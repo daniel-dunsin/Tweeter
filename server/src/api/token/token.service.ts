@@ -14,8 +14,8 @@ export class TokenService {
     return await this.prisma.token.findMany({ where });
   }
 
-  async getToken(where: Prisma.TokenWhereUniqueInput) {
-    return await this.prisma.token.findMany({ where });
+  async getToken(where: Prisma.TokenWhereInput) {
+    return await this.prisma.token.findFirst({ where });
   }
 
   async updateToken(
@@ -23,6 +23,17 @@ export class TokenService {
     update: Prisma.TokenUpdateInput,
   ) {
     return await this.prisma.token.update({ where, data: update });
+  }
+
+  async upsertToken(
+    where: Prisma.TokenWhereUniqueInput | Prisma.TokenWhereInput,
+    update: Prisma.TokenUpdateInput,
+  ) {
+    return await this.prisma.token.upsert({
+      where: where as Prisma.TokenWhereUniqueInput,
+      update,
+      create: { ...where, ...update } as Prisma.TokenCreateInput,
+    });
   }
 
   async deleteToken(where: Prisma.TokenWhereUniqueInput) {

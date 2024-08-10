@@ -3,6 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { CheckEmailDto, CheckUserNameDto, SignUpDto } from './dtos/sign-up.dto';
 import { AuthProvider } from './auth.provider';
 import { LoginDto } from './dtos/login.dto';
+import { VerifyEmailDto } from './dtos/verify-email.dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -27,5 +28,10 @@ export class AuthController {
   @Post('check-username')
   async checkUserName(@Body() checkUserNameDto: CheckUserNameDto) {
     return await this.authProvider.checkUserName(checkUserNameDto.userName);
+  }
+
+  @Post('verify-email')
+  async verifyEmail(@Body() verifyEmailDto: VerifyEmailDto) {
+    return await this.authProvider.verifyEmail(verifyEmailDto);
   }
 }

@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dtos/sign-up.dto';
 import { UtilService } from 'src/shared/utils/utils.service';
@@ -11,6 +15,7 @@ import { ISendMailOptions } from 'src/shared/mail/interfaces/mail.interface';
 import { LoginDto } from './dtos/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { SignJwtDto } from './dtos/jwt-sign.dto';
+import { VerifyEmailDto } from './dtos/verify-email.dto';
 
 @Injectable()
 export class AuthProvider {
@@ -47,11 +52,13 @@ export class AuthProvider {
 
     const otp = this.utilService.getOtp();
 
-    await this.tokenService.createToken({
-      type: TokenTypes.passwordResetToken,
-      code: otp,
-      email,
-    });
+    await this.tokenService.upsertToken(
+      {
+        type: TokenTypes.passwordResetToken,
+        email,
+      },
+      { code: otp },
+    );
 
     this.eventEmitter.emit(AppEvents.sendMail, {
       to: email,
@@ -121,6 +128,26 @@ export class AuthProvider {
       data: {
         exists: !!userExists,
       },
+    };
+  }
+
+  async verifyEmail(verifyEmailDto: VerifyEmailDto) {
+    const { email, code } = verifyEmailDto;
+
+    const token = await this.tokenService.getToken({
+      email,
+      code,
+      type: TokenTypes.accountVerificationToken,
+    });
+
+    if (!token) throw new NotFoundException('otp is invalid');
+
+    await this.authService.updateAuth({ email }, { isVerified: true });
+    await this.tokenService.deleteToken({ id: token.id });
+
+    return {
+      success: true,
+      message: 'Account verified successfully',
     };
   }
 }
