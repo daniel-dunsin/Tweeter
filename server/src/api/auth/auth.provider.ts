@@ -5,6 +5,12 @@ import { UtilService } from 'src/shared/utils/utils.service';
 import { UserService } from '../user/user.service';
 import { TokenService } from '../token/token.service';
 import { TokenTypes } from '@prisma/client';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { AppEvents } from 'src/shared/events/event.enum';
+import { ISendMailOptions } from 'src/shared/mail/interfaces/mail.interface';
+import { LoginDto } from './dtos/login.dto';
+import { JwtService } from '@nestjs/jwt';
+import { SignJwtDto } from './dtos/jwt-sign.dto';
 
 @Injectable()
 export class AuthProvider {
@@ -13,6 +19,8 @@ export class AuthProvider {
     private readonly utilService: UtilService,
     private readonly userService: UserService,
     private readonly tokenService: TokenService,
+    private readonly jwtService: JwtService,
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   async signUp(signUpDto: SignUpDto) {
@@ -44,7 +52,49 @@ export class AuthProvider {
       code: otp,
       email,
     });
+
+    this.eventEmitter.emit(AppEvents.sendMail, {
+      to: email,
+      subject: 'Verify Email',
+      template: 'verify-email',
+      context: { name, code: otp },
+    } as ISendMailOptions);
+
+    return {
+      success: true,
+      message: 'Sign Up Successful',
+    };
   }
 
-  async login() {}
+  async login(loginDto: LoginDto) {
+    const { credential, password } = loginDto;
+
+    const userExists = await this.authService.getAuth({
+      OR: [{ email: credential }],
+    });
+
+    if (!userExists) throw new BadRequestException('Invalid login credentials');
+
+    if (!userExists.password)
+      throw new BadRequestException('Login with google or reset your password');
+
+    const passwordMatch = await this.utilService.comparePassword(
+      password,
+      userExists.password,
+    );
+
+    if (!passwordMatch)
+      throw new BadRequestException('Invalid login credentials');
+
+    const user = await this.userService.getUser({ email: userExists.email });
+
+    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
+    await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
+
+    return {
+      success: true,
+      message: 'Login successful',
+      data: user,
+    };
+  }
 }

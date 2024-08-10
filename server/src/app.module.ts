@@ -4,6 +4,7 @@ import { envSchema } from './shared/schemas/env.schema';
 import { SharedModule } from './shared/shared.module';
 import { ApiModule } from './api/api.module';
 import { BullModule } from '@nestjs/bull';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -23,7 +24,7 @@ import { BullModule } from '@nestjs/bull';
         };
       },
     }),
-
+    EventEmitterModule.forRoot(),
     SharedModule,
     ApiModule,
   ],

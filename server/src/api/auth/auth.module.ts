@@ -8,6 +8,7 @@ import { PrismaModule } from 'src/shared/prisma/prisma.module';
 import { SharedModule } from 'src/shared/shared.module';
 import { UserModule } from '../user/user.module';
 import { TokenModule } from '../token/token.module';
+import { MailModule } from 'src/shared/mail/mail.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { TokenModule } from '../token/token.module';
     SharedModule,
     UserModule,
     TokenModule,
+    MailModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, AuthProvider],

@@ -10,8 +10,8 @@ export class AuthService {
     return await this.prisma.auth.create({ data });
   }
 
-  async getAuth(where: Prisma.AuthWhereUniqueInput) {
-    return await this.prisma.auth.findUnique({ where });
+  async getAuth(where: Prisma.AuthWhereInput) {
+    return await this.prisma.auth.findFirst({ where });
   }
 
   async updateAuth(
@@ -23,5 +23,20 @@ export class AuthService {
 
   async deleteAuth(where: Prisma.AuthWhereUniqueInput) {
     return await this.prisma.auth.delete({ where });
+  }
+
+  async getJwtToken(where: Prisma.JwtTokenWhereUniqueInput) {
+    return await this.prisma.jwtToken.findUnique({ where });
+  }
+
+  async upsertJwtToken(
+    where: Prisma.JwtTokenWhereUniqueInput,
+    data: Prisma.JwtTokenUpdateInput,
+  ) {
+    return await this.prisma.jwtToken.upsert({
+      where,
+      update: data,
+      create: { ...where, ...data } as Prisma.JwtTokenCreateInput,
+    });
   }
 }
