@@ -95,6 +95,9 @@ export class AuthProvider {
       success: true,
       message: 'Login successful',
       data: user,
+      meta: {
+        accessToken,
+      },
     };
   }
 }
