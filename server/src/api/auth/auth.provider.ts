@@ -100,4 +100,27 @@ export class AuthProvider {
       },
     };
   }
+
+  async checkEmail(email: string) {
+    const userExists = await this.authService.getAuth({ email });
+
+    return {
+      success: true,
+      message: 'Check email successful',
+      data: {
+        exists: !!userExists,
+      },
+    };
+  }
+  async checkUserName(userName: string) {
+    const userExists = await this.authService.getAuth({ userName });
+
+    return {
+      success: true,
+      message: 'check username successful',
+      data: {
+        exists: !!userExists,
+      },
+    };
+  }
 }

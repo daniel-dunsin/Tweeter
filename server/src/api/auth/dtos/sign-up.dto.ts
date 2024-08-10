@@ -22,3 +22,8 @@ export class CheckEmailDto {
   @IsEmail(false)
   email: string;
 }
+
+export class CheckUserNameDto {
+  @IsString(false)
+  userName: string;
+}
