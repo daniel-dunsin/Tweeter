@@ -1,6 +1,9 @@
 import 'package:client/home.dart';
-import 'package:client/theme/colors.dart';
-import 'package:client/theme/font.dart';
+import 'package:client/shared/constants/localstorage.dart';
+import 'package:client/shared/theme/colors.dart';
+import 'package:client/shared/theme/font.dart';
+import 'package:client/shared/theme/index.dart';
+import 'package:client/shared/utils/localstorage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:toastification/toastification.dart';
@@ -19,6 +22,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  AppColorMode? colorMode;
+
   @override
   initState() {
     super.initState();
@@ -27,22 +32,34 @@ class _MyAppState extends State<MyApp> {
 
   void initialization() async {
     await Future.delayed(const Duration(seconds: 4));
-
     FlutterNativeSplash.remove();
+
+    setState(() async {
+      colorMode = (await LocalStorage.getAny<AppColorMode>(
+              key: LocalStorageEnum.theme)) ??
+          AppColorMode.light;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final mode = colorMode == AppColorMode.light
+        ? TweeterColors.light()
+        : TweeterColors.dark();
+
     return ToastificationWrapper(
       child: MaterialApp(
         title: 'Tweeter',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           textTheme:
               ThemeData().textTheme.apply(fontFamily: FontFamily.poppins),
         ).copyWith(
-          extensions: [TweeterColors.light()],
+          extensions: [
+            mode,
+          ],
+          scaffoldBackgroundColor: mode.backgroundColor,
+          appBarTheme: AppBarTheme().copyWith(),
         ),
         home: Home(),
       ),

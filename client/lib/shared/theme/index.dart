@@ -1,0 +1,1 @@
+enum AppColorMode { light, dark }
