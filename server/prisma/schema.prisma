@@ -1,0 +1,55 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Auth {
+  id String @default(uuid()) @id 
+  email String @unique
+  password String?
+  isVerified Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+
+  @@map("auths")
+  @@index([email])
+}
+
+model User {
+  id String @default(uuid()) @id 
+  email String @unique
+  firstName String
+  lastName String
+  userName String @unique
+  dateOfBirth DateTime
+  profilePicture String @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1H81w4SmKH5DZmIbxU7EB0aMSkNQDoPQA1mRQxf2Y0wMF1NSa7vghbwwKASi1q4NPmNw&usqp=CAU")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+  @@index([email, userName])
+}
+
+enum TokenTypes {
+  accountVerificationToken
+  passwordResetToken
+}
+
+model Token {
+  id String @default(uuid()) @unique
+  code String
+  type TokenTypes
+  email String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tokens")
+  @@index([email])
+}
