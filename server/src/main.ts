@@ -10,7 +10,7 @@ import { ValidationExceptions } from './core/exceptions/validation.exception';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.setGlobalPrefix('/api');
-  app.enableVersioning({ type: VersioningType.URI, prefix: 'v1' });
+  app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
   app.enableCors();
   app.disable('x-powered-by');
 

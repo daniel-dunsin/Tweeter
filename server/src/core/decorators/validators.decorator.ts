@@ -8,8 +8,10 @@ import {
   IsOptional,
   IsDateString,
   IsNumberString,
+  IsUUID as _IsUUID,
 } from 'class-validator';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
+import { v4 } from 'uuid';
 
 export const IsString = (isOptional: boolean) => {
   const decorators = [_IsString()];
@@ -110,6 +112,19 @@ export const IsBase64 = (isOptional: boolean) => {
     decorators.push(IsOptional());
   } else {
     decorators.push(ApiProperty({ example: 'base64' }));
+  }
+
+  return applyDecorators(...decorators);
+};
+
+export const IsUUID = (isOptional: boolean) => {
+  const decorators = [_IsUUID()];
+
+  if (isOptional) {
+    decorators.push(ApiPropertyOptional({ example: v4() }));
+    decorators.push(IsOptional());
+  } else {
+    decorators.push(ApiProperty({ example: v4() }));
   }
 
   return applyDecorators(...decorators);
