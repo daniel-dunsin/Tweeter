@@ -46,7 +46,7 @@ class LocalStorage {
   static Future<T?> getAny<T>({required dynamic key}) async {
     final prefs = await _getPrefs();
 
-    return prefs.get(key) as T;
+    return prefs.getString(key) as T;
   }
 
   static Future<bool?> getBool({required dynamic key}) async {

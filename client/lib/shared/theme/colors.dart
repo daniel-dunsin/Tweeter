@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 class TweeterColors extends ThemeExtension<TweeterColors> {
   static Color blue = Color.fromRGBO(29, 161, 242, 1);
-  static Color black = Color.fromRGBO(20, 23, 26, 1);
-  static Color darkGray = Color.fromRGBO(109, 119, 134, 1);
+  static Color black = Color.fromRGBO(7, 7, 7, 1);
+  static Color darkGray = Color.fromRGBO(60, 64, 72, 1);
   static Color lightGray = Color.fromRGBO(170, 184, 194, 1);
   static Color extraLightGray = Color.fromRGBO(225, 232, 237, 1);
   static Color white = Color.fromRGBO(245, 248, 250, 1);
 
   final Color backgroundColor;
+  final Color secondaryBackgroundColor;
   final Color inputBackgroundColor;
   final Color foregroundColor;
   final Color secondaryForegroundColor;
@@ -16,6 +17,7 @@ class TweeterColors extends ThemeExtension<TweeterColors> {
 
   const TweeterColors.internal({
     required this.backgroundColor,
+    required this.secondaryBackgroundColor,
     required this.inputBackgroundColor,
     required this.foregroundColor,
     required this.secondaryForegroundColor,
@@ -25,6 +27,7 @@ class TweeterColors extends ThemeExtension<TweeterColors> {
   factory TweeterColors.light() {
     return TweeterColors.internal(
       backgroundColor: white,
+      secondaryBackgroundColor: lightGray,
       inputBackgroundColor: lightGray,
       foregroundColor: black,
       secondaryForegroundColor: darkGray,
@@ -36,6 +39,7 @@ class TweeterColors extends ThemeExtension<TweeterColors> {
     return TweeterColors.internal(
       backgroundColor: black,
       inputBackgroundColor: darkGray,
+      secondaryBackgroundColor: darkGray,
       foregroundColor: white,
       secondaryForegroundColor: extraLightGray,
       iconColor: blue,
