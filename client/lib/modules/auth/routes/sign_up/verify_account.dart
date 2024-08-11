@@ -19,7 +19,7 @@ class VerifyAccountScreen extends StatelessWidget {
           onTap: () {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              AuthRoutes.login,
+              AuthRoutes.signUp,
               (route) => false,
             );
           },

@@ -43,7 +43,7 @@ class UnderlinedTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
     return SizedBox(
-      height: height ?? 45,
+      height: height ?? 64,
       width: fullWidth == true ? double.maxFinite : width ?? 200,
       child: TextFormField(
         onChanged: onChangeValue,

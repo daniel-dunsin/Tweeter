@@ -106,7 +106,11 @@ class SecondaryButton extends StatelessWidget {
 
     return TextButton.icon(
       onPressed: disabled == true || loading == true ? null : onPressed,
-      label: loading == true ? CircularProgressIndicator() : child,
+      label: loading == true
+          ? CircularProgressIndicator(
+              strokeWidth: 2,
+            )
+          : child,
       icon: icon,
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor ?? appColors.backgroundColor,

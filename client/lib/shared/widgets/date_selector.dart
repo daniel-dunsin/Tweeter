@@ -3,11 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 
-class DateSelector extends StatelessWidget {
+class DateSelector extends StatefulWidget {
   final DateTime? date;
   final Function(DateTime? date)? onChangeDate;
 
-  const DateSelector({super.key, this.date, this.onChangeDate});
+  DateSelector({super.key, this.date, this.onChangeDate});
+
+  @override
+  State<DateSelector> createState() => _DateSelectorState();
+}
+
+class _DateSelectorState extends State<DateSelector> {
+  DateTime currentDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -23,23 +30,21 @@ class DateSelector extends StatelessWidget {
           topRight: Radius.circular(40),
         ),
       ),
-      child: StatefulBuilder(
-        builder: (context, setState) {
-          return CalendarCarousel<Event>(
-            onDayPressed: (DateTime date, List<Event> events) {
-              onChangeDate!(date);
-              setState(() {});
-            },
-            selectedDateTime: date ?? DateTime.now(),
-            todayButtonColor: appColors.secondaryBackgroundColor,
-            todayTextStyle: TextStyle(color: appColors.foregroundColor),
-            selectedDayButtonColor: appColors.iconColor,
-            daysTextStyle: TextStyle(color: appColors.foregroundColor),
-            weekendTextStyle: TextStyle(color: appColors.foregroundColor),
-            headerTextStyle: TextStyle(color: appColors.foregroundColor),
-            weekdayTextStyle: TextStyle(color: appColors.foregroundColor),
-          );
+      child: CalendarCarousel<Event>(
+        onDayPressed: (DateTime date, List<Event> events) {
+          widget.onChangeDate!(date);
+          setState(() {
+            currentDate = date;
+          });
         },
+        selectedDateTime: currentDate,
+        todayButtonColor: appColors.secondaryBackgroundColor,
+        todayTextStyle: TextStyle(color: appColors.foregroundColor),
+        selectedDayButtonColor: appColors.iconColor,
+        daysTextStyle: TextStyle(color: appColors.foregroundColor),
+        weekendTextStyle: TextStyle(color: appColors.foregroundColor),
+        headerTextStyle: TextStyle(color: appColors.foregroundColor),
+        weekdayTextStyle: TextStyle(color: appColors.foregroundColor),
       ),
     );
   }
