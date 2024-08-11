@@ -5,7 +5,7 @@ final focusBorder = Border();
 
 class UnderlinedTextField extends StatelessWidget {
   final TextEditingController? controller;
-  final Function(String? value)? onChangeValue;
+  final void Function(String? value)? onChangeValue;
   final String? labelText;
   final FormFieldValidator<String?>? validator;
   final bool? fullWidth;

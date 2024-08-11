@@ -1,5 +1,6 @@
 import 'package:client/config/routes.dart';
 import 'package:client/shared/theme/index.dart';
+import 'package:client/shared/utils/network.dart';
 import 'package:client/shared/widgets/button.dart';
 import 'package:client/shared/widgets/cancel_appbar_leading.dart';
 import 'package:client/shared/widgets/date_selector.dart';
@@ -32,6 +33,7 @@ class SignUpScreen extends StatelessWidget {
             UnderlinedTextField(
               labelText: "Name",
               fullWidth: true,
+              onChangeValue: (value) {},
             ),
             const SizedBox(height: 20),
             UnderlinedTextField(

@@ -6,7 +6,9 @@ Future? httpWrapper({
   required Future<dynamic> Function() request,
   Function()? onError,
 }) async {
-  try {} catch (e) {
+  try {
+    await request();
+  } catch (e) {
     String errorMessage = "Oops! an error occured";
     if (e is DioException) {
       if (e.response != null) {
@@ -23,7 +25,10 @@ Future? httpWrapper({
       icon: Icon(Icons.error, color: Colors.white),
       backgroundColor: Color.fromRGBO(255, 0, 0, 1),
       foregroundColor: Colors.white,
-      title: Text(errorMessage),
+      title: Text(
+        errorMessage,
+        style: TextStyle(fontSize: 12),
+      ),
       alignment: Alignment.topCenter,
       dismissDirection: DismissDirection.vertical,
       autoCloseDuration: const Duration(seconds: 2),

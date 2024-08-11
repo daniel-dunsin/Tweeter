@@ -1,1 +1,0 @@
-enum LocalStorageEnum { theme }
