@@ -1,3 +1,4 @@
+import 'package:client/config/routes.dart';
 import 'package:client/modules/auth/routes/select_sign_up/widgets/already_have_an_account.dart';
 import 'package:client/modules/auth/routes/select_sign_up/widgets/google_button.dart';
 import 'package:client/modules/auth/routes/select_sign_up/widgets/or_divider.dart';
@@ -41,7 +42,9 @@ class SelectSignUpScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
                 fullWidth: true,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AuthRoutes.signUp);
+                },
               ),
               SizedBox(height: 15),
               TermsAndCondition(),

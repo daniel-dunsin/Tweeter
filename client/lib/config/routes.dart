@@ -5,6 +5,7 @@ import 'package:client/modules/auth/routes/login/enter_login_password.dart';
 import 'package:client/modules/auth/routes/login/login.dart';
 import 'package:client/modules/auth/routes/select_sign_up/select_sign_up.dart';
 import 'package:client/modules/auth/routes/sign_up/sign_up.dart';
+import 'package:client/modules/auth/routes/sign_up/verify_account.dart';
 import 'package:flutter/material.dart';
 
 class PublicRoutes {}
@@ -17,6 +18,7 @@ class AuthRoutes {
   static String forgotPassword = "/auth/forgot-password";
   static String forgotPasswordCode = "/auth/forgot-password/code";
   static String resetPassword = "/auth/forgot-password/reset";
+  static String verifyEmail = "/auth/verify-email";
 }
 
 class PrivateRoutes {}
@@ -31,5 +33,6 @@ Map<String, Widget Function(BuildContext context)> getRoutes(
     AuthRoutes.forgotPassword: (context) => ForgotPasswordScreen(),
     AuthRoutes.forgotPasswordCode: (context) => EnterForgotPasswordCodeScreen(),
     AuthRoutes.resetPassword: (context) => ResetPasswordScreen(),
+    AuthRoutes.verifyEmail: (context) => VerifyAccountScreen(),
   };
 }
