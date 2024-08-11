@@ -9,6 +9,7 @@ Future? handleError({required Object e}) async {
       print(
         "Request failed with status code : ${e.response?.statusCode} - ${e.response?.data}",
       );
+      errorMessage = e.response?.data["error"] ?? e.message;
     } else {
       errorMessage = e.message ?? "Oops! an error occured";
     }

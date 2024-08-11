@@ -51,25 +51,29 @@ class UnderlinedTextField extends StatelessWidget {
         validator: validator,
         controller: controller,
         style: TextStyle(
-          color: enabled == false
-              ? appColors.secondaryForegroundColor
-              : appColors.iconColor,
+          color: enabled == false ? appColors.secondaryForegroundColor : appColors.iconColor,
           fontSize: 12,
         ),
         cursorColor: appColors.secondaryForegroundColor,
         enabled: enabled,
         autovalidateMode: AutovalidateMode.onUserInteraction,
+        obscureText: obscureText ?? false,
         initialValue: initialValue,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
           labelText: labelText,
           labelStyle: TextStyle(
             color: Colors.grey,
-            fontSize: 11,
+            fontSize: 13,
           ),
           floatingLabelStyle: TextStyle(
             color: appColors.secondaryForegroundColor,
             fontSize: 12,
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              width: 1,
+              color: appColors.secondaryForegroundColor,
+            ),
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -85,8 +89,8 @@ class UnderlinedTextField extends StatelessWidget {
           ),
           disabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              width: 1.4,
-              color: appColors.secondaryBackgroundColor,
+              width: 1,
+              color: appColors.secondaryForegroundColor,
             ),
           ),
           prefixIcon: prefixIcon,
@@ -134,12 +138,10 @@ class UnderlinedPasswordTextField extends StatefulWidget {
   });
 
   @override
-  State<UnderlinedPasswordTextField> createState() =>
-      _UnderlinedPasswordTextFieldState();
+  State<UnderlinedPasswordTextField> createState() => _UnderlinedPasswordTextFieldState();
 }
 
-class _UnderlinedPasswordTextFieldState
-    extends State<UnderlinedPasswordTextField> {
+class _UnderlinedPasswordTextFieldState extends State<UnderlinedPasswordTextField> {
   bool visible = false;
 
   void toggleVisibility() {
@@ -174,8 +176,7 @@ class _UnderlinedPasswordTextFieldState
               ),
         onPressed: toggleVisibility,
       ),
-      accentColor:
-          visible ? appColors.iconColor : appColors.secondaryForegroundColor,
+      accentColor: visible ? appColors.iconColor : appColors.secondaryForegroundColor,
       onChangeValue: widget.onChangeValue,
       labelText: widget.labelText,
       validator: widget.validator,

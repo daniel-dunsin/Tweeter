@@ -31,7 +31,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             const Text(
               "Enter the email, phone number, or username associated with your account to change your password",
               style: TextStyle(
-                fontSize: 11,
+                fontSize: 13,
                 color: Colors.grey,
               ),
             ),
@@ -49,7 +49,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                     Navigator.popAndPushNamed(
                       context,
                       AuthRoutes.forgotPasswordCode,
-                      arguments: {"email": "adejaredaniel12@gmail.com"},
+                      arguments: {
+                        "email": "adejaredaniel12@gmail.com"
+                      },
                     );
                   }),
             )

@@ -1,5 +1,6 @@
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class ContainedButton extends StatelessWidget {
   final Function()? onPressed;
@@ -37,7 +38,7 @@ class ContainedButton extends StatelessWidget {
 
     return ElevatedButton.icon(
       onPressed: disabled == true || loading == true ? null : onPressed,
-      label: loading == true ? CircularProgressIndicator() : child,
+      label: loading == true ? LoadingAnimationWidget.discreteCircle(color: appColors.secondaryBackgroundColor, secondRingColor: appColors.secondaryBackgroundColor, thirdRingColor: appColors.secondaryBackgroundColor, size: 20) : child,
       icon: icon,
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor ?? appColors.foregroundColor,
@@ -56,9 +57,7 @@ class ContainedButton extends StatelessWidget {
           side: BorderSide(
             style: BorderStyle.solid,
             width: 2,
-            color: disabled == true
-                ? Color.fromARGB(255, 100, 100, 100)
-                : appColors.foregroundColor,
+            color: disabled == true || loading == true ? Color.fromARGB(255, 100, 100, 100) : appColors.foregroundColor,
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(80),
@@ -106,11 +105,7 @@ class SecondaryButton extends StatelessWidget {
 
     return TextButton.icon(
       onPressed: disabled == true || loading == true ? null : onPressed,
-      label: loading == true
-          ? CircularProgressIndicator(
-              strokeWidth: 2,
-            )
-          : child,
+      label: loading == true ? LoadingAnimationWidget.discreteCircle(color: appColors.secondaryBackgroundColor, secondRingColor: appColors.secondaryBackgroundColor, thirdRingColor: appColors.secondaryBackgroundColor, size: 20) : child,
       icon: icon,
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor ?? appColors.backgroundColor,
@@ -129,9 +124,7 @@ class SecondaryButton extends StatelessWidget {
           side: BorderSide(
             style: BorderStyle.solid,
             width: 2,
-            color: disabled == true
-                ? Color.fromARGB(255, 100, 100, 100)
-                : appColors.foregroundColor,
+            color: disabled == true || loading == true ? Color.fromARGB(255, 100, 100, 100) : appColors.foregroundColor,
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(80),

@@ -16,35 +16,35 @@ class TermsAndCondition extends StatelessWidget {
         Text(
           "By signing up, you agree to our ",
           style: TextStyle(
-            fontSize: 11,
+            fontSize: 13,
             color: appColors.secondaryForegroundColor,
           ),
         ),
         Text(
           "terms, ",
           style: TextStyle(
-            fontSize: 11,
+            fontSize: 13,
             color: appColors.iconColor,
           ),
         ),
         Text(
           "privacy policy ",
           style: TextStyle(
-            fontSize: 11,
+            fontSize: 13,
             color: appColors.iconColor,
           ),
         ),
         Text(
           "and ",
           style: TextStyle(
-            fontSize: 11,
+            fontSize: 13,
             color: appColors.secondaryForegroundColor,
           ),
         ),
         Text(
           "cookie use",
           style: TextStyle(
-            fontSize: 11,
+            fontSize: 13,
             color: appColors.iconColor,
           ),
         )
