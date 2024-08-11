@@ -1,3 +1,6 @@
+import 'package:client/modules/auth/routes/forgot_password/enter_forgot_password_code.dart';
+import 'package:client/modules/auth/routes/forgot_password/forgot_password.dart';
+import 'package:client/modules/auth/routes/forgot_password/reset_password.dart';
 import 'package:client/modules/auth/routes/login/enter_login_password.dart';
 import 'package:client/modules/auth/routes/login/login.dart';
 import 'package:client/modules/auth/routes/select_sign_up/select_sign_up.dart';
@@ -11,6 +14,9 @@ class AuthRoutes {
   static String signUp = "/auth/sign-up";
   static String login = "/auth/login";
   static String loginPassword = "/auth/login-password";
+  static String forgotPassword = "/auth/forgot-password";
+  static String forgotPasswordCode = "/auth/forgot-password/code";
+  static String resetPassword = "/auth/forgot-password/reset";
 }
 
 class PrivateRoutes {}
@@ -22,5 +28,8 @@ Map<String, Widget Function(BuildContext context)> getRoutes(
     AuthRoutes.signUp: (context) => SignUpScreen(),
     AuthRoutes.login: (context) => LoginScreen(),
     AuthRoutes.loginPassword: (context) => EnterLoginPasswordScreen(),
+    AuthRoutes.forgotPassword: (context) => ForgotPasswordScreen(),
+    AuthRoutes.forgotPasswordCode: (context) => EnterForgotPasswordCodeScreen(),
+    AuthRoutes.resetPassword: (context) => ResetPasswordScreen(),
   };
 }

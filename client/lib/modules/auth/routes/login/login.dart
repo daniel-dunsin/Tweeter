@@ -12,7 +12,14 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: CancelAppbarLeading(),
+        leading: CancelAppbarLeading(
+          onTap: () {
+            final navigator = Navigator.of(context);
+            navigator.canPop()
+                ? navigator.pop()
+                : navigator.popAndPushNamed(AuthRoutes.signUpInitial);
+          },
+        ),
         leadingWidth: double.maxFinite,
       ),
       body: Padding(
@@ -37,7 +44,12 @@ class LoginScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Forgot Password?"),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(AuthRoutes.forgotPassword);
+                    },
+                    child: Text("Forgot Password?")),
                 ContainedButton(
                   child: Text("Next"),
                   onPressed: () {

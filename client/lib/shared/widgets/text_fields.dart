@@ -43,7 +43,7 @@ class UnderlinedTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
     return SizedBox(
-      height: height ?? 50,
+      height: height ?? 45,
       width: fullWidth == true ? double.maxFinite : width ?? 200,
       child: TextFormField(
         onChanged: onChangeValue,
@@ -61,13 +61,16 @@ class UnderlinedTextField extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         initialValue: initialValue,
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
           labelText: labelText,
           labelStyle: TextStyle(
+            color: Colors.grey,
+            fontSize: 11,
+          ),
+          floatingLabelStyle: TextStyle(
             color: appColors.secondaryForegroundColor,
             fontSize: 12,
           ),
-          floatingLabelStyle: TextStyle(
-              color: appColors.secondaryForegroundColor, fontSize: 12),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
               width: 1.4,
