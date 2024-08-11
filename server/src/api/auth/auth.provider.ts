@@ -29,15 +29,15 @@ export class AuthProvider {
   ) {}
 
   async signUp(signUpDto: SignUpDto) {
-    const { email, password, dateOfBirth, name } = signUpDto;
+    const { email, password, dateOfBirth, name, userName } = signUpDto;
 
     const authExists = await this.authService.getAuth({
-      email,
+      OR: [{ email }, { userName }],
     });
 
     if (authExists) {
       throw new BadRequestException(
-        'Oops! A user with this email address already exists',
+        'Oops! A user with this email address or username already exists',
       );
     }
 
@@ -48,7 +48,7 @@ export class AuthProvider {
       password: hashedPassword,
     });
 
-    await this.userService.createUser({ email, name, dateOfBirth });
+    await this.userService.createUser({ email, name, dateOfBirth, userName });
 
     const otp = this.utilService.getOtp();
 

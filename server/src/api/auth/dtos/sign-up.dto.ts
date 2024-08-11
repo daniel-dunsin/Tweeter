@@ -16,6 +16,9 @@ export class SignUpDto {
 
   @IsString(false)
   password: string;
+
+  @IsString(false)
+  userName: string;
 }
 
 export class CheckEmailDto {
