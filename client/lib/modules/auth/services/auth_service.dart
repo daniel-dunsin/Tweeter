@@ -10,4 +10,11 @@ class AuthService {
       data: signUpDto,
     );
   }
+
+  Future<Response> verifyEmail(Map<String, dynamic> verifyEmailDto) async {
+    return await httpInstance.post(
+      "${AppSecrets.serverUrl}/auth/verify-email",
+      data: verifyEmailDto,
+    );
+  }
 }

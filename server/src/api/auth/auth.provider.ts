@@ -54,7 +54,7 @@ export class AuthProvider {
 
     await this.tokenService.upsertToken(
       {
-        type: TokenTypes.passwordResetToken,
+        type: TokenTypes.accountVerificationToken,
         email,
       },
       { code: otp },
@@ -145,9 +145,18 @@ export class AuthProvider {
     await this.authService.updateAuth({ email }, { isVerified: true });
     await this.tokenService.deleteToken({ id: token.id });
 
+    const user = await this.userService.getUser({ email });
+
+    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
+    await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
+
     return {
       success: true,
       message: 'Account verified successfully',
+      data: user,
+      meta: {
+        accessToken,
+      },
     };
   }
 }
