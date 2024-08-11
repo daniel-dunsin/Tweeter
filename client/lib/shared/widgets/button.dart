@@ -44,17 +44,21 @@ class ContainedButton extends StatelessWidget {
         overlayColor: backgroundColor ?? appColors.foregroundColor,
         foregroundColor: foregroundColor ?? appColors.secondaryBackgroundColor,
         iconColor: foregroundColor ?? appColors.secondaryBackgroundColor,
-        disabledBackgroundColor: Colors.grey,
-        disabledForegroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-        minimumSize: fullWidth == true
-            ? Size(double.maxFinite, height ?? 50)
-            : Size(width ?? 200, height ?? 50),
+        disabledBackgroundColor: const Color.fromARGB(255, 100, 100, 100),
+        disabledForegroundColor: const Color.fromARGB(255, 39, 38, 38),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+        minimumSize: fullWidth == null && width == null && height == null
+            ? null
+            : fullWidth == true
+                ? Size(double.maxFinite, height ?? 50)
+                : Size(width ?? 200, height ?? 50),
         shape: RoundedRectangleBorder(
           side: BorderSide(
             style: BorderStyle.solid,
             width: 2,
-            color: appColors.foregroundColor,
+            color: disabled == true
+                ? Color.fromARGB(255, 100, 100, 100)
+                : appColors.foregroundColor,
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(80),
@@ -109,17 +113,21 @@ class SecondaryButton extends StatelessWidget {
         overlayColor: backgroundColor ?? appColors.backgroundColor,
         foregroundColor: foregroundColor ?? appColors.foregroundColor,
         iconColor: foregroundColor ?? appColors.foregroundColor,
-        disabledBackgroundColor: Colors.grey,
-        disabledForegroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-        minimumSize: fullWidth == true
-            ? Size(double.maxFinite, height ?? 50)
-            : Size(width ?? 200, height ?? 50),
+        disabledBackgroundColor: const Color.fromARGB(255, 100, 100, 100),
+        disabledForegroundColor: const Color.fromARGB(255, 39, 38, 38),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+        minimumSize: fullWidth == null && width == null && height == null
+            ? null
+            : fullWidth == true
+                ? Size(double.maxFinite, height ?? 50)
+                : Size(width ?? 200, height ?? 50),
         shape: RoundedRectangleBorder(
           side: BorderSide(
             style: BorderStyle.solid,
             width: 2,
-            color: appColors.foregroundColor,
+            color: disabled == true
+                ? Color.fromARGB(255, 100, 100, 100)
+                : appColors.foregroundColor,
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(80),

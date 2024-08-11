@@ -37,18 +37,22 @@ class _MyAppState extends State<MyApp> {
     return ToastificationWrapper(
       child: MaterialApp(
         title: 'Tweeter',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
           textTheme: ThemeData().textTheme.apply(
                 fontFamily: FontFamily.poppins,
-                bodyColor: mode.foregroundColor,
+                bodyColor: mode.secondaryForegroundColor,
               ),
         ).copyWith(
           extensions: [
             mode,
           ],
           scaffoldBackgroundColor: mode.backgroundColor,
-          appBarTheme: AppBarTheme().copyWith(),
+          appBarTheme: AppBarTheme().copyWith(
+            backgroundColor: mode.backgroundColor,
+            foregroundColor: mode.secondaryForegroundColor,
+          ),
         ),
         routes: getRoutes(context),
         initialRoute: AuthRoutes.signUpInitial,

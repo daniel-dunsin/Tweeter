@@ -1,3 +1,4 @@
+import 'package:client/config/routes.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -16,11 +17,16 @@ class AlreadyHaveAnAccount extends StatelessWidget {
             color: appColors.secondaryForegroundColor,
           ),
         ),
-        Text(
-          "Log in",
-          style: TextStyle(
-            fontSize: 11,
-            color: appColors.iconColor,
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, AuthRoutes.login);
+          },
+          child: Text(
+            "Log in",
+            style: TextStyle(
+              fontSize: 11,
+              color: appColors.iconColor,
+            ),
           ),
         )
       ],

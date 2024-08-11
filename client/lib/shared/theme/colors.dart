@@ -5,7 +5,7 @@ class TweeterColors extends ThemeExtension<TweeterColors> {
   static Color black = Color.fromRGBO(7, 7, 7, 1);
   static Color darkGray = Color.fromRGBO(60, 64, 72, 1);
   static Color lightGray = Color.fromRGBO(170, 184, 194, 1);
-  static Color extraLightGray = Color.fromRGBO(225, 232, 237, 1);
+  static Color extraLightGray = Color.fromRGBO(216, 218, 219, 1);
   static Color white = Color.fromRGBO(245, 248, 250, 1);
 
   final Color backgroundColor;
