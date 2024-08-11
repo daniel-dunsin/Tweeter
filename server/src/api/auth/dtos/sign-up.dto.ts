@@ -12,7 +12,7 @@ export class SignUpDto {
   email: string;
 
   @IsDate(false)
-  dateOfBirth: Date;
+  dateOfBirth: string;
 
   @IsString(false)
   password: string;

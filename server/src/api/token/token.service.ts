@@ -26,14 +26,23 @@ export class TokenService {
   }
 
   async upsertToken(
-    where: Prisma.TokenWhereUniqueInput | Prisma.TokenWhereInput,
+    where: Prisma.TokenWhereInput,
     update: Prisma.TokenUpdateInput,
   ) {
-    return await this.prisma.token.upsert({
+    const token = await this.prisma.token.findFirst({
       where: where as Prisma.TokenWhereUniqueInput,
-      update,
-      create: { ...where, ...update } as Prisma.TokenCreateInput,
     });
+
+    if (!token) {
+      return await this.prisma.token.create({
+        data: { ...where, ...update } as Prisma.TokenCreateInput,
+      });
+    } else {
+      return await this.prisma.token.update({
+        where: { id: token.id },
+        data: { ...update },
+      });
+    }
   }
 
   async deleteToken(where: Prisma.TokenWhereUniqueInput) {

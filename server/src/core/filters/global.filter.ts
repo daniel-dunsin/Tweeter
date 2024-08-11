@@ -35,6 +35,8 @@ export class GlobalFilter implements ExceptionFilter {
       statusCode = HttpStatus.UNAUTHORIZED;
     }
 
-    return res.status(200).json({ error: message, statusCode, success: false });
+    return res
+      .status(statusCode)
+      .json({ error: message, statusCode, success: false });
   }
 }
