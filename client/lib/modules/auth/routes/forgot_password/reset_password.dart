@@ -1,5 +1,6 @@
 import 'package:client/shared/widgets/app_cover.dart';
 import 'package:client/shared/widgets/button.dart';
+import 'package:client/shared/widgets/custom_app_bar.dart';
 import 'package:client/shared/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ class ResetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppCover(
+      appBar: customAppBar,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

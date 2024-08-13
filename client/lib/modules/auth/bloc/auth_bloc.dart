@@ -73,6 +73,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final user = UserModel.fromMap(userMap);
         final String accessToken = response["meta"]["accessToken"];
 
+        await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
+        await LocalStorage.setString(key: localStorageConstants.accessToken, value: accessToken);
+
         emit(LoginSuccess(user: user));
       } catch (e) {
         handleError(e: e);

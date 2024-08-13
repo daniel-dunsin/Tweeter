@@ -23,6 +23,7 @@ class EnterForgotPasswordCodeScreen extends StatelessWidget {
             );
           },
         ),
+        toolbarHeight: 30,
         leadingWidth: double.maxFinite,
       ),
       child: Column(

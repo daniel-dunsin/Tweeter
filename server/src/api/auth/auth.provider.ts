@@ -16,6 +16,7 @@ import { LoginDto } from './dtos/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { SignJwtDto } from './dtos/jwt-sign.dto';
 import { VerifyEmailDto } from './dtos/verify-email.dto';
+import { ResetPasswordDto } from './dtos/forgot-password.dto';
 
 @Injectable()
 export class AuthProvider {
@@ -172,6 +173,76 @@ export class AuthProvider {
       data: {
         exists: !!userExists,
       },
+    };
+  }
+
+  async forgotPassword(credential: string) {
+    const user = await this.userService.getUser({
+      OR: [{ email: credential }, { userName: credential }],
+    });
+
+    if (!user) throw new NotFoundException('Account does not exist');
+
+    const otp = this.utilService.getOtp();
+
+    await this.tokenService.upsertToken(
+      {
+        email: user.email,
+        type: TokenTypes.passwordResetToken,
+      },
+      { code: otp },
+    );
+
+    await this.eventEmitter.emit(AppEvents.sendMail, {
+      to: user.email,
+      subject: 'Tweeter: Password reset code',
+      template: 'reset-password',
+      context: {
+        name: user.name,
+        code: otp,
+      },
+    } as ISendMailOptions);
+
+    return {
+      success: true,
+      message: 'password reset request successful',
+    };
+  }
+
+  async confirmPasswordResetCode(code: string) {
+    const token = await this.tokenService.getToken({
+      code,
+      type: TokenTypes.passwordResetToken,
+    });
+
+    if (!token) throw new NotFoundException('token is invalid');
+
+    return {
+      success: true,
+      message: 'password reset code valid',
+    };
+  }
+
+  async resetPassword(resetPasswordDto: ResetPasswordDto) {
+    const { password, code } = resetPasswordDto;
+
+    const token = await this.tokenService.getToken({
+      code,
+      type: TokenTypes.passwordResetToken,
+    });
+
+    if (!token) throw new NotFoundException('token is invalid');
+
+    const hashedPassword = await this.utilService.hashPassword(password);
+
+    await this.authService.updateAuth(
+      { email: token.email },
+      { password: hashedPassword },
+    );
+
+    return {
+      success: true,
+      message: 'password reset successful',
     };
   }
 }

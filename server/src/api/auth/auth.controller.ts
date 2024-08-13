@@ -9,6 +9,11 @@ import {
 import { AuthProvider } from './auth.provider';
 import { LoginDto } from './dtos/login.dto';
 import { VerifyEmailDto } from './dtos/verify-email.dto';
+import {
+  ConfirmPasswordResetCode,
+  ForgotPasswordDto,
+  ResetPasswordDto,
+} from './dtos/forgot-password.dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -45,5 +50,24 @@ export class AuthController {
   @Post('verify-email')
   async verifyEmail(@Body() verifyEmailDto: VerifyEmailDto) {
     return await this.authProvider.verifyEmail(verifyEmailDto);
+  }
+
+  @Post('forgot-password')
+  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return await this.authProvider.forgotPassword(forgotPasswordDto.credential);
+  }
+
+  @Post('forgot-password/confirm')
+  async confirmPasswordResetCode(
+    @Body() confirmPasswordResetCodeDto: ConfirmPasswordResetCode,
+  ) {
+    return await this.authProvider.confirmPasswordResetCode(
+      confirmPasswordResetCodeDto.code,
+    );
+  }
+
+  @Post('forgot-password/reset')
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    return await this.authProvider.resetPassword(resetPasswordDto);
   }
 }
