@@ -5,6 +5,7 @@ import 'package:client/modules/auth/bloc/auth_state.dart';
 import 'package:client/shared/widgets/app_cover.dart';
 import 'package:client/shared/widgets/button.dart';
 import 'package:client/shared/widgets/custom_app_bar.dart';
+import 'package:client/shared/widgets/error_badge.dart';
 import 'package:client/shared/widgets/text_fields.dart';
 import "package:flutter_bloc/flutter_bloc.dart";
 import 'package:flutter/material.dart';
@@ -63,17 +64,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 fullWidth: true,
                 controller: credentialsController,
               ),
-              AnimatedOpacity(
-                child: Container(
-                  width: double.maxFinite,
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                  ),
-                  child: Text("This account does not exist"),
-                ),
-                opacity: state is AuthCheckCredentialSuccess && state.accountExists == false ? 1 : 0,
-                duration: const Duration(milliseconds: 500),
+              ErrorBadge(
+                isVisible: state is AuthCheckCredentialSuccess && state.accountExists == false,
+                message: "This account does not exist",
               ),
               const Spacer(),
               Row(

@@ -9,8 +9,8 @@ class VerifyEmailModel {
     required this.code,
   });
 
-  Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
+  Map<String, String> toMap() {
+    final result = <String, String>{};
 
     result.addAll({
       'email': email
@@ -22,7 +22,7 @@ class VerifyEmailModel {
     return result;
   }
 
-  factory VerifyEmailModel.fromMap(Map<String, dynamic> map) {
+  factory VerifyEmailModel.fromMap(Map<String, String> map) {
     return VerifyEmailModel(
       email: map['email'] ?? '',
       code: map['code'] ?? '',

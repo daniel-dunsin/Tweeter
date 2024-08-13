@@ -1,4 +1,5 @@
 import 'package:client/modules/auth/models/login_model.dart';
+import 'package:client/modules/auth/models/reset_password_model.dart';
 import 'package:client/modules/auth/models/sign_up_model.dart';
 import 'package:client/modules/auth/models/verify_email_model.dart';
 import 'package:client/modules/auth/services/auth_service.dart';
@@ -28,6 +29,24 @@ class AuthRepository {
 
   login(LoginModel loginDto) async {
     final response = await this.authService.login(loginDto.toMap());
+
+    return response.data;
+  }
+
+  forgotPassword(String credential) async {
+    final response = await this.authService.forgotPassword(credential);
+
+    return response.data;
+  }
+
+  confirmPasswordResetCode(String code) async {
+    final response = await this.authService.confirmPasswordResetCode(code);
+
+    return response.data;
+  }
+
+  resetPassword(ResetPasswordModel resetPasswordDto) async {
+    final response = await this.authService.resetPassword(resetPasswordDto.toMap());
 
     return response.data;
   }

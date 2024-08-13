@@ -91,7 +91,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                               VerifyEmailModel.fromMap(
                                 {
                                   "code": codeController.text,
-                                  "email": email,
+                                  "email": email!,
                                 },
                               ),
                             ),

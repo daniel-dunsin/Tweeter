@@ -82,5 +82,44 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(LoginError());
       }
     });
+
+    on<ForgotPasswordRequested>((event, emit) async {
+      emit(ForgotPasswordLoading());
+
+      try {
+        await this.authRepository.forgotPassword(event.credential);
+
+        emit(ForgotPasswordSuccess());
+      } catch (e) {
+        handleError(e: e);
+        emit(ForgotPasswordError());
+      }
+    });
+
+    on<ConfirmPasswordResetCodeRequested>((event, emit) async {
+      emit(ConfirmPasswordResetCodeLoading());
+
+      try {
+        await this.authRepository.confirmPasswordResetCode(event.code);
+
+        emit(ConfirmPasswordResetCodeSuccess());
+      } catch (e) {
+        handleError(e: e);
+        emit(ConfirmPasswordResetCodeError());
+      }
+    });
+
+    on<ResetPasswordRequested>((event, emit) async {
+      emit(ResetPasswordLoading());
+
+      try {
+        await this.authRepository.resetPassword(event.resetPasswordDto);
+
+        emit(ResetPasswordSuccess());
+      } catch (e) {
+        handleError(e: e);
+        emit(ResetPasswordError());
+      }
+    });
   }
 }

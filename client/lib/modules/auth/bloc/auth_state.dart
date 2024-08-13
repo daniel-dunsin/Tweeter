@@ -41,3 +41,21 @@ class LoginSuccess extends AuthState {
 }
 
 class LoginError extends AuthState {}
+
+class ForgotPasswordLoading extends AuthState {}
+
+class ForgotPasswordSuccess extends AuthState {}
+
+class ForgotPasswordError extends AuthState {}
+
+class ConfirmPasswordResetCodeLoading extends AuthState {}
+
+class ConfirmPasswordResetCodeSuccess extends AuthState {}
+
+class ConfirmPasswordResetCodeError extends AuthState {}
+
+class ResetPasswordLoading extends AuthState {}
+
+class ResetPasswordSuccess extends AuthState {}
+
+class ResetPasswordError extends AuthState {}

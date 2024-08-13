@@ -11,7 +11,7 @@ class AuthService {
     );
   }
 
-  Future<Response> verifyEmail(Map<String, dynamic> verifyEmailDto) async {
+  Future<Response> verifyEmail(Map<String, String> verifyEmailDto) async {
     return await httpInstance.post(
       "${AppSecrets.serverUrl}/auth/verify-email",
       data: verifyEmailDto,
@@ -26,5 +26,21 @@ class AuthService {
 
   Future<Response> login(Map<String, String> loginDto) async {
     return await httpInstance.post("${AppSecrets.serverUrl}/auth/login", data: loginDto);
+  }
+
+  Future<Response> forgotPassword(String credential) async {
+    return await httpInstance.post("${AppSecrets.serverUrl}/auth/forgot-password", data: {
+      "credential": credential
+    });
+  }
+
+  Future<Response> confirmPasswordResetCode(String code) async {
+    return await httpInstance.post("${AppSecrets.serverUrl}/auth/forgot-password/confirm", data: {
+      "code": code
+    });
+  }
+
+  Future<Response> resetPassword(Map<String, String> resetPasswordDto) async {
+    return await httpInstance.post("${AppSecrets.serverUrl}/auth/forgot-password/reset", data: resetPasswordDto);
   }
 }
