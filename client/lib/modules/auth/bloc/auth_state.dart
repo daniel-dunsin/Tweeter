@@ -21,3 +21,23 @@ class AuthVerifyEmailSuccess extends AuthState {
 }
 
 class AuthVerifyEmailError extends AuthState {}
+
+class AuthCheckCredentialLoading extends AuthState {}
+
+class AuthCheckCredentialSuccess extends AuthState {
+  final bool accountExists;
+
+  AuthCheckCredentialSuccess({required this.accountExists});
+}
+
+class AuthCheckCredentialError extends AuthState {}
+
+class LoginLoading extends AuthState {}
+
+class LoginSuccess extends AuthState {
+  final UserModel user;
+
+  LoginSuccess({required this.user});
+}
+
+class LoginError extends AuthState {}

@@ -17,11 +17,21 @@ class SignUpModel {
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> result = {};
 
-    result.addAll({'email': email});
-    result.addAll({'password': password});
-    result.addAll({'name': name});
-    result.addAll({'userName': userName});
-    result.addAll({'dateOfBirth': dateOfBirth.toIso8601String()});
+    result.addAll({
+      'email': email
+    });
+    result.addAll({
+      'password': password
+    });
+    result.addAll({
+      'name': name
+    });
+    result.addAll({
+      'userName': userName
+    });
+    result.addAll({
+      'dateOfBirth': dateOfBirth.toIso8601String()
+    });
 
     return result;
   }
@@ -38,6 +48,5 @@ class SignUpModel {
 
   String toJson() => json.encode(toMap());
 
-  factory SignUpModel.fromJson(String source) =>
-      SignUpModel.fromMap(json.decode(source));
+  factory SignUpModel.fromJson(String source) => SignUpModel.fromMap(json.decode(source));
 }

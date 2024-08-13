@@ -1,6 +1,11 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CheckEmailDto, CheckUserNameDto, SignUpDto } from './dtos/sign-up.dto';
+import {
+  CheckCredentialDto,
+  CheckEmailDto,
+  CheckUserNameDto,
+  SignUpDto,
+} from './dtos/sign-up.dto';
 import { AuthProvider } from './auth.provider';
 import { LoginDto } from './dtos/login.dto';
 import { VerifyEmailDto } from './dtos/verify-email.dto';
@@ -28,6 +33,13 @@ export class AuthController {
   @Post('check-username')
   async checkUserName(@Body() checkUserNameDto: CheckUserNameDto) {
     return await this.authProvider.checkUserName(checkUserNameDto.userName);
+  }
+
+  @Post('check-credential')
+  async checkCredential(@Body() checkCredentialDto: CheckCredentialDto) {
+    return await this.authProvider.checkCredential(
+      checkCredentialDto.credential,
+    );
   }
 
   @Post('verify-email')

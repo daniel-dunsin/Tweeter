@@ -42,5 +42,42 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthVerifyEmailError());
       }
     });
+
+    on<CheckCredentialRequested>((event, emit) async {
+      emit(AuthCheckCredentialLoading());
+
+      try {
+        final response = await this.authRepository.checkCredential(event.credential);
+
+        final bool accountExists = response["data"]["exists"];
+
+        emit(AuthCheckCredentialSuccess(accountExists: accountExists));
+        await Future.delayed(Duration(seconds: 2), () {
+          if (!accountExists) {
+            emit(AuthInitialState());
+          }
+        });
+      } catch (e) {
+        handleError(e: e);
+        emit(AuthCheckCredentialError());
+      }
+    });
+
+    on<LoginRequested>((event, emit) async {
+      emit(LoginLoading());
+
+      try {
+        final response = await this.authRepository.login(event.loginDto);
+
+        final Map<String, dynamic> userMap = response["data"];
+        final user = UserModel.fromMap(userMap);
+        final String accessToken = response["meta"]["accessToken"];
+
+        emit(LoginSuccess(user: user));
+      } catch (e) {
+        handleError(e: e);
+        emit(LoginError());
+      }
+    });
   }
 }

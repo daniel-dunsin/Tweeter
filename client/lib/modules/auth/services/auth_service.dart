@@ -17,4 +17,14 @@ class AuthService {
       data: verifyEmailDto,
     );
   }
+
+  Future<Response> checkCredential(String credential) async {
+    return await httpInstance.post("${AppSecrets.serverUrl}/auth/check-credential", data: {
+      "credential": credential
+    });
+  }
+
+  Future<Response> login(Map<String, String> loginDto) async {
+    return await httpInstance.post("${AppSecrets.serverUrl}/auth/login", data: loginDto);
+  }
 }

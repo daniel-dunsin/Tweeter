@@ -46,6 +46,7 @@ export class AuthProvider {
     await this.authService.createAuth({
       email,
       password: hashedPassword,
+      userName,
     });
 
     await this.userService.createUser({ email, name, dateOfBirth, userName });
@@ -77,7 +78,7 @@ export class AuthProvider {
     const { credential, password } = loginDto;
 
     const userExists = await this.authService.getAuth({
-      OR: [{ email: credential }],
+      OR: [{ email: credential }, { userName: credential }],
     });
 
     if (!userExists) throw new BadRequestException('Invalid login credentials');
@@ -156,6 +157,20 @@ export class AuthProvider {
       data: user,
       meta: {
         accessToken,
+      },
+    };
+  }
+
+  async checkCredential(credential: string) {
+    const userExists = await this.authService.getAuth({
+      OR: [{ userName: credential }, { email: credential }],
+    });
+
+    return {
+      success: true,
+      message: 'user exists',
+      data: {
+        exists: !!userExists,
       },
     };
   }

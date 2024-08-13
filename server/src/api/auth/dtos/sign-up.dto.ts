@@ -30,3 +30,8 @@ export class CheckUserNameDto {
   @IsString(false)
   userName: string;
 }
+
+export class CheckCredentialDto {
+  @IsString(false)
+  credential: string;
+}
