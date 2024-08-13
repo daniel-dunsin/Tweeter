@@ -1,72 +1,106 @@
 import 'package:client/config/routes.dart';
+import 'package:client/modules/auth/bloc/auth_bloc.dart';
+import 'package:client/modules/auth/bloc/auth_event.dart';
+import 'package:client/modules/auth/bloc/auth_state.dart';
 import 'package:client/shared/widgets/app_cover.dart';
 import 'package:client/shared/widgets/button.dart';
-import 'package:client/shared/widgets/cancel_appbar_leading.dart';
+import 'package:client/shared/widgets/custom_app_bar.dart';
 import 'package:client/shared/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EnterForgotPasswordCodeScreen extends StatelessWidget {
+class EnterForgotPasswordCodeScreen extends StatefulWidget {
   const EnterForgotPasswordCodeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final String? email = (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?)?["email"];
+  State<EnterForgotPasswordCodeScreen> createState() => _EnterForgotPasswordCodeScreenState();
+}
 
+class _EnterForgotPasswordCodeScreenState extends State<EnterForgotPasswordCodeScreen> {
+  final _codeController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _codeController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _codeController.dispose();
+  }
+
+  void handleSubmit() {
+    context.read<AuthBloc>().add(ConfirmPasswordResetCodeRequested(_codeController.text));
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return AppCover(
-      appBar: AppBar(
-        leading: CancelAppbarLeading(
-          onTap: () {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              AuthRoutes.login,
-              (route) => false,
-            );
-          },
-        ),
-        toolbarHeight: 30,
-        leadingWidth: double.maxFinite,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            "We sent you a code",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            "Check your email ($email) to get your confirmation code. If you need to request a new code, go back and reselect a confirmation.",
-            style: TextStyle(
-              fontSize: 13,
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(height: 30),
-          UnderlinedTextField(
-            labelText: "Enter your code",
-            fullWidth: true,
-          ),
-          const Spacer(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).popAndPushNamed(AuthRoutes.forgotPassword);
-                },
-                child: const Text("Back"),
+      appBar: customAppBar,
+      child: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is ConfirmPasswordResetCodeSuccess) {
+            Navigator.of(context).popAndPushNamed(AuthRoutes.resetPassword, arguments: {
+              "code": _codeController.text
+            });
+          }
+
+          if (state is ConfirmPasswordResetCodeError) {
+            _codeController.text = "";
+          }
+        },
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "We sent you a code",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-              ContainedButton(
-                  child: Text("Next"),
-                  onPressed: () {
-                    Navigator.of(context).popAndPushNamed(AuthRoutes.resetPassword);
-                  })
+              const SizedBox(height: 10),
+              Text(
+                "Check your email to get your confirmation code. If you need to request a new code, go back and reselect a confirmation.",
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 30),
+              UnderlinedTextField(
+                labelText: "Enter your code",
+                fullWidth: true,
+                controller: _codeController,
+              ),
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Back"),
+                  ),
+                  ContainedButton(
+                    child: Text("Next"),
+                    loading: state is ForgotPasswordLoading,
+                    disabled: _codeController.text.isEmpty,
+                    onPressed: () {
+                      handleSubmit();
+                    },
+                  )
+                ],
+              )
             ],
-          )
-        ],
+          );
+        },
       ),
     );
   }

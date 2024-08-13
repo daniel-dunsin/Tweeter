@@ -193,7 +193,7 @@ export class AuthProvider {
       { code: otp },
     );
 
-    await this.eventEmitter.emit(AppEvents.sendMail, {
+    this.eventEmitter.emit(AppEvents.sendMail, {
       to: user.email,
       subject: 'Tweeter: Password reset code',
       template: 'reset-password',

@@ -21,7 +21,7 @@ class ErrorBadge extends StatelessWidget {
         ),
         child: Text(message),
       ),
-      opacity: !isVisible ? 1 : 0,
+      opacity: isVisible ? 1 : 0,
       duration: const Duration(milliseconds: 500),
     );
   }
