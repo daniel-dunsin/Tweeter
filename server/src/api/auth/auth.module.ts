@@ -9,6 +9,8 @@ import { SharedModule } from 'src/shared/shared.module';
 import { UserModule } from '../user/user.module';
 import { TokenModule } from '../token/token.module';
 import { MailModule } from 'src/shared/mail/mail.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './guards/auth.guard';
 
 @Module({
   imports: [
@@ -30,6 +32,13 @@ import { MailModule } from 'src/shared/mail/mail.module';
     MailModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthProvider],
+  providers: [
+    AuthService,
+    AuthProvider,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AuthModule {}
