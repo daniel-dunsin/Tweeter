@@ -47,5 +47,14 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+
+
+		<!-- Image Picker -->
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>I need to use it to pick images for users to update profile picture</string>
+		<key>NSCameraUsageDescription</key>
+		<string>I need to use it to pick images for users to update profile picture</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>I need it for voice posts</string>
 	</dict>
 </plist>
