@@ -6,6 +6,6 @@ import { QueueModule } from './queues/queue.module';
 
 @Module({
   imports: [PrismaModule, UtilsModule, EventModule, QueueModule],
-  exports: [UtilsModule, EventModule],
+  exports: [UtilsModule, EventModule, PrismaModule],
 })
 export class SharedModule {}
