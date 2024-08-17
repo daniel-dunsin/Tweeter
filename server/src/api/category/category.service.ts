@@ -16,4 +16,16 @@ export class CategoryService {
   async getCategories(where: Prisma.CategoryWhereInput) {
     return this.prisma.category.findMany({ where });
   }
+
+  async createSubCategory(data: Prisma.SubCategoryCreateInput) {
+    return this.prisma.subCategory.create({ data });
+  }
+
+  async getSubCategories(where: Prisma.SubCategoryWhereInput) {
+    return this.prisma.subCategory.findMany({ where });
+  }
+
+  async getSubCategory(where: Prisma.SubCategoryWhereInput) {
+    return this.prisma.subCategory.findFirst({ where });
+  }
 }
