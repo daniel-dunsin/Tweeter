@@ -1,0 +1,210 @@
+[
+  {
+    "name": "Music",
+    "description": "Various genres of music",
+    "subCategories": [
+      {
+        "name": "Rap",
+        "description": "Rap music genre"
+      },
+      {
+        "name": "Music",
+        "description": "General music category"
+      },
+      {
+        "name": "Pop",
+        "description": "Pop music genre"
+      },
+      {
+        "name": "R&B and soul",
+        "description": "R&B and soul music genres"
+      },
+      {
+        "name": "Country music",
+        "description": "Country music genre"
+      }
+    ]
+  },
+  {
+    "name": "Sports",
+    "description": "Various types of sports",
+    "subCategories": [
+      {
+        "name": "Football",
+        "description": "Football sport"
+      },
+      {
+        "name": "NFL",
+        "description": "National Football League"
+      },
+      {
+        "name": "NBA",
+        "description": "National Basketball Association"
+      },
+      {
+        "name": "Basketball",
+        "description": "Basketball sport"
+      },
+      {
+        "name": "Soccer",
+        "description": "Soccer sport"
+      }
+    ]
+  },
+  {
+    "name": "Gaming",
+    "description": "Gaming-related content",
+    "subCategories": [
+      {
+        "name": "Gaming",
+        "description": "General gaming category"
+      },
+      {
+        "name": "Gaming news",
+        "description": "News related to gaming"
+      },
+      {
+        "name": "Video games",
+        "description": "Various video games"
+      },
+      {
+        "name": "Esports",
+        "description": "Competitive esports"
+      },
+      {
+        "name": "Gaming influencers",
+        "description": "Influencers in the gaming community"
+      }
+    ]
+  },
+  {
+    "name": "Technology",
+    "description": "Technology and innovation",
+    "subCategories": [
+      {
+        "name": "AI & Machine Learning",
+        "description": "Artificial Intelligence and machine learning technologies"
+      },
+      {
+        "name": "Software Development",
+        "description": "Programming, coding, and software engineering"
+      },
+      {
+        "name": "Gadgets",
+        "description": "Latest tech gadgets and devices"
+      },
+      {
+        "name": "Cybersecurity",
+        "description": "Internet security and data protection"
+      },
+      {
+        "name": "Blockchain",
+        "description": "Blockchain technology and cryptocurrencies"
+      }
+    ]
+  },
+  {
+    "name": "News",
+    "description": "Latest news and updates",
+    "subCategories": [
+      {
+        "name": "World News",
+        "description": "International news and events"
+      },
+      {
+        "name": "Local News",
+        "description": "Local and community news"
+      },
+      {
+        "name": "Breaking News",
+        "description": "Urgent and breaking news stories"
+      },
+      {
+        "name": "Business News",
+        "description": "Business and financial news"
+      },
+      {
+        "name": "Entertainment News",
+        "description": "News about celebrities and the entertainment industry"
+      }
+    ]
+  },
+  {
+    "name": "Politics",
+    "description": "Political news and discussions",
+    "subCategories": [
+      {
+        "name": "Elections",
+        "description": "Information and news on elections"
+      },
+      {
+        "name": "Government",
+        "description": "News on government policies and actions"
+      },
+      {
+        "name": "International Relations",
+        "description": "Global politics and diplomacy"
+      },
+      {
+        "name": "Political Debates",
+        "description": "Discussions and debates on political issues"
+      },
+      {
+        "name": "Political Parties",
+        "description": "News about different political parties"
+      }
+    ]
+  },
+  {
+    "name": "Education",
+    "description": "Educational content and news",
+    "subCategories": [
+      {
+        "name": "Online Learning",
+        "description": "E-learning platforms and courses"
+      },
+      {
+        "name": "Higher Education",
+        "description": "Colleges, universities, and higher learning institutions"
+      },
+      {
+        "name": "STEM",
+        "description": "Science, Technology, Engineering, and Mathematics education"
+      },
+      {
+        "name": "K-12 Education",
+        "description": "Kindergarten to 12th-grade education"
+      },
+      {
+        "name": "Educational Technology",
+        "description": "Technological tools for education"
+      }
+    ]
+  },
+  {
+    "name": "Religion",
+    "description": "Religion and spirituality",
+    "subCategories": [
+      {
+        "name": "Christianity",
+        "description": "Christian beliefs and practices"
+      },
+      {
+        "name": "Islam",
+        "description": "Islamic beliefs and practices"
+      },
+      {
+        "name": "Hinduism",
+        "description": "Hindu beliefs and practices"
+      },
+      {
+        "name": "Buddhism",
+        "description": "Buddhist beliefs and practices"
+      },
+      {
+        "name": "Spirituality",
+        "description": "General spirituality and wellness"
+      }
+    ]
+  }
+]
