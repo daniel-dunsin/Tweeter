@@ -16,7 +16,7 @@ class AppCover extends StatelessWidget {
           child: ConstrainedBox(
             constraints: BoxConstraints(
               minWidth: MediaQuery.of(context).size.width,
-              minHeight: MediaQuery.of(context).size.height - 30 - (appBar?.toolbarHeight ?? 0),
+              minHeight: MediaQuery.of(context).size.height - 50 - (appBar?.toolbarHeight ?? 0),
             ),
             child: IntrinsicHeight(
               child: Padding(

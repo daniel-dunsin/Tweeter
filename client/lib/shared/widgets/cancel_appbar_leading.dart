@@ -1,3 +1,4 @@
+import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class CancelAppbarLeading extends StatelessWidget {
@@ -24,6 +25,30 @@ class CancelAppbarLeading extends StatelessWidget {
             fontSize: 13,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class SkipAppBarAction extends StatelessWidget {
+  final String text;
+  final Function()? onPressed;
+
+  const SkipAppBarAction({
+    super.key,
+    this.text = "Skip",
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final appColors = Theme.of(context).appColors;
+    return TextButton(
+      child: Text(text),
+      onPressed: () {},
+      style: TextButton.styleFrom(
+        overlayColor: Colors.transparent,
+        foregroundColor: appColors.foregroundColor,
       ),
     );
   }

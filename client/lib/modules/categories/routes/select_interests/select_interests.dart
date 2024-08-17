@@ -43,10 +43,9 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: CancelAppbarLeading(
-          text: "Skip",
-          onTap: () {},
-        ),
+        actions: [
+          SkipAppBarAction()
+        ],
         surfaceTintColor: Colors.transparent,
         toolbarHeight: 50,
       ),
@@ -135,7 +134,7 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
                   elevation: 3,
                   color: Colors.transparent,
                   child: Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.symmetric(vertical: 10),
                     child: ContainedButton(
                       child: Text("Done"),
                       onPressed: () {},

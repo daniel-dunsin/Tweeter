@@ -5,6 +5,7 @@ import 'package:client/modules/auth/routes/login/enter_login_password.dart';
 import 'package:client/modules/auth/routes/login/login.dart';
 import 'package:client/modules/auth/routes/select_sign_up/select_sign_up.dart';
 import 'package:client/modules/auth/routes/sign_up/sign_up.dart';
+import 'package:client/modules/auth/routes/sign_up/update_profile_picture.dart';
 import 'package:client/modules/auth/routes/sign_up/verify_account.dart';
 import 'package:client/modules/categories/routes/select_interests/select_interests.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class AuthRoutes {
   static String resetPassword = "/auth/forgot-password/reset";
   static String verifyEmail = "/auth/verify-email";
   static String selectInterests = "/auth/select-interests";
+  static String updateDp = "/auth/update-dp";
 }
 
 class PrivateRoutes {}
@@ -36,5 +38,6 @@ Map<String, Widget Function(BuildContext context)> getRoutes(BuildContext contex
     AuthRoutes.resetPassword: (context) => ResetPasswordScreen(),
     AuthRoutes.verifyEmail: (context) => VerifyAccountScreen(),
     AuthRoutes.selectInterests: (context) => SelectInterestScreen(),
+    AuthRoutes.updateDp: (context) => UpdateProfilePictureScreen(),
   };
 }

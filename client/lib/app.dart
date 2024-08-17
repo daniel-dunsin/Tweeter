@@ -29,10 +29,11 @@ class App extends StatelessWidget {
           appBarTheme: AppBarTheme().copyWith(
             backgroundColor: mode.backgroundColor,
             foregroundColor: mode.secondaryForegroundColor,
+            surfaceTintColor: Colors.transparent,
           ),
         ),
         routes: getRoutes(context),
-        initialRoute: AuthRoutes.selectInterests,
+        initialRoute: AuthRoutes.updateDp,
       ),
     );
   }
