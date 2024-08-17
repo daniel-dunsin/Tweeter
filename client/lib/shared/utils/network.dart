@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
 Future? handleError({required Object e}) async {
+  print(e);
   String errorMessage = "Oops! an error occured";
   if (e is DioException) {
     if (e.response != null) {

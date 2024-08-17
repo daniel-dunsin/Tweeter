@@ -2,6 +2,9 @@ import 'package:client/app.dart';
 import 'package:client/modules/auth/bloc/auth_bloc.dart';
 import 'package:client/modules/auth/repository/auth_repository.dart';
 import 'package:client/modules/auth/services/auth_service.dart';
+import 'package:client/modules/categories/bloc/categories_bloc.dart';
+import 'package:client/modules/categories/repository/categories_repository.dart';
+import 'package:client/modules/categories/services/categories_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -35,13 +38,17 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(create: (context) => AuthRepository(AuthService()))
+        RepositoryProvider(create: (context) => AuthRepository(AuthService())),
+        RepositoryProvider(create: (context) => CategoriesRepository(CategoriesService()))
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (context) => AuthBloc(context.read<AuthRepository>()),
-          )
+          ),
+          BlocProvider(
+            create: (context) => CategoriesBloc(context.read<CategoriesRepository>()),
+          ),
         ],
         child: App(),
       ),

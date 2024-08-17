@@ -32,7 +32,7 @@ class App extends StatelessWidget {
           ),
         ),
         routes: getRoutes(context),
-        initialRoute: AuthRoutes.signUpInitial,
+        initialRoute: AuthRoutes.selectInterests,
       ),
     );
   }

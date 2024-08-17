@@ -6,6 +6,7 @@ import 'package:client/modules/auth/routes/login/login.dart';
 import 'package:client/modules/auth/routes/select_sign_up/select_sign_up.dart';
 import 'package:client/modules/auth/routes/sign_up/sign_up.dart';
 import 'package:client/modules/auth/routes/sign_up/verify_account.dart';
+import 'package:client/modules/categories/routes/select_interests/select_interests.dart';
 import 'package:flutter/material.dart';
 
 class PublicRoutes {}
@@ -19,12 +20,12 @@ class AuthRoutes {
   static String forgotPasswordCode = "/auth/forgot-password/code";
   static String resetPassword = "/auth/forgot-password/reset";
   static String verifyEmail = "/auth/verify-email";
+  static String selectInterests = "/auth/select-interests";
 }
 
 class PrivateRoutes {}
 
-Map<String, Widget Function(BuildContext context)> getRoutes(
-    BuildContext context) {
+Map<String, Widget Function(BuildContext context)> getRoutes(BuildContext context) {
   return {
     AuthRoutes.signUpInitial: (context) => SelectSignUpScreen(),
     AuthRoutes.signUp: (context) => SignUpScreen(),
@@ -34,5 +35,6 @@ Map<String, Widget Function(BuildContext context)> getRoutes(
     AuthRoutes.forgotPasswordCode: (context) => EnterForgotPasswordCodeScreen(),
     AuthRoutes.resetPassword: (context) => ResetPasswordScreen(),
     AuthRoutes.verifyEmail: (context) => VerifyAccountScreen(),
+    AuthRoutes.selectInterests: (context) => SelectInterestScreen(),
   };
 }
