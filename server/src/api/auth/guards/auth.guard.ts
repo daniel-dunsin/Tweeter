@@ -8,17 +8,26 @@ import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { SignJwtDto } from '../dtos/jwt-sign.dto';
 import { PrismaService } from 'src/shared/prisma/prisma.service';
+import { Reflector } from '@nestjs/core';
+import { IsPublic } from 'src/core/decorators/auth.decorator';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
     private readonly prisma: PrismaService,
+    private readonly reflector: Reflector,
   ) {}
 
   async canActivate(context: ExecutionContext) {
     const ctx = context.switchToHttp();
     const req = ctx.getRequest<Request>();
+
+    const isPublic = this.reflector.get(IsPublic, context.getHandler());
+
+    if (isPublic) {
+      return true;
+    }
 
     const authToken = req.headers['authorization'];
 
