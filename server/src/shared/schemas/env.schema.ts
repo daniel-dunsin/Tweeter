@@ -16,4 +16,7 @@ export const envSchema = Joi.object({
   REDIS_PORT: Joi.string().required(),
   REDIS_PASSWORD: Joi.string().required(),
   REDIS_HOST: Joi.string().required(),
+  CLOUDINARY_API_KEY: Joi.string().required(),
+  CLOUDINARY_API_SECRET: Joi.string().required(),
+  CLOUDINARY_CLOUD_NAME: Joi.string().required(),
 }).strict();

@@ -33,7 +33,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   jwtToken JwtToken?
-  interests UserSubCategory[]
+  interests SubCategory[]
 
   @@map("users")
   @@index([email, userName])
@@ -69,27 +69,22 @@ model JwtToken {
 }
 
 
-model UserSubCategory {
-  id String @default(uuid()) @id 
-  subCategoryId String
-  subCategory SubCategory @relation(references: [id], fields: [subCategoryId])
-  userId String
-  user User @relation(references: [id], fields: [userId])
-}
-
-
 model Category {
   id String @default(uuid()) @id
   name String
   description String?
   subCategories SubCategory[]
+
+  @@map("categories")
 }
 
 model SubCategory {
   id String @default(uuid()) @id
   name String
   description String?
-  users UserSubCategory[]
   categoryId String
   category Category? @relation(references: [id], fields: [categoryId])
+  users User[]
+
+  @@map("subcategories")
 }
