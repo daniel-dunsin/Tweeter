@@ -121,5 +121,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(ResetPasswordError());
       }
     });
+
+    on<UpdateProfilePictureRequested>((event, emit) async {
+      emit(UpdateProfilePictureLoading());
+
+      try {
+        await this.authRepository.updateUserProfilePicture(event.profilePicture);
+
+        emit(UpdateProfilePictureSuccess());
+      } catch (e) {
+        handleError(e: e);
+        emit(UpdateProfilePictureError());
+      }
+    });
   }
 }

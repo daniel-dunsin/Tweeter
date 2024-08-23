@@ -6,7 +6,9 @@ import { Prisma } from '@prisma/client';
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
-  private populateOptions: Prisma.UserInclude = { interests: true };
+  private populateOptions: Prisma.UserInclude = {
+    interests: { include: { category: true } },
+  };
 
   async createUser(data: Prisma.UserCreateInput) {
     return await this.prisma.user.create({

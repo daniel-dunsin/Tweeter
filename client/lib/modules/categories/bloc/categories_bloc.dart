@@ -1,9 +1,11 @@
-import 'package:client/modules/categories/bloc/categories_events.dart';
-import 'package:client/modules/categories/bloc/categories_state.dart';
 import 'package:client/modules/categories/models/category_model.dart';
 import 'package:client/modules/categories/repository/categories_repository.dart';
 import 'package:client/shared/utils/network.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+part 'categories_state.dart';
+part 'categories_events.dart';
 
 class CategoriesBloc extends Bloc<CategoriesEvents, CategoriesState> {
   final CategoriesRepository categoriesRepository;
@@ -24,6 +26,19 @@ class CategoriesBloc extends Bloc<CategoriesEvents, CategoriesState> {
       } catch (e) {
         handleError(e: e);
         emit(GetCategoriesError());
+      }
+    });
+
+    on<SelectInterestsRequested>((event, emit) async {
+      emit(SelectInterestLoading());
+
+      try {
+        await this.categoriesRepository.selectUserInterests(event.interests);
+
+        emit(SelectInterestSuccess());
+      } catch (e) {
+        handleError(e: e);
+        throw e;
       }
     });
   }

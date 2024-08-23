@@ -38,7 +38,14 @@ class ContainedButton extends StatelessWidget {
 
     return ElevatedButton.icon(
       onPressed: disabled == true || loading == true ? null : onPressed,
-      label: loading == true ? LoadingAnimationWidget.discreteCircle(color: appColors.secondaryBackgroundColor, secondRingColor: appColors.secondaryBackgroundColor, thirdRingColor: appColors.secondaryBackgroundColor, size: 20) : child,
+      label: loading == true
+          ? LoadingAnimationWidget.discreteCircle(
+              color: appColors.secondaryBackgroundColor,
+              secondRingColor: appColors.secondaryBackgroundColor,
+              thirdRingColor: appColors.secondaryBackgroundColor,
+              size: 20,
+            )
+          : child,
       icon: icon,
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor ?? appColors.foregroundColor,

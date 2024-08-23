@@ -1,8 +1,9 @@
 import 'package:client/modules/categories/bloc/categories_bloc.dart';
-import 'package:client/modules/categories/bloc/categories_events.dart';
-import 'package:client/modules/categories/bloc/categories_state.dart';
+import 'package:client/modules/categories/models/category_model.dart';
+import 'package:client/modules/categories/models/subcategory_model.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/theme/index.dart';
+import 'package:client/shared/utils/network.dart';
 import 'package:client/shared/widgets/button.dart';
 import 'package:client/shared/widgets/cancel_appbar_leading.dart';
 import 'package:client/shared/widgets/loader.dart';
@@ -17,6 +18,7 @@ class SelectInterestScreen extends StatefulWidget {
 }
 
 class _SelectInterestScreenState extends State<SelectInterestScreen> {
+  List<CategoryModel> allCategories = [];
   List<String> selectedSubcategories = [];
 
   @override
@@ -37,6 +39,12 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
     }
   }
 
+  void submit() {
+    context.read<CategoriesBloc>().add(
+          SelectInterestsRequested(selectedSubcategories),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
@@ -51,7 +59,20 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
       ),
       body: Padding(
         padding: CustomTheme.majorScreenPadding,
-        child: BlocBuilder<CategoriesBloc, CategoriesState>(
+        child: BlocConsumer<CategoriesBloc, CategoriesState>(
+          listener: (context, state) {
+            if (state is GetCategoriesSuccess) {
+              setState(() {
+                allCategories = state.categories;
+              });
+            }
+            if (state is SelectInterestSuccess) {
+              handleSuccess("Interests selected");
+              setState(() {
+                selectedSubcategories = [];
+              });
+            }
+          },
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,57 +93,55 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: state is GetCategoriesSuccess
-                              ? state.categories.map(
-                                  (category) {
-                                    return Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          category.name,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Wrap(
-                                          direction: Axis.horizontal,
-                                          alignment: WrapAlignment.start,
-                                          spacing: 10,
-                                          runSpacing: 5,
-                                          children: category.subCategories.map(
-                                            (sub) {
-                                              final bool selected = selectedSubcategories.contains(sub.id);
+                          children: allCategories.map(
+                            (category) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    category.name,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Wrap(
+                                    direction: Axis.horizontal,
+                                    alignment: WrapAlignment.start,
+                                    spacing: 10,
+                                    runSpacing: 5,
+                                    children: category.subCategories.map(
+                                      (sub) {
+                                        final bool selected = selectedSubcategories.contains(sub.id);
 
-                                              return ChoiceChip(
-                                                selected: selected,
-                                                label: Text(sub.name),
-                                                color: WidgetStatePropertyAll(!selected ? appColors.backgroundColor : appColors.iconColor),
-                                                labelStyle: TextStyle(
-                                                  color: selected ? TweeterColors.white : appColors.iconColor,
-                                                ),
-                                                showCheckmark: false,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(50),
-                                                  side: BorderSide(
-                                                    color: appColors.iconColor,
-                                                    width: 2,
-                                                  ),
-                                                ),
-                                                onSelected: (selected) {
-                                                  toggleSubCategory(sub.id);
-                                                },
-                                              );
-                                            },
-                                          ).toList(),
-                                        ),
-                                        const SizedBox(height: 10),
-                                      ],
-                                    );
-                                  },
-                                ).toList()
-                              : [],
+                                        return ChoiceChip(
+                                          selected: selected,
+                                          label: Text(sub.name),
+                                          color: WidgetStatePropertyAll(!selected ? appColors.backgroundColor : appColors.iconColor),
+                                          labelStyle: TextStyle(
+                                            color: selected ? TweeterColors.white : appColors.iconColor,
+                                          ),
+                                          showCheckmark: false,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(50),
+                                            side: BorderSide(
+                                              color: appColors.iconColor,
+                                              width: 2,
+                                            ),
+                                          ),
+                                          onSelected: (selected) {
+                                            toggleSubCategory(sub.id);
+                                          },
+                                        );
+                                      },
+                                    ).toList(),
+                                  ),
+                                  const SizedBox(height: 10),
+                                ],
+                              );
+                            },
+                          ).toList(),
                         ),
                       ),
                     ),
@@ -137,8 +156,11 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: ContainedButton(
                       child: Text("Done"),
-                      onPressed: () {},
+                      onPressed: () {
+                        submit();
+                      },
                       fullWidth: true,
+                      loading: state is SelectInterestLoading,
                       disabled: selectedSubcategories.isEmpty,
                     ),
                   ),

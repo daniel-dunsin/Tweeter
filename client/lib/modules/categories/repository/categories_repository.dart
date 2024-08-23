@@ -10,4 +10,10 @@ class CategoriesRepository {
 
     return response.data;
   }
+
+  selectUserInterests(List<String> subCategories) async {
+    final response = await this.categoriesService.updateInterests(subCategories);
+
+    return response.data;
+  }
 }

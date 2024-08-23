@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:client/modules/auth/models/login_model.dart';
 import 'package:client/modules/auth/models/reset_password_model.dart';
 import 'package:client/modules/auth/models/sign_up_model.dart';
@@ -49,4 +51,10 @@ class ResetPasswordRequested extends AuthEvent {
   final ResetPasswordModel resetPasswordDto;
 
   ResetPasswordRequested(this.resetPasswordDto);
+}
+
+class UpdateProfilePictureRequested extends AuthEvent {
+  final File profilePicture;
+
+  UpdateProfilePictureRequested(this.profilePicture);
 }

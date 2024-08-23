@@ -45,7 +45,7 @@ class SkipAppBarAction extends StatelessWidget {
     final appColors = Theme.of(context).appColors;
     return TextButton(
       child: Text(text),
-      onPressed: () {},
+      onPressed: onPressed,
       style: TextButton.styleFrom(
         overlayColor: Colors.transparent,
         foregroundColor: appColors.foregroundColor,

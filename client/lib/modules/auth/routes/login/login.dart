@@ -4,7 +4,7 @@ import 'package:client/modules/auth/bloc/auth_event.dart';
 import 'package:client/modules/auth/bloc/auth_state.dart';
 import 'package:client/shared/widgets/app_cover.dart';
 import 'package:client/shared/widgets/button.dart';
-import 'package:client/shared/widgets/custom_app_bar.dart';
+import 'package:client/shared/widgets/cancel_appbar_leading.dart';
 import 'package:client/shared/widgets/error_badge.dart';
 import 'package:client/shared/widgets/text_fields.dart';
 import "package:flutter_bloc/flutter_bloc.dart";
@@ -32,7 +32,15 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final authBloc = context.read<AuthBloc>();
     return AppCover(
-      appBar: customAppBar,
+      appBar: AppBar(
+        leading: CancelAppbarLeading(
+          onTap: () {
+            final navigator = Navigator.of(context);
+
+            navigator.canPop() ? navigator.pop() : navigator.popAndPushNamed(AuthRoutes.signUpInitial);
+          },
+        ),
+      ),
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthCheckCredentialSuccess) {

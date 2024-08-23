@@ -37,7 +37,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
       listener: (context, state) {
         if (state is AuthVerifyEmailSuccess) {
           handleSuccess("Welcome ${state.user.name}");
-          Navigator.of(context).pushNamedAndRemoveUntil(AuthRoutes.login, (route) => false);
+          Navigator.of(context).pushNamedAndRemoveUntil(AuthRoutes.updateDp, (route) => false);
         }
       },
       builder: (context, state) {

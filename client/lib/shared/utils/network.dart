@@ -1,4 +1,6 @@
+import 'package:client/shared/constants/localstorage.dart';
 import 'package:client/shared/theme/colors.dart';
+import 'package:client/shared/utils/localstorage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
@@ -55,4 +57,12 @@ handleSuccess(String message) {
     closeButtonShowType: CloseButtonShowType.none,
     dragToClose: true,
   );
+}
+
+Future<Options> getDefaulNetworkOptions() async {
+  final authToken = await LocalStorage.getString(key: localStorageConstants.accessToken);
+
+  return Options(headers: {
+    "Authorization": "Bearer $authToken"
+  });
 }

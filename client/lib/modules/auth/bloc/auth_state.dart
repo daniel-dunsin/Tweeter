@@ -59,3 +59,9 @@ class ResetPasswordLoading extends AuthState {}
 class ResetPasswordSuccess extends AuthState {}
 
 class ResetPasswordError extends AuthState {}
+
+class UpdateProfilePictureLoading extends AuthState {}
+
+class UpdateProfilePictureSuccess extends AuthState {}
+
+class UpdateProfilePictureError extends AuthState {}

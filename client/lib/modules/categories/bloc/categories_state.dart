@@ -1,5 +1,4 @@
-import 'package:client/modules/categories/models/category_model.dart';
-import 'package:flutter/material.dart';
+part of 'categories_bloc.dart';
 
 @immutable
 sealed class CategoriesState {}
@@ -15,3 +14,9 @@ class GetCategoriesSuccess extends CategoriesState {
 }
 
 class GetCategoriesError extends CategoriesState {}
+
+class SelectInterestLoading extends CategoriesState {}
+
+class SelectInterestSuccess extends CategoriesState {}
+
+class SelectInterestError extends CategoriesState {}

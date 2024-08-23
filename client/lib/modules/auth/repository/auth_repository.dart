@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:client/modules/auth/models/login_model.dart';
 import 'package:client/modules/auth/models/reset_password_model.dart';
 import 'package:client/modules/auth/models/sign_up_model.dart';
 import 'package:client/modules/auth/models/verify_email_model.dart';
 import 'package:client/modules/auth/services/auth_service.dart';
+import 'package:client/shared/utils/file.dart';
 
 class AuthRepository {
   final AuthService authService;
@@ -47,6 +50,12 @@ class AuthRepository {
 
   resetPassword(ResetPasswordModel resetPasswordDto) async {
     final response = await this.authService.resetPassword(resetPasswordDto.toMap());
+
+    return response.data;
+  }
+
+  updateUserProfilePicture(File profilePicture) async {
+    final response = await this.authService.updateProfilePicture(convertImageToBase64(profilePicture));
 
     return response.data;
   }

@@ -33,7 +33,7 @@ class App extends StatelessWidget {
           ),
         ),
         routes: getRoutes(context),
-        initialRoute: AuthRoutes.updateDp,
+        initialRoute: AuthRoutes.signUpInitial,
       ),
     );
   }
