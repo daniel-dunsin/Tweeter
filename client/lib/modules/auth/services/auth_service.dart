@@ -63,4 +63,11 @@ class AuthService {
       options: await getDefaulNetworkOptions(),
     );
   }
+
+  Future<Response> getUser() async {
+    return await httpInstance.get(
+      "${AppSecrets.serverUrl}/user",
+      options: await getDefaulNetworkOptions(),
+    );
+  }
 }

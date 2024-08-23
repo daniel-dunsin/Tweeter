@@ -59,4 +59,10 @@ class AuthRepository {
 
     return response.data;
   }
+
+  getUser() async {
+    final response = await this.authService.getUser();
+
+    return response.data;
+  }
 }

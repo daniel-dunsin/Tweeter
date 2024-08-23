@@ -4,15 +4,19 @@ import 'package:client/shared/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 class App extends StatelessWidget {
+  final String initialRoute;
   final mode = TweeterColors.dark();
 
-  App({super.key});
+  App({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
     return ToastificationWrapper(
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         title: 'Tweeter',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -33,7 +37,7 @@ class App extends StatelessWidget {
           ),
         ),
         routes: getRoutes(context),
-        initialRoute: AuthRoutes.signUpInitial,
+        initialRoute: initialRoute,
       ),
     );
   }

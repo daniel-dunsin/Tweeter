@@ -4,10 +4,11 @@ import 'package:client/modules/auth/routes/forgot_password/reset_password.dart';
 import 'package:client/modules/auth/routes/login/enter_login_password.dart';
 import 'package:client/modules/auth/routes/login/login.dart';
 import 'package:client/modules/auth/routes/select_sign_up/select_sign_up.dart';
-import 'package:client/modules/auth/routes/sign_up/sign_up.dart';
-import 'package:client/modules/auth/routes/sign_up/update_profile_picture.dart';
-import 'package:client/modules/auth/routes/sign_up/verify_account.dart';
-import 'package:client/modules/categories/routes/select_interests/select_interests.dart';
+import 'package:client/modules/auth/routes/onboarding/sign_up.dart';
+import 'package:client/modules/auth/routes/onboarding/update_profile_picture.dart';
+import 'package:client/modules/auth/routes/onboarding/verify_account.dart';
+import 'package:client/modules/auth/routes/onboarding/select_interests.dart';
+import 'package:client/modules/home/routes/root.dart';
 import 'package:flutter/material.dart';
 
 class PublicRoutes {}
@@ -25,7 +26,9 @@ class AuthRoutes {
   static String updateDp = "/auth/update-dp";
 }
 
-class PrivateRoutes {}
+class PrivateRoutes {
+  static String rootHome = "/private/root-home";
+}
 
 Map<String, Widget Function(BuildContext context)> getRoutes(BuildContext context) {
   return {
@@ -39,5 +42,8 @@ Map<String, Widget Function(BuildContext context)> getRoutes(BuildContext contex
     AuthRoutes.verifyEmail: (context) => VerifyAccountScreen(),
     AuthRoutes.selectInterests: (context) => SelectInterestScreen(),
     AuthRoutes.updateDp: (context) => UpdateProfilePictureScreen(),
+
+    // private
+    PrivateRoutes.rootHome: (context) => RootHome(),
   };
 }

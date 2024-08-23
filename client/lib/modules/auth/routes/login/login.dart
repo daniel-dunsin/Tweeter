@@ -40,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
             navigator.canPop() ? navigator.pop() : navigator.popAndPushNamed(AuthRoutes.signUpInitial);
           },
         ),
+        leadingWidth: double.maxFinite,
       ),
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {

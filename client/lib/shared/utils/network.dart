@@ -1,3 +1,5 @@
+import 'package:client/app.dart';
+import 'package:client/config/routes.dart';
 import 'package:client/shared/constants/localstorage.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/utils/localstorage.dart';
@@ -5,15 +7,25 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
-Future? handleError({required Object e}) async {
+Future? handleError({
+  required Object e,
+  bool navigateOnSessionExpired = true,
+}) async {
   print(e);
   String errorMessage = "Oops! an error occured";
   if (e is DioException) {
     if (e.response != null) {
+      if (e.response?.statusCode == 403) {
+        errorMessage = "Session Expired! Login Again";
+        navigatorKey.currentState?.pushNamedAndRemoveUntil(AuthRoutes.login, (route) => false);
+        await LocalStorage.removeEntry(key: localStorageConstants.user);
+        await LocalStorage.removeEntry(key: localStorageConstants.accessToken);
+      } else {
+        errorMessage = e.response?.data["error"] ?? e.message;
+      }
       print(
         "Request failed with status code : ${e.response?.statusCode} - ${e.response?.data}",
       );
-      errorMessage = e.response?.data["error"] ?? e.message;
     } else {
       errorMessage = e.message ?? "Oops! an error occured";
     }

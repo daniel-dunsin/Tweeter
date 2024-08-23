@@ -50,6 +50,7 @@ class _EnterLoginPasswordScreenState extends State<EnterLoginPasswordScreen> {
         child: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
           if (state is LoginSuccess) {
             handleSuccess("Welcome ${state.user.name}");
+            Navigator.pushNamedAndRemoveUntil(context, PrivateRoutes.rootHome, (route) => false);
           }
         }, builder: (context, state) {
           return Column(
