@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,35 +7,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Auth {
-  id String @default(uuid()) @id 
-  email String @unique
-  userName String?
-  password String?
-  isVerified Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
+  id         String   @id @default(uuid())
+  email      String   @unique
+  userName   String?
+  password   String?
+  isVerified Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  @@map("auths")
   @@index([email])
+  @@map("auths")
 }
 
 model User {
-  id String @default(uuid()) @id 
-  email String @unique
-  name String 
-  userName String? 
-  dateOfBirth String
-  profilePicture String @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1H81w4SmKH5DZmIbxU7EB0aMSkNQDoPQA1mRQxf2Y0wMF1NSa7vghbwwKASi1q4NPmNw&usqp=CAU")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  jwtToken JwtToken?
-  interests SubCategory[]
+  id               String        @id @default(uuid())
+  email            String        @unique
+  name             String
+  userName         String?
+  dateOfBirth      String
+  profilePicture   String        @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1H81w4SmKH5DZmIbxU7EB0aMSkNQDoPQA1mRQxf2Y0wMF1NSa7vghbwwKASi1q4NPmNw&usqp=CAU")
+  profilePictureId String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  jwtToken         JwtToken?
+  interests        SubCategory[]
 
-  @@map("users")
   @@index([email, userName])
+  @@map("users")
 }
 
 enum TokenTypes {
@@ -45,46 +43,44 @@ enum TokenTypes {
 }
 
 model Token {
-  id String @default(uuid()) @unique @id
-  code String
-  type TokenTypes
-  email String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String     @id @unique @default(uuid())
+  code      String
+  type      TokenTypes
+  email     String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
-  @@map("tokens")
   @@index([email])
+  @@map("tokens")
 }
 
-
 model JwtToken {
-  id String @default(uuid()) @id
-  user User? @relation(references: [id], fields: [userId])
-  userId String @unique
+  id          String   @id @default(uuid())
+  user        User?    @relation(references: [id], fields: [userId])
+  userId      String   @unique
   accessToken String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@map("jwt_tokens")
 }
 
-
 model Category {
-  id String @default(uuid()) @id
-  name String
-  description String?
+  id            String        @id @default(uuid())
+  name          String
+  description   String?
   subCategories SubCategory[]
 
   @@map("categories")
 }
 
 model SubCategory {
-  id String @default(uuid()) @id
-  name String
+  id          String    @id @default(uuid())
+  name        String
   description String?
-  categoryId String
-  category Category? @relation(references: [id], fields: [categoryId])
-  users User[]
+  categoryId  String
+  category    Category? @relation(references: [id], fields: [categoryId])
+  users       User[]
 
   @@map("subcategories")
 }

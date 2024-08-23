@@ -6,26 +6,44 @@ import { Prisma } from '@prisma/client';
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
+  private populateOptions: Prisma.UserInclude = { interests: true };
+
   async createUser(data: Prisma.UserCreateInput) {
-    return await this.prisma.user.create({ data });
+    return await this.prisma.user.create({
+      data,
+      include: this.populateOptions,
+    });
   }
 
   async getUser(where: Prisma.UserWhereInput) {
-    return await this.prisma.user.findFirst({ where });
+    return await this.prisma.user.findFirst({
+      where,
+      include: this.populateOptions,
+    });
   }
 
   async getUsers(where: Prisma.UserWhereInput) {
-    return await this.prisma.user.findMany({ where });
+    return await this.prisma.user.findMany({
+      where,
+      include: this.populateOptions,
+    });
   }
 
   async updateUser(
     where: Prisma.UserWhereUniqueInput,
     update: Prisma.UserUpdateInput,
   ) {
-    return await this.prisma.user.update({ where, data: update });
+    return await this.prisma.user.update({
+      where,
+      data: update,
+      include: this.populateOptions,
+    });
   }
 
   async deleteUser(where: Prisma.UserWhereUniqueInput) {
-    return await this.prisma.user.delete({ where });
+    return await this.prisma.user.delete({
+      where,
+      include: this.populateOptions,
+    });
   }
 }
