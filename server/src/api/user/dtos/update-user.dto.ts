@@ -6,6 +6,15 @@ import { v4 } from 'uuid';
 export class UpdateUserDto {
   @IsString(true)
   name?: string;
+
+  @IsString(true)
+  bio?: string;
+
+  @IsString(true)
+  website?: string;
+
+  @IsString(true)
+  dateOfBirth?: string;
 }
 
 export class UpdateUserDPDto {

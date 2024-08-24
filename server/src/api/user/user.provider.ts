@@ -79,4 +79,28 @@ export class UserProvider {
       data,
     };
   }
+
+  async updateUserCoverDp(userId: string, picture: string) {
+    const user = await this.userService.getUser({ id: userId });
+
+    if (!user) throw new NotFoundException('User not found');
+
+    const { secure_url, public_id } =
+      await this.utilService.uploadAsset(picture);
+
+    const prevPublicId = user.coverPicture;
+
+    const data = await this.userService.updateUser(
+      { id: user.id },
+      { coverPicture: secure_url, coverPictureId: public_id },
+    );
+
+    if (prevPublicId) await this.utilService.deleteAsset(prevPublicId);
+
+    return {
+      success: true,
+      message: 'Cover picture updated',
+      data,
+    };
+  }
 }
