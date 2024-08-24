@@ -1,16 +1,34 @@
 import 'package:client/config/routes.dart';
+import 'package:client/modules/auth/models/user_model.dart';
+import 'package:client/shared/cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
+import "package:flutter_bloc/flutter_bloc.dart";
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   final String initialRoute;
+  final UserModel? user;
+
+  App({super.key, required this.initialRoute, this.user});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
   final mode = TweeterColors.dark();
 
-  App({super.key, required this.initialRoute});
+  @override
+  void initState() {
+    super.initState();
+    if (widget.user != null) {
+      context.read<AppCubit>().setUser(widget.user!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +55,7 @@ class App extends StatelessWidget {
           ),
         ),
         routes: getRoutes(context),
-        initialRoute: initialRoute,
+        initialRoute: widget.initialRoute,
       ),
     );
   }
