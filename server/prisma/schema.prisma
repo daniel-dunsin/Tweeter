@@ -33,6 +33,9 @@ model User {
   jwtToken         JwtToken?
   interests        SubCategory[]
 
+  retweets Tweet[] @relation("UserRetweet")
+  tweets   Tweet[]
+
   @@index([email, userName])
   @@map("users")
 }
@@ -83,4 +86,49 @@ model SubCategory {
   users       User[]
 
   @@map("subcategories")
+}
+
+model Tweet {
+  id       String       @id @default(uuid())
+  hashTags HashTag[]
+  media    TweetMedia[]
+  text     String?
+
+  parentTweetId String?
+  parentTweet   Tweet?  @relation("ParentChildTweets", fields: [parentTweetId], references: [id])
+  childTweets   Tweet[] @relation("ParentChildTweets")
+
+  quotedTweetId String?
+  quotedTweet   Tweet?  @relation("Quotes", fields: [quotedTweetId], references: [id])
+  quotes        Tweet[] @relation("Quotes")
+
+  retweeters User[] @relation("UserRetweet")
+
+  tweeterId String
+  tweeter   User   @relation(references: [id], fields: [tweeterId])
+
+  @@map("tweets")
+}
+
+enum TweetMediaType {
+  image
+  video
+  audio
+}
+
+model TweetMedia {
+  id       String         @id @default(uuid())
+  type     TweetMediaType
+  url      String
+  publicId String
+  tweetId  String
+  tweet    Tweet          @relation(references: [id], fields: [tweetId])
+}
+
+model HashTag {
+  id     String  @id @default(uuid())
+  text   String
+  tweets Tweet[]
+
+  @@map("hashtags")
 }
