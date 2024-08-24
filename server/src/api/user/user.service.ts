@@ -48,4 +48,12 @@ export class UserService {
       include: this.populateOptions,
     });
   }
+
+  async createFollow(data: Prisma.FollowCreateInput) {
+    return await this.prisma.follow.create({ data });
+  }
+
+  async getFollows(where: Prisma.FollowWhereInput) {
+    return await this.prisma.follow.findMany({ where });
+  }
 }

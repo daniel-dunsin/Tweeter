@@ -111,10 +111,11 @@ model SubCategory {
 
 model Tweet {
   id           String         @id @default(uuid())
-  hashTags     HashTag[]
+  isPinned     Boolean        @default(false)
   media        TweetMedia[]
   text         String?
   hashTagUsage HashTagUsage[]
+  hashTags     HashTag[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @default(now()) @updatedAt
 
