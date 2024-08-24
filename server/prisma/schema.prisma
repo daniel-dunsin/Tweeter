@@ -33,8 +33,10 @@ model User {
   jwtToken         JwtToken?
   interests        SubCategory[]
 
-  retweets Tweet[] @relation("UserRetweet")
-  tweets   Tweet[]
+  retweets   Tweet[] @relation("UserRetweet")
+  tweets     Tweet[] @relation("Tweets")
+  likedPosts Tweet[] @relation("Likes")
+  bookmarks  Tweet[] @relation("Bookmarks")
 
   @@index([email, userName])
   @@map("users")
@@ -105,7 +107,12 @@ model Tweet {
   retweeters User[] @relation("UserRetweet")
 
   tweeterId String
-  tweeter   User   @relation(references: [id], fields: [tweeterId])
+  tweeter   User   @relation("Tweets", references: [id], fields: [tweeterId])
+
+  likersIds String[]
+  likers    User[]   @relation("Likes")
+
+  bookmarkers User[] @relation("Bookmarks")
 
   @@map("tweets")
 }
