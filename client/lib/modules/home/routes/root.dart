@@ -42,7 +42,8 @@ class _RootHomeState extends State<RootHome> {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel? user = context.read<AppCubit>().state.user!;
+    final UserModel? user = context.read<AppCubit>().state.user;
+
     return Scaffold(
       drawer: HomeDrawer(),
       appBar: AppBar(

@@ -1,5 +1,7 @@
 import 'package:client/config/routes.dart';
 import 'package:client/modules/auth/models/user_model.dart';
+import 'package:client/modules/follow/repository/follow_repository.dart';
+import 'package:client/modules/follow/service/follow_service.dart';
 import 'package:client/shared/cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/theme/font.dart';
@@ -26,8 +28,31 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     if (widget.user != null) {
-      context.read<AppCubit>().setUser(widget.user!);
+      _loadAppCubit();
     }
+  }
+
+  _loadAppCubit() async {
+    final appCubit = context.read<AppCubit>();
+
+    appCubit.setUser(widget.user!);
+
+    final response = await FollowRepository(FollowService()).getUserFollows(widget.user!.id);
+
+    final List<UserModel> followers = (response["data"]["followers"] as List<dynamic>)
+        .map(
+          (userMap) => UserModel.fromMap(userMap),
+        )
+        .toList();
+
+    final List<UserModel> following = (response["data"]["followings"] as List<dynamic>)
+        .map(
+          (userMap) => UserModel.fromMap(userMap),
+        )
+        .toList();
+
+    appCubit.setFollowers(followers);
+    appCubit.setFollowings(following);
   }
 
   @override

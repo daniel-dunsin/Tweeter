@@ -9,6 +9,8 @@ import 'package:client/modules/auth/services/auth_service.dart';
 import 'package:client/modules/categories/bloc/categories_bloc.dart';
 import 'package:client/modules/categories/repository/categories_repository.dart';
 import 'package:client/modules/categories/services/categories_service.dart';
+import 'package:client/modules/follow/repository/follow_repository.dart';
+import 'package:client/modules/follow/service/follow_service.dart';
 import 'package:client/shared/constants/localstorage.dart';
 import 'package:client/shared/cubit/app_cubit.dart';
 import 'package:client/shared/utils/localstorage.dart';
@@ -82,7 +84,8 @@ class _MyAppState extends State<MyApp> {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => AuthRepository(AuthService())),
-        RepositoryProvider(create: (context) => CategoriesRepository(CategoriesService()))
+        RepositoryProvider(create: (context) => CategoriesRepository(CategoriesService())),
+        RepositoryProvider(create: (context) => FollowRepository(FollowService())),
       ],
       child: MultiBlocProvider(
         providers: [

@@ -22,7 +22,7 @@ final navs = <DrawerNavItem>[
   ),
   DrawerNavItem(
     icon: Icons.list_alt_outlined,
-    label: "Jobs",
+    label: "Lists",
     route: "/private/lists",
   ),
 ];
@@ -54,8 +54,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    final appCubit = context.read<AppCubit>();
     final appColors = Theme.of(context).appColors;
-    final user = context.read<AppCubit>().state.user!;
+    final user = appCubit.state.user!;
+    final followers = appCubit.state.followers;
+    final followings = appCubit.state.following;
 
     return Drawer(
       width: MediaQuery.of(context).size.width * .8,
@@ -69,47 +72,38 @@ class _HomeDrawerState extends State<HomeDrawer> {
               horizontal: 20,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundImage: NetworkImage(user.profilePicture),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          user.name,
-                          style: TextStyle(
-                            color: appColors.foregroundColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          "@${user.userName}",
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundImage: NetworkImage(user.profilePicture),
                     ),
-                    Icon(
-                      Icons.person_add_alt_outlined,
-                      color: appColors.foregroundColor,
-                    )
+                    const SizedBox(height: 5),
+                    Text(
+                      user.name,
+                      style: TextStyle(
+                        color: appColors.foregroundColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      "@${user.userName}",
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 Row(
                   children: [
                     Text(
-                      "564 ",
+                      "${followers?.length ?? 0} ",
                       style: TextStyle(
                         color: appColors.foregroundColor,
                         fontWeight: FontWeight.w600,
@@ -122,7 +116,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       ),
                     ),
                     Text(
-                      "620 ",
+                      "${followings?.length ?? 0} ",
                       style: TextStyle(
                         color: appColors.foregroundColor,
                         fontWeight: FontWeight.w600,

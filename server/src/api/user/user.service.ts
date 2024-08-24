@@ -8,6 +8,8 @@ export class UserService {
 
   private populateOptions: Prisma.UserInclude = {
     interests: { include: { category: true } },
+    followers: true,
+    followings: true,
   };
 
   async createUser(data: Prisma.UserCreateInput) {

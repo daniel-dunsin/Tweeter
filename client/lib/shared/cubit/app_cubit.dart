@@ -10,4 +10,12 @@ class AppCubit extends Cubit<AppCubitState> {
 
     emit(newState);
   }
+
+  setFollowers(List<UserModel> followers) {
+    emit(state.copyWith(followers: followers));
+  }
+
+  setFollowings(List<UserModel> following) {
+    emit(state.copyWith(following: following));
+  }
 }

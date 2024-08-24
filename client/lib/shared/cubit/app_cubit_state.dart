@@ -4,16 +4,24 @@ import 'package:client/modules/auth/models/user_model.dart';
 
 class AppCubitState {
   final UserModel? user;
+  final List<UserModel>? followers;
+  final List<UserModel>? following;
 
   AppCubitState({
     this.user,
+    this.followers,
+    this.following,
   });
 
   AppCubitState copyWith({
     UserModel? user,
+    List<UserModel>? followers,
+    List<UserModel>? following,
   }) {
     return AppCubitState(
       user: user ?? this.user,
+      followers: followers ?? this.followers,
+      following: following ?? this.following,
     );
   }
 
@@ -25,6 +33,16 @@ class AppCubitState {
         'user': user!.toMap()
       });
     }
+    if (followers != null) {
+      result.addAll({
+        'followers': followers!.map((x) => x.toMap()).toList()
+      });
+    }
+    if (following != null) {
+      result.addAll({
+        'following': following!.map((x) => x.toMap()).toList()
+      });
+    }
 
     return result;
   }
@@ -32,6 +50,8 @@ class AppCubitState {
   factory AppCubitState.fromMap(Map<String, dynamic> map) {
     return AppCubitState(
       user: map['user'] != null ? UserModel.fromMap(map['user']) : null,
+      followers: map['followers'] != null ? List<UserModel>.from(map['followers']?.map((x) => UserModel.fromMap(x))) : null,
+      following: map['following'] != null ? List<UserModel>.from(map['following']?.map((x) => UserModel.fromMap(x))) : null,
     );
   }
 
@@ -40,15 +60,5 @@ class AppCubitState {
   factory AppCubitState.fromJson(String source) => AppCubitState.fromMap(json.decode(source));
 
   @override
-  String toString() => 'AppCubitState(user: $user)';
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is AppCubitState && other.user == user;
-  }
-
-  @override
-  int get hashCode => user.hashCode;
+  String toString() => 'AppCubitState(user: $user, followers: $followers, following: $following)';
 }

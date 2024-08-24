@@ -1,4 +1,4 @@
-import { Controller, Delete, Param, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 import { Auth } from 'src/core/decorators/auth.decorator';
@@ -20,7 +20,7 @@ export class FollowController {
     return await this.followProvider.unfollow(user.id, followingId);
   }
 
-  @Post('user/:userId')
+  @Get('user/:userId')
   async getFollows(@Param('userId') userId: string) {
     return await this.followProvider.getFollows(userId);
   }
