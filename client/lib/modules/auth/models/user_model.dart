@@ -7,6 +7,10 @@ class UserModel {
   final String userName;
   final String profilePicture;
   final String id;
+  final String? bio;
+  final String? coverPicture;
+  final String? website;
+  final DateTime createdAt;
 
   UserModel({
     required this.email,
@@ -15,6 +19,10 @@ class UserModel {
     required this.userName,
     required this.profilePicture,
     required this.id,
+    this.bio,
+    this.coverPicture,
+    this.website,
+    required this.createdAt,
   });
 
   UserModel copyWith({
@@ -24,6 +32,10 @@ class UserModel {
     String? userName,
     String? profilePicture,
     String? id,
+    String? bio,
+    String? coverPicture,
+    String? website,
+    DateTime? createdAt,
   }) {
     return UserModel(
       email: email ?? this.email,
@@ -32,6 +44,10 @@ class UserModel {
       userName: userName ?? this.userName,
       profilePicture: profilePicture ?? this.profilePicture,
       id: id ?? this.id,
+      bio: bio ?? this.bio,
+      coverPicture: coverPicture ?? this.coverPicture,
+      website: website ?? this.website,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -56,6 +72,24 @@ class UserModel {
     result.addAll({
       'id': id
     });
+    if (bio != null) {
+      result.addAll({
+        'bio': bio
+      });
+    }
+    if (coverPicture != null) {
+      result.addAll({
+        'coverPicture': coverPicture
+      });
+    }
+    if (website != null) {
+      result.addAll({
+        'website': website
+      });
+    }
+    result.addAll({
+      'createdAt': createdAt.toIso8601String()
+    });
 
     return result;
   }
@@ -68,10 +102,31 @@ class UserModel {
       userName: map['userName'] ?? '',
       profilePicture: map['profilePicture'] ?? '',
       id: map['id'] ?? '',
+      bio: map['bio'],
+      coverPicture: map['coverPicture'],
+      website: map['website'],
+      createdAt: DateTime.parse(map['createdAt']),
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'UserModel(email: $email, name: $name, dateOfBirth: $dateOfBirth, userName: $userName, profilePicture: $profilePicture, id: $id, bio: $bio, coverPicture: $coverPicture, website: $website, createdAt: $createdAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is UserModel && other.email == email && other.name == name && other.dateOfBirth == dateOfBirth && other.userName == userName && other.profilePicture == profilePicture && other.id == id && other.bio == bio && other.coverPicture == coverPicture && other.website == website && other.createdAt == createdAt;
+  }
+
+  @override
+  int get hashCode {
+    return email.hashCode ^ name.hashCode ^ dateOfBirth.hashCode ^ userName.hashCode ^ profilePicture.hashCode ^ id.hashCode ^ bio.hashCode ^ coverPicture.hashCode ^ website.hashCode ^ createdAt.hashCode;
+  }
 }

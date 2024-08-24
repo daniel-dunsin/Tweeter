@@ -3,6 +3,7 @@ import 'package:client/modules/auth/bloc/auth_state.dart';
 import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/auth/repository/auth_repository.dart';
 import 'package:client/shared/constants/localstorage.dart';
+import 'package:client/shared/cubit/app_cubit.dart';
 import 'package:client/shared/utils/localstorage.dart';
 import 'package:client/shared/utils/network.dart';
 import 'package:dio/dio.dart';
@@ -10,8 +11,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
+  final AppCubit appCubit;
 
-  AuthBloc(this.authRepository) : super(AuthInitialState()) {
+  AuthBloc({required this.authRepository, required this.appCubit}) : super(AuthInitialState()) {
     on<AuthSignUp>((event, emit) async {
       emit(AuthSignUpLoading());
       try {
@@ -35,6 +37,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
         await LocalStorage.setString(key: localStorageConstants.accessToken, value: accessToken);
+        appCubit.setUser(user);
 
         emit(AuthVerifyEmailSuccess(user: user));
       } catch (e) {
@@ -75,6 +78,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
         await LocalStorage.setString(key: localStorageConstants.accessToken, value: accessToken);
+        appCubit.setUser(user);
 
         emit(LoginSuccess(user: user));
       } catch (e) {

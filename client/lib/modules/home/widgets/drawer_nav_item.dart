@@ -19,6 +19,9 @@ class DrawerNavItem extends StatelessWidget {
     final appColors = Theme.of(context).appColors;
 
     return ListTile(
+      onTap: () {
+        Navigator.pushNamed(context, route);
+      },
       contentPadding: EdgeInsets.symmetric(vertical: 3),
       leading: Icon(
         icon,

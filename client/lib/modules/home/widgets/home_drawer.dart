@@ -1,3 +1,4 @@
+import 'package:client/config/routes.dart';
 import 'package:client/modules/home/widgets/drawer_nav_item.dart';
 import 'package:client/shared/cubit/app_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +9,7 @@ final navs = <DrawerNavItem>[
   DrawerNavItem(
     icon: Icons.person_outline_rounded,
     label: "Profile",
-    route: "/private/profile",
+    route: PrivateRoutes.profile,
   ),
   DrawerNavItem(
     icon: Icons.workspace_premium_outlined,
@@ -77,9 +78,14 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundImage: NetworkImage(user.profilePicture),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(PrivateRoutes.profile);
+                      },
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundImage: NetworkImage(user.profilePicture),
+                      ),
                     ),
                     const SizedBox(height: 5),
                     Text(

@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
         providers: [
           BlocProvider(create: (context) => AppCubit()),
           BlocProvider(
-            create: (context) => AuthBloc(context.read<AuthRepository>()),
+            create: (context) => AuthBloc(authRepository: context.read<AuthRepository>(), appCubit: context.read<AppCubit>()),
           ),
           BlocProvider(
             create: (context) => CategoriesBloc(context.read<CategoriesRepository>()),
