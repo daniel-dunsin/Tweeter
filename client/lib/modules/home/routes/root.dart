@@ -44,20 +44,31 @@ class _RootHomeState extends State<RootHome> {
   Widget build(BuildContext context) {
     final UserModel? user = context.read<AppCubit>().state.user!;
     return Scaffold(
+      drawer: HomeDrawer(),
       appBar: AppBar(
-        leading: Padding(
-          padding: EdgeInsets.all(8),
-          child: CircleAvatar(
-            radius: 50,
-            backgroundImage: NetworkImage(
-              user?.profilePicture as String,
-            ),
-          ),
+        leading: Builder(
+          builder: (context) {
+            return GestureDetector(
+              onTap: () {
+                if (Scaffold.of(context).hasDrawer) {
+                  Scaffold.of(context).openDrawer();
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.all(8),
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage: NetworkImage(
+                    user?.profilePicture as String,
+                  ),
+                ),
+              ),
+            );
+          },
         ),
         centerTitle: true,
         title: Logo(),
       ),
-      drawer: HomeDrawer(),
       bottomNavigationBar: HomeBottomNav(
         currentPage: currentPageIndex,
         onChangePage: changePage,
