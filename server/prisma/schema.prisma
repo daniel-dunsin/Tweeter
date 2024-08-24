@@ -29,9 +29,11 @@ model User {
   profilePicture   String        @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1H81w4SmKH5DZmIbxU7EB0aMSkNQDoPQA1mRQxf2Y0wMF1NSa7vghbwwKASi1q4NPmNw&usqp=CAU")
   profilePictureId String?
   createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  updatedAt        DateTime      @default(now()) @updatedAt
   jwtToken         JwtToken?
   interests        SubCategory[]
+  followers        Follow[]      @relation("Followers")
+  followings       Follow[]      @relation("Followings")
 
   retweets   Tweet[] @relation("UserRetweet")
   tweets     Tweet[] @relation("Tweets")
@@ -40,6 +42,19 @@ model User {
 
   @@index([email, userName])
   @@map("users")
+}
+
+model Follow {
+  id          String   @id @default(uuid())
+  followerId  String
+  follower    User     @relation("Followers", references: [id], fields: [followerId])
+  followingId String
+  following   User     @relation("Followings", references: [id], fields: [followingId])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  @@unique([followerId, followingId])
+  @@map("follows")
 }
 
 enum TokenTypes {
@@ -75,6 +90,8 @@ model Category {
   name          String
   description   String?
   subCategories SubCategory[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now()) @updatedAt
 
   @@map("categories")
 }
@@ -86,15 +103,20 @@ model SubCategory {
   categoryId  String
   category    Category? @relation(references: [id], fields: [categoryId])
   users       User[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
 
   @@map("subcategories")
 }
 
 model Tweet {
-  id       String       @id @default(uuid())
-  hashTags HashTag[]
-  media    TweetMedia[]
-  text     String?
+  id           String         @id @default(uuid())
+  hashTags     HashTag[]
+  media        TweetMedia[]
+  text         String?
+  hashTagUsage HashTagUsage[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now()) @updatedAt
 
   parentTweetId String?
   parentTweet   Tweet?  @relation("ParentChildTweets", fields: [parentTweetId], references: [id])
@@ -130,12 +152,34 @@ model TweetMedia {
   publicId String
   tweetId  String
   tweet    Tweet          @relation(references: [id], fields: [tweetId])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("tweets_media")
 }
 
 model HashTag {
-  id     String  @id @default(uuid())
-  text   String
-  tweets Tweet[]
+  id           String         @id @default(uuid())
+  text         String
+  tweets       Tweet[]
+  hashTagUsage HashTagUsage[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now()) @updatedAt
 
   @@map("hashtags")
+}
+
+model HashTagUsage {
+  id String @id @default(uuid())
+
+  hashTagId String
+  hashTag   HashTag @relation(references: [id], fields: [hashTagId])
+
+  tweetId String
+  tweet   Tweet  @relation(references: [id], fields: [tweetId])
+
+  createdAt DateTime @default(now())
+
+  @@map("hashtags_usage")
 }
