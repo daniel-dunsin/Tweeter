@@ -80,7 +80,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushNamed(PrivateRoutes.profile);
+                        Navigator.of(context).pushNamed(PrivateRoutes.profile, arguments: {
+                          "userId": user.id
+                        });
                       },
                       child: CircleAvatar(
                         radius: 20,

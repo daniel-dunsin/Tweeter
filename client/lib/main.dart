@@ -11,6 +11,9 @@ import 'package:client/modules/categories/repository/categories_repository.dart'
 import 'package:client/modules/categories/services/categories_service.dart';
 import 'package:client/modules/follow/repository/follow_repository.dart';
 import 'package:client/modules/follow/service/follow_service.dart';
+import 'package:client/modules/profile/bloc/profile_bloc.dart';
+import 'package:client/modules/profile/repositories/profile_repository.dart';
+import 'package:client/modules/profile/services/profile_service.dart';
 import 'package:client/shared/constants/localstorage.dart';
 import 'package:client/shared/cubit/app_cubit.dart';
 import 'package:client/shared/utils/localstorage.dart';
@@ -86,6 +89,7 @@ class _MyAppState extends State<MyApp> {
         RepositoryProvider(create: (context) => AuthRepository(AuthService())),
         RepositoryProvider(create: (context) => CategoriesRepository(CategoriesService())),
         RepositoryProvider(create: (context) => FollowRepository(FollowService())),
+        RepositoryProvider(create: (context) => ProfileRepository(ProfileService())),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -96,6 +100,7 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(
             create: (context) => CategoriesBloc(context.read<CategoriesRepository>()),
           ),
+          BlocProvider(create: (context) => ProfileBloc(context.read<ProfileRepository>())),
         ],
         child: App(
           initialRoute: widget.initialRoute,

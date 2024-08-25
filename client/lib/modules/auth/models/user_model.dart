@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
+
 class UserModel {
   final String email;
   final String name;
@@ -11,6 +13,8 @@ class UserModel {
   final String? coverPicture;
   final String? website;
   final DateTime createdAt;
+  final List<UserModel>? followers;
+  final List<UserModel>? followings;
 
   UserModel({
     required this.email,
@@ -23,6 +27,8 @@ class UserModel {
     this.coverPicture,
     this.website,
     required this.createdAt,
+    this.followers,
+    this.followings,
   });
 
   UserModel copyWith({
@@ -36,6 +42,8 @@ class UserModel {
     String? coverPicture,
     String? website,
     DateTime? createdAt,
+    List<UserModel>? followers,
+    List<UserModel>? followings,
   }) {
     return UserModel(
       email: email ?? this.email,
@@ -48,6 +56,8 @@ class UserModel {
       coverPicture: coverPicture ?? this.coverPicture,
       website: website ?? this.website,
       createdAt: createdAt ?? this.createdAt,
+      followers: followers ?? this.followers,
+      followings: followings ?? this.followings,
     );
   }
 
@@ -88,8 +98,18 @@ class UserModel {
       });
     }
     result.addAll({
-      'createdAt': createdAt.toIso8601String()
+      'createdAt': createdAt.millisecondsSinceEpoch
     });
+    if (followers != null) {
+      result.addAll({
+        'followers': followers!.map((x) => x.toMap()).toList()
+      });
+    }
+    if (followings != null) {
+      result.addAll({
+        'followings': followings!.map((x) => x.toMap()).toList()
+      });
+    }
 
     return result;
   }
@@ -106,27 +126,12 @@ class UserModel {
       coverPicture: map['coverPicture'],
       website: map['website'],
       createdAt: DateTime.parse(map['createdAt']),
+      followers: map['followers'] != null ? List<UserModel>.from(map['followers']?.map((x) => UserModel.fromMap(x))) : null,
+      followings: map['followings'] != null ? List<UserModel>.from(map['followings']?.map((x) => UserModel.fromMap(x))) : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source));
-
-  @override
-  String toString() {
-    return 'UserModel(email: $email, name: $name, dateOfBirth: $dateOfBirth, userName: $userName, profilePicture: $profilePicture, id: $id, bio: $bio, coverPicture: $coverPicture, website: $website, createdAt: $createdAt)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is UserModel && other.email == email && other.name == name && other.dateOfBirth == dateOfBirth && other.userName == userName && other.profilePicture == profilePicture && other.id == id && other.bio == bio && other.coverPicture == coverPicture && other.website == website && other.createdAt == createdAt;
-  }
-
-  @override
-  int get hashCode {
-    return email.hashCode ^ name.hashCode ^ dateOfBirth.hashCode ^ userName.hashCode ^ profilePicture.hashCode ^ id.hashCode ^ bio.hashCode ^ coverPicture.hashCode ^ website.hashCode ^ createdAt.hashCode;
-  }
 }

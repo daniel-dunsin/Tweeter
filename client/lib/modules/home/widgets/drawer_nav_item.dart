@@ -1,5 +1,7 @@
+import 'package:client/shared/cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DrawerNavItem extends StatelessWidget {
   final IconData icon;
@@ -17,10 +19,13 @@ class DrawerNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
+    final user = context.read<AppCubit>().state.user;
 
     return ListTile(
       onTap: () {
-        Navigator.pushNamed(context, route);
+        Navigator.pushNamed(context, route, arguments: {
+          "userId": user?.id
+        });
       },
       contentPadding: EdgeInsets.symmetric(vertical: 3),
       leading: Icon(

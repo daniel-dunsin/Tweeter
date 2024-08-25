@@ -27,7 +27,7 @@ Future? handleError({
         "Request failed with status code : ${e.response?.statusCode} - ${e.response?.data}",
       );
     } else {
-      errorMessage = e.message ?? "Oops! an error occured";
+      errorMessage = e.message ?? e.toString();
     }
   }
 

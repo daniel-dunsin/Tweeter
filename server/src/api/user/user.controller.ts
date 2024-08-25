@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Auth } from 'src/core/decorators/auth.decorator';
 import { UserProvider } from './user.provider';
@@ -47,5 +47,10 @@ export class UserController {
       userId,
       updateUserInterestsDto.interests,
     );
+  }
+
+  @Get(':userId')
+  async getUserById(@Param('userId') userId: string) {
+    return await this.userProvider.getUser(userId);
   }
 }
