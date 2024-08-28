@@ -29,3 +29,18 @@ String convertImageToBase64(File file) {
     throw e;
   }
 }
+
+File convertBase64ToImage(String base64String) {
+  try {
+    final decodedString = base64String.split(',').last;
+
+    final bytes = base64Decode(decodedString);
+
+    final file = File.fromRawPath(bytes);
+
+    return file;
+  } catch (e) {
+    handleError(e: e);
+    throw e;
+  }
+}

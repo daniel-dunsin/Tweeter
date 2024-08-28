@@ -1,4 +1,5 @@
 import 'package:client/modules/auth/models/user_model.dart';
+import 'package:client/modules/profile/routes/edit_profile/edit_profile.dart';
 import 'package:client/modules/profile/routes/user_profile/widgets/tab_bar.dart';
 import 'package:client/shared/cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
@@ -117,7 +118,15 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                         Visibility(
                           child: Positioned(
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) {
+                                    return EditProfileScreen(user: widget.user!);
+                                  },
+                                );
+                              },
                               child: Text(
                                 "Edit Profile",
                                 style: TextStyle(

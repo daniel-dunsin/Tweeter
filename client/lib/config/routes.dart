@@ -31,7 +31,6 @@ class AuthRoutes {
 class PrivateRoutes {
   static String rootHome = "/private/root-home";
   static String profile = "/private/profile";
-  static String editProfile = "/private/profile/edit";
 }
 
 Map<String, Widget Function(BuildContext context)> getRoutes(BuildContext context) {
@@ -50,6 +49,5 @@ Map<String, Widget Function(BuildContext context)> getRoutes(BuildContext contex
     // private
     PrivateRoutes.rootHome: (context) => RootHome(),
     PrivateRoutes.profile: (context) => UserProfileScreen(),
-    PrivateRoutes.editProfile: (context) => EditProfileScreen(),
   };
 }

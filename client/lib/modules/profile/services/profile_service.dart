@@ -11,4 +11,11 @@ class ProfileService {
       options: await getDefaulNetworkOptions(),
     );
   }
+
+  Future<Response> editUserProfile(Map<String, dynamic> editProfileDto) async {
+    return await httpInstance.put(
+      "${AppSecrets.serverUrl}/user",
+      options: await getDefaulNetworkOptions(),
+    );
+  }
 }

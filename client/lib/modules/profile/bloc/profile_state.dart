@@ -14,3 +14,13 @@ class GetProfileSuccess extends ProfileState {
 }
 
 class GetProfileError extends ProfileState {}
+
+class EditProfileLoading extends ProfileState {}
+
+class EditProfileSuccess extends ProfileState {
+  final UserModel user;
+
+  EditProfileSuccess(this.user);
+}
+
+class EditProfileError extends ProfileState {}

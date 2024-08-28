@@ -10,3 +10,9 @@ class GetProfileRequested extends ProfileEvent {
 
   GetProfileRequested(this.userId);
 }
+
+class EditProfileRequested extends ProfileEvent {
+  final EditProfileModel editProfileDto;
+
+  EditProfileRequested(this.editProfileDto);
+}

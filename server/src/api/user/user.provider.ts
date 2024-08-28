@@ -42,6 +42,16 @@ export class UserProvider {
   }
 
   async updateUser(userId: string, updateUserDto: UpdateUserDto) {
+    if (updateUserDto.profilePicture) {
+      await this.updateUserDp(userId, updateUserDto.profilePicture);
+      delete updateUserDto.profilePicture;
+    }
+
+    if (updateUserDto.coverPicture) {
+      await this.updateUserCoverDp(userId, updateUserDto.coverPicture);
+      delete updateUserDto.coverPicture;
+    }
+
     const data = await this.userService.updateUser(
       { id: userId },
       updateUserDto,

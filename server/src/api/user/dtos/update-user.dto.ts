@@ -15,6 +15,12 @@ export class UpdateUserDto {
 
   @IsString(true)
   dateOfBirth?: string;
+
+  @IsString(true)
+  profilePicture?: string;
+
+  @IsString(true)
+  coverPicture?: string;
 }
 
 export class UpdateUserDPDto {
