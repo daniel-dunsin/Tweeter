@@ -1,6 +1,5 @@
 import { Processor, Process, OnQueueActive } from '@nestjs/bull';
-import { AppQueues } from './queues.enum';
-import { APP_QUEUE } from '../events/event.enum';
+import { APP_QUEUE, AppQueues } from './queues.enum';
 import { Job } from 'bull';
 import { Inject } from '@nestjs/common';
 import { MailService } from '../mail/mail.service';

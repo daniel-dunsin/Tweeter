@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
-import { APP_QUEUE } from '../events/event.enum';
 import { MailModule } from '../mail/mail.module';
 import { AppQueue } from './queues.consumers';
+import { APP_QUEUE } from './queues.enum';
 
 @Module({
   imports: [

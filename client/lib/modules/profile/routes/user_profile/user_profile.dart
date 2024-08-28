@@ -14,9 +14,12 @@ class UserProfileScreen extends StatefulWidget {
   State<UserProfileScreen> createState() => _UserProfileScreenState();
 }
 
-class _UserProfileScreenState extends State<UserProfileScreen> {
-  final _scrollController = ScrollController();
+class _UserProfileScreenState extends State<UserProfileScreen> with TickerProviderStateMixin {
+  final ScrollController _scrollController = ScrollController();
+  late TabController _tabController;
   UserModel? user;
+  List<UserModel>? followers;
+  List<UserModel>? followings;
 
   @override
   void initState() {
@@ -26,6 +29,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         setState(() {});
       }
     });
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -38,10 +42,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     if (user == null) {
       final userId = (ModalRoute.of(context)?.settings.arguments as Map<String, String?>)["userId"];
       final loggedInUser = context.read<AppCubit>().state.user;
+      final loggedInUserFollowers = context.read<AppCubit>().state.followers;
+      final loggedInUserFollowings = context.read<AppCubit>().state.following;
 
       if (userId == loggedInUser?.id) {
         setState(() {
           user = loggedInUser;
+          followers = loggedInUserFollowers;
+          followings = loggedInUserFollowings;
         });
       } else {
         context.read<ProfileBloc>().add(GetProfileRequested(userId!));
@@ -59,6 +67,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           if (state is GetProfileSuccess) {
             setState(() {
               user = state.user;
+              followings = state.user.followings;
+              followers = state.user.followers;
             });
           }
 
@@ -69,25 +79,24 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         builder: (context, state) {
           return Stack(
             children: [
-              state is GetProfileSuccess
-                  ? CustomScrollView(
-                      controller: _scrollController,
-                      slivers: [
-                        SliverAppBar(
-                          automaticallyImplyLeading: false,
-                          expandedHeight: 400,
-                          collapsedHeight: 70,
-                          toolbarHeight: 70,
-                          pinned: true,
-                          floating: false,
-                          flexibleSpace: UserProfileAppBar(
+              state is! GetProfileLoading
+                  ? Visibility(
+                      child: CustomScrollView(
+                        controller: _scrollController,
+                        slivers: [
+                          UserProfileAppBar(
                             scrollController: _scrollController,
                             user: user,
-                            followers: user?.followers,
-                            followings: user?.followings,
+                            followers: followers,
+                            followings: followings,
+                            tabController: _tabController,
                           ),
-                        )
-                      ],
+                          SliverToBoxAdapter(
+                            child: SizedBox(height: 1000),
+                          )
+                        ],
+                      ),
+                      visible: user != null,
                     )
                   : Center(
                       child: LoadingAnimationWidget.discreteCircle(

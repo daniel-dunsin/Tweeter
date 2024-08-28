@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { APP_QUEUE, AppEvents } from './event.enum';
+import { AppEvents } from './event.enum';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
-import { AppQueues } from '../queues/queues.enum';
+import { APP_QUEUE, AppQueues } from '../queues/queues.enum';
 import {
   ISendBulkMailOptions,
   ISendMailOptions,
