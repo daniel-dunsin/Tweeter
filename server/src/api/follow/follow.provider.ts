@@ -67,16 +67,22 @@ export class FollowProvider {
       }),
     ]);
 
-    const [followers, followings] = await Promise.all([
+    const [followers, followings, verifiedFollowers] = await Promise.all([
       this.userService.getUsers({
         OR: _followers.map(({ followerId }) => ({ id: followerId })),
       }),
       this.userService.getUsers({
         OR: _followings.map(({ followingId }) => ({ id: followingId })),
       }),
+      this.userService.getUsers({
+        OR: _followers.map(({ followerId }) => ({
+          id: followerId,
+          isVerified: true,
+        })),
+      }),
     ]);
 
-    const data = { followers, followings };
+    const data = { followers, followings, verifiedFollowers };
 
     return {
       success: true,

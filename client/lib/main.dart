@@ -9,6 +9,7 @@ import 'package:client/modules/auth/services/auth_service.dart';
 import 'package:client/modules/categories/bloc/categories_bloc.dart';
 import 'package:client/modules/categories/repository/categories_repository.dart';
 import 'package:client/modules/categories/services/categories_service.dart';
+import 'package:client/modules/follow/bloc/follows_bloc.dart';
 import 'package:client/modules/follow/repository/follow_repository.dart';
 import 'package:client/modules/follow/service/follow_service.dart';
 import 'package:client/modules/profile/bloc/profile_bloc.dart';
@@ -111,6 +112,12 @@ class _MyAppState extends State<MyApp> {
               appCubit: context.read<AppCubit>(),
             ),
           ),
+          BlocProvider(
+            create: (context) => FollowsBloc(
+              followRepository: context.read<FollowRepository>(),
+              appCubit: context.read<AppCubit>(),
+            ),
+          )
         ],
         child: App(
           initialRoute: widget.initialRoute,

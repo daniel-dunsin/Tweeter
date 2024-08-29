@@ -32,6 +32,7 @@ model User {
   coverPictureId   String?
   website          String?
   bio              String?
+  isVerified       Boolean       @default(false)
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @default(now()) @updatedAt
   jwtToken         JwtToken?

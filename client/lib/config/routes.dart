@@ -8,6 +8,7 @@ import 'package:client/modules/auth/routes/onboarding/sign_up.dart';
 import 'package:client/modules/auth/routes/onboarding/update_profile_picture.dart';
 import 'package:client/modules/auth/routes/onboarding/verify_account.dart';
 import 'package:client/modules/auth/routes/onboarding/select_interests.dart';
+import 'package:client/modules/follow/routes/follows/follows.dart';
 import 'package:client/modules/home/routes/root.dart';
 import 'package:client/modules/profile/routes/user_profile/user_profile.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class AuthRoutes {
 class PrivateRoutes {
   static String rootHome = "/private/root-home";
   static String profile = "/private/profile";
+  static String follows = "/private/follows";
 }
 
 Map<String, Widget Function(BuildContext context)> getRoutes(BuildContext context) {
@@ -48,5 +50,6 @@ Map<String, Widget Function(BuildContext context)> getRoutes(BuildContext contex
     // private
     PrivateRoutes.rootHome: (context) => RootHome(),
     PrivateRoutes.profile: (context) => UserProfileScreen(),
+    PrivateRoutes.follows: (context) => FollowsScreen()
   };
 }

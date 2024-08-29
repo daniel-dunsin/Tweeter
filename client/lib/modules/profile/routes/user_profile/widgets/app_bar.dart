@@ -1,4 +1,6 @@
+import 'package:client/config/routes.dart';
 import 'package:client/modules/auth/models/user_model.dart';
+import 'package:client/modules/follow/enums/index.dart';
 import 'package:client/modules/profile/routes/edit_profile/edit_profile.dart';
 import 'package:client/modules/profile/routes/user_profile/widgets/tab_bar.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
@@ -122,6 +124,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                                 showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,
+                                  sheetAnimationStyle: AnimationStyle(duration: Duration(milliseconds: 500)),
                                   builder: (context) {
                                     return EditProfileScreen(
                                       initialUser: widget.user!,
@@ -235,41 +238,68 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                           softWrap: true,
                         ),
                         const SizedBox(height: 8),
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              WidgetSpan(
-                                child: Text(
-                                  " ${widget.followings?.length}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: appColors.foregroundColor,
-                                  ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(PrivateRoutes.follows, arguments: {
+                                  "user": widget.user,
+                                  "tab": FollowsTabs.followings,
+                                });
+                              },
+                              child: Text.rich(
+                                TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                      child: Text(
+                                        " ${widget.followings?.length}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: appColors.foregroundColor,
+                                        ),
+                                      ),
+                                    ),
+                                    WidgetSpan(
+                                      child: Text(
+                                        " Following",
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ),
+                            const SizedBox(width: 15),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(PrivateRoutes.follows, arguments: {
+                                  "user": widget.user,
+                                  "tab": FollowsTabs.followers,
+                                });
+                              },
+                              child: Text.rich(
+                                TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                      child: Text(
+                                        "${widget.followers?.length}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: appColors.foregroundColor,
+                                        ),
+                                      ),
+                                    ),
+                                    WidgetSpan(
+                                      child: Text(
+                                        " Followers",
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              WidgetSpan(
-                                child: Text(
-                                  " Following",
-                                ),
-                              ),
-                              WidgetSpan(child: const SizedBox(width: 15)),
-                              WidgetSpan(
-                                child: Text(
-                                  "${widget.followers?.length}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: appColors.foregroundColor,
-                                  ),
-                                ),
-                              ),
-                              WidgetSpan(
-                                child: Text(
-                                  " Followers",
-                                ),
-                              ),
-                            ],
-                          ),
-                          style: TextStyle(color: Colors.grey),
+                            ),
+                          ],
                         ),
                         UserProfileTabBar(tabController: widget.tabController),
                       ],

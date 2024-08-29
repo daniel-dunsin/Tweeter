@@ -1,4 +1,5 @@
 import 'package:client/config/routes.dart';
+import 'package:client/modules/follow/enums/index.dart';
 import 'package:client/modules/home/widgets/drawer_nav_item.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -110,30 +111,66 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Text(
-                      "${followers?.length ?? 0} ",
-                      style: TextStyle(
-                        color: appColors.foregroundColor,
-                        fontWeight: FontWeight.w600,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(PrivateRoutes.follows, arguments: {
+                          "user": user,
+                          "tab": FollowsTabs.followings
+                        });
+                      },
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            WidgetSpan(
+                              child: Text(
+                                "${followers?.length ?? 0} ",
+                                style: TextStyle(
+                                  color: appColors.foregroundColor,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            WidgetSpan(
+                              child: Text(
+                                "Following    ",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    Text(
-                      "Following    ",
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Text(
-                      "${followings?.length ?? 0} ",
-                      style: TextStyle(
-                        color: appColors.foregroundColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      "Followers",
-                      style: TextStyle(
-                        color: Colors.grey,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(PrivateRoutes.follows, arguments: {
+                          "user": user,
+                          "tab": FollowsTabs.followers,
+                        });
+                      },
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            WidgetSpan(
+                              child: Text(
+                                "${followings?.length ?? 0} ",
+                                style: TextStyle(
+                                  color: appColors.foregroundColor,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            WidgetSpan(
+                              child: Text(
+                                "Followers",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
