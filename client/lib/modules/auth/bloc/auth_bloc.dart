@@ -3,7 +3,7 @@ import 'package:client/modules/auth/bloc/auth_state.dart';
 import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/auth/repository/auth_repository.dart';
 import 'package:client/shared/constants/localstorage.dart';
-import 'package:client/shared/cubit/app_cubit.dart';
+import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/utils/localstorage.dart';
 import 'package:client/shared/utils/network.dart';
 import 'package:dio/dio.dart';

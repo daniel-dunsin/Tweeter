@@ -9,7 +9,6 @@ import 'package:client/modules/auth/routes/onboarding/update_profile_picture.dar
 import 'package:client/modules/auth/routes/onboarding/verify_account.dart';
 import 'package:client/modules/auth/routes/onboarding/select_interests.dart';
 import 'package:client/modules/home/routes/root.dart';
-import 'package:client/modules/profile/routes/edit_profile/edit_profile.dart';
 import 'package:client/modules/profile/routes/user_profile/user_profile.dart';
 import 'package:flutter/material.dart';
 

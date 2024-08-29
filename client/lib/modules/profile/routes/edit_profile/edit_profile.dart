@@ -3,7 +3,7 @@ import 'package:client/modules/profile/bloc/profile_bloc.dart';
 import 'package:client/modules/profile/models/edit_profile_model.dart';
 import 'package:client/modules/profile/routes/edit_profile/widgets/profile_key_value.dart';
 import 'package:client/shared/constants/images.dart';
-import 'package:client/shared/cubit/app_cubit.dart';
+import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/utils/file.dart';
 import 'package:flutter/material.dart';

@@ -6,43 +6,19 @@ import 'package:client/modules/home/routes/notifications/notifications.dart';
 import 'package:client/modules/home/routes/search/search.dart';
 import 'package:client/modules/home/widgets/home_bottom_nav.dart';
 import 'package:client/modules/home/widgets/home_drawer.dart';
-import 'package:client/shared/cubit/app_cubit.dart';
+import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
+import 'package:client/shared/cubit/app_nav_cubit/app_nav_cubit.dart';
 import 'package:client/shared/widgets/logo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
-class RootHome extends StatefulWidget {
+class RootHome extends StatelessWidget {
   const RootHome({super.key});
 
   @override
-  State<RootHome> createState() => _RootHomeState();
-}
-
-final List<Widget> screens = [
-  HomeScreen(),
-  SearchScreen(),
-  CommunitiesScreen(),
-  NotificationsScreen(),
-  MessagesScreen(),
-];
-
-class _RootHomeState extends State<RootHome> {
-  int currentPageIndex = 0;
-
-  void changePage(int index) {
-    setState(() {
-      currentPageIndex = index;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final UserModel? user = context.read<AppCubit>().state.user;
+    final UserModel? user = context.watch<AppCubit>().state.user;
+    final appBottomNavIndex = context.watch<AppNavCubit>().state;
 
     return Scaffold(
       drawer: HomeDrawer(),
@@ -70,16 +46,21 @@ class _RootHomeState extends State<RootHome> {
         centerTitle: true,
         title: Logo(),
       ),
-      bottomNavigationBar: HomeBottomNav(
-        currentPage: currentPageIndex,
-        onChangePage: changePage,
-      ),
+      bottomNavigationBar: HomeBottomNav(),
       body: SafeArea(
         child: IndexedStack(
           children: screens,
-          index: currentPageIndex,
+          index: appBottomNavIndex,
         ),
       ),
     );
   }
 }
+
+final List<Widget> screens = [
+  HomeScreen(),
+  SearchScreen(),
+  CommunitiesScreen(),
+  NotificationsScreen(),
+  MessagesScreen(),
+];

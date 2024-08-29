@@ -2,7 +2,7 @@ import 'package:client/config/routes.dart';
 import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/follow/repository/follow_repository.dart';
 import 'package:client/modules/follow/service/follow_service.dart';
-import 'package:client/shared/cubit/app_cubit.dart';
+import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/theme/font.dart';
 import 'package:flutter/material.dart';

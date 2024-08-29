@@ -1,7 +1,7 @@
 import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/profile/bloc/profile_bloc.dart';
 import 'package:client/modules/profile/routes/user_profile/widgets/app_bar.dart';
-import 'package:client/shared/cubit/app_cubit.dart';
+import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

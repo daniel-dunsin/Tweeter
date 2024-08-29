@@ -1,6 +1,6 @@
 import 'package:client/config/routes.dart';
 import 'package:client/modules/home/widgets/drawer_nav_item.dart';
-import 'package:client/shared/cubit/app_cubit.dart';
+import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +55,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final appCubit = context.read<AppCubit>();
+    final appCubit = context.watch<AppCubit>();
     final appColors = Theme.of(context).appColors;
     final user = appCubit.state.user!;
     final followers = appCubit.state.followers;

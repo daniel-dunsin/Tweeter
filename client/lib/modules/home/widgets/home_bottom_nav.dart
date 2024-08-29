@@ -1,5 +1,7 @@
+import 'package:client/shared/cubit/app_nav_cubit/app_nav_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 final List<IconData> bottomNavTabsIcons = [
   Icons.home_outlined,
@@ -18,18 +20,14 @@ final List<IconData> bottomNavTabsSelectedIcons = [
 ];
 
 class HomeBottomNav extends StatelessWidget {
-  final int currentPage;
-  final Function(int index) onChangePage;
-
   const HomeBottomNav({
     super.key,
-    required this.currentPage,
-    required this.onChangePage,
   });
 
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
+    final appNavCubit = context.watch<AppNavCubit>();
 
     return Theme(
       data: Theme.of(context).copyWith(
@@ -44,34 +42,31 @@ class HomeBottomNav extends StatelessWidget {
             ),
           ),
         ),
-        child: StatefulBuilder(builder: (context, setState) {
-          return NavigationBar(
-            destinations: [
-              for (int i = 0; i < bottomNavTabsIcons.length; i++)
-                NavigationDestination(
-                  icon: Icon(
-                    bottomNavTabsIcons[i],
-                    color: appColors.foregroundColor,
-                    size: 27,
-                  ),
-                  label: "",
-                  selectedIcon: Icon(
-                    bottomNavTabsSelectedIcons[i],
-                    color: appColors.foregroundColor,
-                    size: 27,
-                  ),
+        child: NavigationBar(
+          destinations: [
+            for (int i = 0; i < bottomNavTabsIcons.length; i++)
+              NavigationDestination(
+                icon: Icon(
+                  bottomNavTabsIcons[i],
+                  color: appColors.foregroundColor,
+                  size: 27,
                 ),
-            ],
-            indicatorColor: Colors.transparent,
-            backgroundColor: appColors.backgroundColor,
-            animationDuration: Duration(milliseconds: 300),
-            selectedIndex: currentPage,
-            onDestinationSelected: (int screen) {
-              onChangePage(screen);
-              setState(() {});
-            },
-          );
-        }),
+                label: "",
+                selectedIcon: Icon(
+                  bottomNavTabsSelectedIcons[i],
+                  color: appColors.foregroundColor,
+                  size: 27,
+                ),
+              ),
+          ],
+          indicatorColor: Colors.transparent,
+          backgroundColor: appColors.backgroundColor,
+          animationDuration: Duration(milliseconds: 300),
+          selectedIndex: appNavCubit.state,
+          onDestinationSelected: (int screen) {
+            appNavCubit.setBottomNavIndex(screen, context);
+          },
+        ),
       ),
     );
   }
