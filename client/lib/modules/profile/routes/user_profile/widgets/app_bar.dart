@@ -31,7 +31,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
-    final loggedInUser = context.read<AppCubit>().state.user;
+    final loggedInUser = context.watch<AppCubit>().state.user;
 
     return StatefulBuilder(
       builder: (context, setState) {

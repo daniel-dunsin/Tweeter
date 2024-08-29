@@ -1,5 +1,6 @@
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ProfileKeyValue extends StatelessWidget {
   final String profileKey;
@@ -22,7 +23,7 @@ class ProfileKeyValue extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: this.enforceMinLine == true ? 2 : 5, horizontal: 8),
       child: Row(
-        crossAxisAlignment: this.enforceMinLine == true ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+        crossAxisAlignment: enforceMinLine == true ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         children: [
           SizedBox(
             width: 70,
@@ -38,6 +39,10 @@ class ProfileKeyValue extends StatelessWidget {
             child: TextFormField(
               controller: controller,
               cursorColor: appColors.iconColor,
+              maxLines: 3,
+              minLines: enforceMinLine == true ? 1 : null,
+              enabled: !disableInput,
+              maxLength: 180,
               style: TextStyle(
                 color: appColors.iconColor,
                 fontSize: 15,
@@ -45,10 +50,8 @@ class ProfileKeyValue extends StatelessWidget {
               decoration: InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.all(1),
+                counterText: enforceMinLine == true ? '' : null,
               ),
-              maxLines: 3,
-              minLines: this.enforceMinLine == true ? 1 : null,
-              enabled: !disableInput,
             ),
           )
         ],

@@ -36,12 +36,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     on<EditProfileRequested>((event, emit) async {
       emit(EditProfileLoading());
+      print("editing profile");
       try {
         final response = await this.profileRepository.editUserProfile(event.editProfileDto);
 
         final Map<String, dynamic> userMap = response["data"];
         final UserModel user = UserModel.fromMap(userMap);
         appCubit.setUser(user);
+
         emit(EditProfileSuccess(user));
       } catch (e) {
         handleError(e: e);

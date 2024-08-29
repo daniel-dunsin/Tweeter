@@ -15,6 +15,7 @@ class ProfileService {
   Future<Response> editUserProfile(Map<String, dynamic> editProfileDto) async {
     return await httpInstance.put(
       "${AppSecrets.serverUrl}/user",
+      data: editProfileDto,
       options: await getDefaulNetworkOptions(),
     );
   }

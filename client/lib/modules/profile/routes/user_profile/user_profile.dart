@@ -60,6 +60,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
+    final loggedInUser = context.watch<AppCubit>().state.user!;
 
     return Scaffold(
       body: BlocConsumer<ProfileBloc, ProfileState>(
@@ -86,7 +87,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
                         slivers: [
                           UserProfileAppBar(
                             scrollController: _scrollController,
-                            user: user,
+                            user: user!.id == loggedInUser.id ? loggedInUser : user,
                             followers: followers,
                             followings: followings,
                             tabController: _tabController,
