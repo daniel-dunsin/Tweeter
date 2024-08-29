@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UtilService } from 'src/shared/utils/utils.service';
+import DEFAULT_IMAGES from 'src/shared/constants/images.const';
 
 @Injectable()
 export class UserProvider {
@@ -110,6 +111,46 @@ export class UserProvider {
     return {
       success: true,
       message: 'Cover picture updated',
+      data,
+    };
+  }
+
+  async deleteProfilePicture(userId: string) {
+    const user = await this.userService.getUser({ id: userId });
+
+    if (!user) throw new NotFoundException('User not found');
+
+    const data = await this.userService.updateUser(
+      { id: userId },
+      { profilePicture: DEFAULT_IMAGES.profilePicture, profilePictureId: null },
+    );
+
+    if (user.profilePictureId)
+      await this.utilService.deleteAsset(user.profilePictureId);
+
+    return {
+      success: true,
+      message: 'dp deleted',
+      data,
+    };
+  }
+
+  async deleteCoverPicture(userId: string) {
+    const user = await this.userService.getUser({ id: userId });
+
+    if (!user) throw new NotFoundException('User not found');
+
+    const data = await this.userService.updateUser(
+      { id: userId },
+      { coverPictureId: null, coverPicture: null },
+    );
+
+    if (user.profilePictureId)
+      await this.utilService.deleteAsset(user.profilePictureId);
+
+    return {
+      success: true,
+      message: 'dp deleted',
       data,
     };
   }

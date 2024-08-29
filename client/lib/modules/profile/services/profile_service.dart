@@ -18,4 +18,18 @@ class ProfileService {
       options: await getDefaulNetworkOptions(),
     );
   }
+
+  Future<Response> deleteProfilePicture() async {
+    return await httpInstance.delete(
+      "${AppSecrets.serverUrl}/user/profile-picture",
+      options: await getDefaulNetworkOptions(),
+    );
+  }
+
+  Future<Response> deleteCoverPicture() async {
+    return await httpInstance.delete(
+      "${AppSecrets.serverUrl}/user/cover-picture",
+      options: await getDefaulNetworkOptions(),
+    );
+  }
 }

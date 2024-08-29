@@ -17,4 +17,16 @@ class ProfileRepository {
 
     return response.data;
   }
+
+  deleteProfilePicture() async {
+    final response = await this.profileService.deleteProfilePicture();
+
+    return response.data;
+  }
+
+  deleteCoverPicture() async {
+    final response = await this.profileService.deleteCoverPicture();
+
+    return response.data;
+  }
 }

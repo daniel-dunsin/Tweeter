@@ -1,18 +1,19 @@
-import 'dart:io';
-
 import 'package:client/modules/auth/models/user_model.dart';
+import 'package:client/modules/profile/bloc/profile_bloc.dart';
 import 'package:client/modules/profile/models/edit_profile_model.dart';
 import 'package:client/modules/profile/routes/edit_profile/widgets/profile_key_value.dart';
+import 'package:client/shared/constants/images.dart';
+import 'package:client/shared/cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/utils/file.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  final UserModel user;
-
+  final UserModel initialUser;
   const EditProfileScreen({
     super.key,
-    required this.user,
+    required this.initialUser,
   });
 
   @override
@@ -21,9 +22,10 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   EditProfileModel _editProfileModel = EditProfileModel();
-  late final nameController = TextEditingController(text: widget.user.name);
-  late final bioController = TextEditingController(text: widget.user.bio);
-  late final websiteController = TextEditingController(text: widget.user.website);
+  late final UserModel user;
+  late final nameController = TextEditingController(text: widget.initialUser.name);
+  late final bioController = TextEditingController(text: widget.initialUser.bio);
+  late final websiteController = TextEditingController(text: widget.initialUser.website);
 
   @override
   void initState() {
@@ -54,174 +56,228 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
+    final profileBloc = context.read<ProfileBloc>();
+    final user = context.watch<AppCubit>().state.user!;
 
     return FractionallySizedBox(
       heightFactor: 0.90,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Container(
-          decoration: BoxDecoration(
-            color: appColors.backgroundColor,
-          ),
-          height: double.maxFinite,
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Cancel",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: const Text(
-                        "Edit Profile",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.grey,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Save",
-                          style: TextStyle(fontSize: 15),
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                height: 180,
-                child: Stack(
-                  children: [
-                    GestureDetector(
-                      onTap: () async {
-                        final file = await pickImage();
+      child: BlocConsumer<ProfileBloc, ProfileState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            final bool saveDisabled = state is DeleteProfilePictureLoading || state is DeleteCoverPictureLoading || state is EditProfileLoading;
 
-                        if (file != null) {
-                          setState(() {
-                            _editProfileModel = _editProfileModel.copyWith(coverPicture: file);
-                          });
-                        }
-                      },
-                      child: Visibility(
-                        child: _editProfileModel.coverPicture == null
-                            ? Image.network(
-                                widget.user.coverPicture ?? "",
-                                width: double.maxFinite,
-                                height: 150,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.file(
-                                _editProfileModel.coverPicture!,
-                                width: double.maxFinite,
-                                height: 150,
-                                fit: BoxFit.cover,
+            return Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Container(
+                decoration: BoxDecoration(
+                  color: appColors.backgroundColor,
+                ),
+                height: double.maxFinite,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                "Cancel",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: appColors.foregroundColor,
+                                ),
                               ),
-                        replacement: Container(
-                          height: 150,
-                          width: double.maxFinite,
-                          color: appColors.secondaryBackgroundColor,
-                          child: Center(
-                            child: Icon(
-                              Icons.photo_camera_outlined,
-                              color: appColors.secondaryForegroundColor,
                             ),
                           ),
-                        ),
-                        visible: widget.user.coverPicture != null || _editProfileModel.coverPicture != null,
+                          Expanded(
+                            child: Text(
+                              "Edit Profile",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: appColors.foregroundColor,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                "Save",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: saveDisabled ? Colors.grey : appColors.foregroundColor,
+                                ),
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Positioned(
-                      top: 120,
-                      left: 10,
-                      child: GestureDetector(
-                        onTap: () async {
-                          final file = await pickImage();
+                    Container(
+                      height: 180,
+                      child: Stack(
+                        children: [
+                          GestureDetector(
+                            onTap: () async {
+                              final file = await pickImage();
 
-                          if (file != null) {
-                            setState(() {
-                              _editProfileModel = _editProfileModel.copyWith(profilePicture: file);
-                            });
-                          }
-                        },
-                        child: CircleAvatar(
-                          backgroundImage: _editProfileModel.profilePicture == null ? NetworkImage(widget.user.profilePicture) : FileImage(_editProfileModel.profilePicture!),
-                          radius: 30,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color.fromRGBO(0, 0, 0, 0.5),
-                                  Color.fromRGBO(0, 0, 0, 0.5),
+                              if (file != null) {
+                                setState(() {
+                                  _editProfileModel = _editProfileModel.copyWith(coverPicture: file);
+                                });
+                              }
+                            },
+                            child: Visibility(
+                              child: Stack(
+                                children: [
+                                  _editProfileModel.coverPicture == null
+                                      ? Image.network(
+                                          user.coverPicture ?? "",
+                                          width: double.maxFinite,
+                                          height: 150,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image.file(
+                                          _editProfileModel.coverPicture!,
+                                          width: double.maxFinite,
+                                          height: 150,
+                                          fit: BoxFit.cover,
+                                        ),
+                                  Positioned(
+                                    right: 14,
+                                    top: 14,
+                                    child: IconButton(
+                                      color: appColors.iconColor,
+                                      onPressed: () {
+                                        if (_editProfileModel.coverPicture != null) {
+                                          setState(() {
+                                            _editProfileModel = _editProfileModel.copyWith(coverPicture: null, coverPictureSetToNull: true);
+                                          });
+                                        } else {
+                                          profileBloc.add(DeleteCoverPictureRequested());
+                                        }
+                                      },
+                                      icon: Icon(
+                                        Icons.delete,
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
-                              borderRadius: BorderRadius.circular(30),
+                              replacement: Container(
+                                height: 150,
+                                width: double.maxFinite,
+                                color: appColors.secondaryBackgroundColor,
+                                child: Center(
+                                  child: Icon(
+                                    Icons.photo_camera_outlined,
+                                    color: appColors.secondaryForegroundColor,
+                                  ),
+                                ),
+                              ),
+                              visible: user.coverPicture != null || _editProfileModel.coverPicture != null,
                             ),
-                            child: Center(
-                              child: Icon(
-                                Icons.photo_camera_outlined,
-                                color: Colors.white,
+                          ),
+                          Positioned(
+                            top: 120,
+                            left: 10,
+                            child: GestureDetector(
+                              onTap: () async {
+                                final file = await pickImage();
+
+                                if (file != null) {
+                                  setState(() {
+                                    _editProfileModel = _editProfileModel.copyWith(profilePicture: file);
+                                  });
+                                }
+                              },
+                              child: CircleAvatar(
+                                backgroundImage: _editProfileModel.profilePicture == null ? NetworkImage(user.profilePicture) : FileImage(_editProfileModel.profilePicture!),
+                                radius: 30,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color.fromRGBO(0, 0, 0, 0.5),
+                                        Color.fromRGBO(0, 0, 0, 0.5),
+                                      ],
+                                    ),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.photo_camera_outlined,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
+                          user.profilePicture != AppImages.placeholderImage || _editProfileModel.profilePicture != null
+                              ? Positioned(
+                                  top: 145,
+                                  left: 65,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      if (_editProfileModel.profilePicture != null) {
+                                        _editProfileModel = _editProfileModel.copyWith(profilePicture: null, profilePictureSetToNull: true);
+                                      } else {
+                                        profileBloc.add(DeleteProfilePictureRequested());
+                                      }
+                                    },
+                                    icon: Icon(Icons.delete),
+                                    color: appColors.iconColor,
+                                  ),
+                                )
+                              : SizedBox(),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            const Divider(height: 0.5, color: Colors.grey),
+                            ProfileKeyValue(
+                              profileKey: "Name",
+                              enforceMinLine: true,
+                              controller: nameController,
+                            ),
+                            Divider(height: 0.5, color: Colors.grey),
+                            const Divider(height: 0.5, color: Colors.grey),
+                            ProfileKeyValue(
+                              profileKey: "Bio",
+                              controller: bioController,
+                            ),
+                            Divider(height: 0.5, color: Colors.grey),
+                            const Divider(height: 0.5, color: Colors.grey),
+                            ProfileKeyValue(
+                              profileKey: "Website",
+                              enforceMinLine: true,
+                              controller: websiteController,
+                            ),
+                            Divider(height: 0.5, color: Colors.grey),
+                          ],
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const Divider(height: 0.5, color: Colors.grey),
-                      ProfileKeyValue(
-                        profileKey: "Name",
-                        enforceMinLine: true,
-                        controller: nameController,
-                      ),
-                      Divider(height: 0.5, color: Colors.grey),
-                      const Divider(height: 0.5, color: Colors.grey),
-                      ProfileKeyValue(
-                        profileKey: "Bio",
-                        controller: bioController,
-                      ),
-                      Divider(height: 0.5, color: Colors.grey),
-                      const Divider(height: 0.5, color: Colors.grey),
-                      ProfileKeyValue(
-                        profileKey: "Website",
-                        enforceMinLine: true,
-                        controller: websiteController,
-                      ),
-                      Divider(height: 0.5, color: Colors.grey),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+            );
+          }),
     );
   }
 }

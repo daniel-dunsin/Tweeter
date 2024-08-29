@@ -16,3 +16,7 @@ class EditProfileRequested extends ProfileEvent {
 
   EditProfileRequested(this.editProfileDto);
 }
+
+class DeleteCoverPictureRequested extends ProfileEvent {}
+
+class DeleteProfilePictureRequested extends ProfileEvent {}

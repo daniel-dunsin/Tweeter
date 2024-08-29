@@ -24,10 +24,12 @@ class EditProfileModel {
     String? name,
     String? bio,
     String? website,
+    bool coverPictureSetToNull = false,
+    bool profilePictureSetToNull = false,
   }) {
     return EditProfileModel(
-      coverPicture: coverPicture ?? this.coverPicture,
-      profilePicture: profilePicture ?? this.profilePicture,
+      coverPicture: coverPictureSetToNull ? null : coverPicture ?? this.coverPicture,
+      profilePicture: profilePictureSetToNull ? null : profilePicture ?? this.profilePicture,
       name: name ?? this.name,
       bio: bio ?? this.bio,
       website: website ?? this.website,

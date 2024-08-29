@@ -123,7 +123,9 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                                   context: context,
                                   isScrollControlled: true,
                                   builder: (context) {
-                                    return EditProfileScreen(user: widget.user!);
+                                    return EditProfileScreen(
+                                      initialUser: widget.user!,
+                                    );
                                   },
                                 );
                               },

@@ -24,3 +24,15 @@ class EditProfileSuccess extends ProfileState {
 }
 
 class EditProfileError extends ProfileState {}
+
+class DeleteProfilePictureLoading extends ProfileState {}
+
+class DeleteProfilePictureSuccess extends ProfileState {}
+
+class DeleteProfilePictureError extends ProfileState {}
+
+class DeleteCoverPictureLoading extends ProfileState {}
+
+class DeleteCoverPictureSuccess extends ProfileState {}
+
+class DeleteCoverPictureError extends ProfileState {}

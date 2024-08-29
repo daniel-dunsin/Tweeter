@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Auth } from 'src/core/decorators/auth.decorator';
 import { UserProvider } from './user.provider';
@@ -52,5 +52,15 @@ export class UserController {
   @Get(':userId')
   async getUserById(@Param('userId') userId: string) {
     return await this.userProvider.getUser(userId);
+  }
+
+  @Delete('profile-picture')
+  async deleteUserDp(@Auth('id') userId: string) {
+    return await this.userProvider.deleteProfilePicture(userId);
+  }
+
+  @Delete('cover-picture')
+  async deleteUserCoverDp(@Auth('id') userId: string) {
+    return await this.userProvider.deleteCoverPicture(userId);
   }
 }
