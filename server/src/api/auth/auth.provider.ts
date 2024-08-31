@@ -17,6 +17,9 @@ import { JwtService } from '@nestjs/jwt';
 import { SignJwtDto } from './dtos/jwt-sign.dto';
 import { VerifyEmailDto } from './dtos/verify-email.dto';
 import { ResetPasswordDto } from './dtos/forgot-password.dto';
+import * as google from 'google-auth-library';
+import { ConfigService } from '@nestjs/config';
+import DEFAULT_IMAGES from 'src/shared/constants/images.const';
 
 @Injectable()
 export class AuthProvider {
@@ -27,6 +30,7 @@ export class AuthProvider {
     private readonly tokenService: TokenService,
     private readonly jwtService: JwtService,
     private readonly eventEmitter: EventEmitter2,
+    private readonly configService: ConfigService,
   ) {}
 
   async signUp(signUpDto: SignUpDto) {
@@ -243,6 +247,65 @@ export class AuthProvider {
     return {
       success: true,
       message: 'password reset successful',
+    };
+  }
+
+  async authWithGoogle(idToken: string) {
+    const GOOGLE_ANDROID_CLIENT_ID = this.configService.get<string>(
+      'GOOGLE_ANDROID_CLIENT_ID',
+    );
+
+    const client = new google.OAuth2Client();
+
+    const ticket = await client.verifyIdToken({
+      idToken,
+      audience: [GOOGLE_ANDROID_CLIENT_ID],
+    });
+
+    const googleUser = await ticket.getPayload();
+
+    const userAuth = await this.authService.getAuth({
+      email: googleUser.email,
+    });
+
+    if (!userAuth) {
+      await this.authService.createAuth({
+        email: googleUser.email,
+        isVerified: true,
+      });
+
+      const user = await this.userService.createUser({
+        name: googleUser.name,
+        email: googleUser.email,
+        profilePicture: googleUser.picture ?? DEFAULT_IMAGES.profilePicture,
+      });
+      const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
+      await this.authService.upsertJwtToken(
+        { userId: user.id },
+        { accessToken },
+      );
+
+      return {
+        message: 'google sign up successful',
+        data: user,
+        meta: {
+          accessToken,
+          isNew: true,
+        },
+      };
+    }
+
+    const user = await this.userService.getUser({ email: googleUser.email });
+    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
+    await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
+
+    return {
+      message: 'google sign in successful',
+      data: user,
+      meta: {
+        accessToken,
+        isNew: false,
+      },
     };
   }
 }

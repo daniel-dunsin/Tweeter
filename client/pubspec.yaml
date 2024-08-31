@@ -21,6 +21,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   intl: ^0.18.1
   intrinsic_dimension: ^0.3.1
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:

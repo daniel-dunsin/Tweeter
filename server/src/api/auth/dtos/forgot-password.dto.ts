@@ -17,3 +17,8 @@ export class ResetPasswordDto {
   @IsString(false)
   password: string;
 }
+
+export class AuthWithGoogleDto {
+  @IsString(false)
+  idToken: string;
+}
