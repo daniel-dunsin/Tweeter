@@ -24,4 +24,9 @@ export class FollowController {
   async getFollows(@Param('userId') userId: string) {
     return await this.followProvider.getFollows(userId);
   }
+
+  @Get('suggested')
+  async getSuggestedFollows(@Auth('id') userId: string) {
+    return await this.followProvider.getSuggestedFollows(userId);
+  }
 }

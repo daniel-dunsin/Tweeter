@@ -2,6 +2,7 @@ import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/follow/bloc/follows_bloc.dart';
 import 'package:client/modules/follow/enums/index.dart';
 import 'package:client/modules/follow/widgets/users_list.dart';
+import 'package:client/modules/home/widgets/home_bottom_nav.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,6 +39,7 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
     if (tab != null && currentTab == null) {
       setState(() {
         currentTab = tab;
+        _tabController.index = tabs.indexOf(tab);
       });
     }
 
@@ -53,6 +55,7 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
     final user = screenArgs?["user"] as UserModel;
 
     return Scaffold(
+      bottomNavigationBar: const HomeBottomNav(),
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {

@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { FollowService } from './follow.service';
 import { UserService } from '../user/user.service';
+import { arrayNotEmpty } from 'class-validator';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class FollowProvider {
@@ -87,6 +89,30 @@ export class FollowProvider {
     return {
       success: true,
       message: 'follows fetched successfully',
+      data,
+    };
+  }
+
+  async getSuggestedFollows(userId: string) {
+    const { interests } = await this.userService.getUser({ id: userId });
+
+    let query: Prisma.UserWhereInput;
+
+    if (arrayNotEmpty(interests)) {
+      query = {
+        interests: {
+          some: { OR: interests.map((interest) => ({ id: interest.id })) },
+        },
+      };
+    } else {
+      query = {};
+    }
+
+    const data = await this.userService.getUsers(query);
+
+    return {
+      success: true,
+      message: 'get suggested follows successful',
       data,
     };
   }
