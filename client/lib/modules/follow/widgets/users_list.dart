@@ -4,15 +4,20 @@ import 'package:flutter/material.dart';
 
 class UsersList extends StatelessWidget {
   final List<UserModel> users;
-  const UsersList({super.key, required this.users});
+  final Widget? replacement;
+  const UsersList({super.key, required this.users, this.replacement});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return UserListTile(user: users[index]);
-      },
-      itemCount: users.length,
+    return Visibility(
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          return UserListTile(user: users[index]);
+        },
+        itemCount: users.length,
+      ),
+      visible: this.users.length > 0,
+      replacement: replacement ?? SizedBox.shrink(),
     );
   }
 }

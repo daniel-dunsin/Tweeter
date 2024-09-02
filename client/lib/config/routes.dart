@@ -50,6 +50,6 @@ Map<String, Widget Function(BuildContext context)> getRoutes(BuildContext contex
     // private
     PrivateRoutes.rootHome: (context) => RootHome(),
     PrivateRoutes.profile: (context) => UserProfileScreen(),
-    PrivateRoutes.follows: (context) => FollowsScreen()
+    PrivateRoutes.follows: (context) => FollowsScreen(),
   };
 }

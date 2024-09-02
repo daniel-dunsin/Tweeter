@@ -96,7 +96,7 @@ export class FollowProvider {
   async getSuggestedFollows(userId: string) {
     const { interests } = await this.userService.getUser({ id: userId });
 
-    let query: Prisma.UserWhereInput;
+    let query: Prisma.UserWhereInput = {};
 
     if (arrayNotEmpty(interests)) {
       query = {
@@ -107,6 +107,8 @@ export class FollowProvider {
     } else {
       query = {};
     }
+
+    query.NOT = { id: userId };
 
     const data = await this.userService.getUsers(query);
 

@@ -1,6 +1,8 @@
 import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/follow/bloc/follows_bloc.dart';
 import 'package:client/modules/follow/enums/index.dart';
+import 'package:client/modules/follow/widgets/no_follower.dart';
+import 'package:client/modules/follow/widgets/no_following.dart';
 import 'package:client/modules/follow/widgets/users_list.dart';
 import 'package:client/modules/home/widgets/home_bottom_nav.dart';
 import 'package:client/shared/theme/colors.dart';
@@ -19,6 +21,9 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
   late final TabController _tabController = TabController(length: 3, vsync: this);
   final List<FollowsTabs> tabs = FollowsTabs.values;
   FollowsTabs? currentTab;
+  List<UserModel> verifiedFollowers = [];
+  List<UserModel> followers = [];
+  List<UserModel> followings = [];
 
   @override
   void initState() {
@@ -99,20 +104,36 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
               isScrollable: false,
             ),
           ),
-          BlocBuilder<FollowsBloc, FollowsState>(
+          BlocConsumer<FollowsBloc, FollowsState>(
+            listener: (context, state) {
+              if (state is GetUserFollowsSuccess) {
+                setState(() {
+                  followers = state.userFollows.followers;
+                  followings = state.userFollows.followings;
+                  verifiedFollowers = state.userFollows.verifiedFollowers;
+                });
+              }
+            },
             builder: (context, state) {
               return Visibility(
                 child: Expanded(
-                  child: state is GetUserFollowsSuccess
-                      ? (TabBarView(
-                          controller: _tabController,
-                          children: [
-                            UsersList(users: state.userFollows.verifiedFollowers),
-                            UsersList(users: state.userFollows.followers),
-                            UsersList(users: state.userFollows.followings),
-                          ],
-                        ))
-                      : SizedBox(),
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      UsersList(
+                        users: verifiedFollowers,
+                        replacement: const NoFollower(),
+                      ),
+                      UsersList(
+                        users: followers,
+                        replacement: NoFollower(),
+                      ),
+                      UsersList(
+                        users: followings,
+                        replacement: NoFollowing(message: "You're not following anyone yet."),
+                      ),
+                    ],
+                  ),
                 ),
                 replacement: Container(
                   padding: EdgeInsets.all(20),

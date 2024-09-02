@@ -14,3 +14,13 @@ class GetUserFollowsSuccess extends FollowsState {
 }
 
 class GetUserFollowsError extends FollowsState {}
+
+class GetSuggestedFollowsLoading extends FollowsState {}
+
+class GetSuggestedFollowsSuccess extends FollowsState {
+  final List<UserModel> users;
+
+  GetSuggestedFollowsSuccess(this.users);
+}
+
+class GetSuggestedFollowsError extends FollowsState {}

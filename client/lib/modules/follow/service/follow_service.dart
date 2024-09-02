@@ -11,4 +11,11 @@ class FollowService {
       options: await getDefaulNetworkOptions(),
     );
   }
+
+  Future<Response> getSuggestedUsers() async {
+    return await httpInstance.get(
+      "${AppSecrets.serverUrl}/follow/suggested",
+      options: await getDefaulNetworkOptions(),
+    );
+  }
 }

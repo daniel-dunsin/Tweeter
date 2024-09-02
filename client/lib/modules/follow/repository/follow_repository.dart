@@ -10,4 +10,10 @@ class FollowRepository {
 
     return response.data;
   }
+
+  getSuggestedFollows() async {
+    final response = await followService.getSuggestedUsers();
+
+    return response.data;
+  }
 }

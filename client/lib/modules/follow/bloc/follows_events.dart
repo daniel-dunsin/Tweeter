@@ -8,3 +8,5 @@ class GetUserFollowsRequested extends FollowsEvents {
 
   GetUserFollowsRequested({required this.userId});
 }
+
+class GetSuggestedFollowsRequested extends FollowsEvents {}
