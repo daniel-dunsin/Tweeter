@@ -54,11 +54,16 @@ Future<Map<String, dynamic>> getInitialRoute() async {
         user = UserModel.fromMap(userMap);
       } else {
         initialRoute = AuthRoutes.signUpInitial;
+        await LocalStorage.removeEntry(key: localStorageConstants.accessToken);
       }
+    } else {
+      initialRoute = AuthRoutes.signUpInitial;
+      await LocalStorage.removeEntry(key: localStorageConstants.accessToken);
     }
   } catch (e) {
     print(e);
     initialRoute = AuthRoutes.signUpInitial;
+    await LocalStorage.removeEntry(key: localStorageConstants.accessToken);
   } finally {
     FlutterNativeSplash.remove();
   }

@@ -2,6 +2,7 @@ import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/home/widgets/home_bottom_nav.dart';
 import 'package:client/modules/profile/bloc/profile_bloc.dart';
 import 'package:client/modules/profile/routes/user_profile/widgets/app_bar.dart';
+import 'package:client/modules/profile/utils/profile_utils.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -69,8 +70,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
           if (state is GetProfileSuccess) {
             setState(() {
               user = state.user;
-              followings = state.user.followings;
-              followers = state.user.followers;
+              followings = followingsToUsers(state.user.followings ?? []);
+              followers = followersToUsers(state.user.followers ?? []);
             });
           }
 

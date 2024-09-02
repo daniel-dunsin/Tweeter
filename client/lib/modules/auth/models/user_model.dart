@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:client/modules/follow/models/follows_model.dart';
+
 class UserModel {
   final String email;
   final String name;
@@ -11,8 +13,8 @@ class UserModel {
   final String? coverPicture;
   final String? website;
   final DateTime createdAt;
-  final List<UserModel>? followers;
-  final List<UserModel>? followings;
+  final List<FollowsModel>? followers;
+  final List<FollowsModel>? followings;
 
   UserModel({
     required this.email,
@@ -40,8 +42,8 @@ class UserModel {
     String? coverPicture,
     String? website,
     DateTime? createdAt,
-    List<UserModel>? followers,
-    List<UserModel>? followings,
+    List<FollowsModel>? followers,
+    List<FollowsModel>? followings,
   }) {
     return UserModel(
       email: email ?? this.email,
@@ -124,8 +126,8 @@ class UserModel {
       coverPicture: map['coverPicture'],
       website: map['website'],
       createdAt: DateTime.parse(map['createdAt']),
-      followers: map['followers'] != null ? List<UserModel>.from(map['followers']?.map((x) => UserModel.fromMap(x))) : null,
-      followings: map['followings'] != null ? List<UserModel>.from(map['followings']?.map((x) => UserModel.fromMap(x))) : null,
+      followers: map['followers'] != null ? List<FollowsModel>.from(map['followers']?.map((x) => FollowsModel.fromMap(x))) : null,
+      followings: map['followings'] != null ? List<FollowsModel>.from(map['followings']?.map((x) => FollowsModel.fromMap(x))) : null,
     );
   }
 

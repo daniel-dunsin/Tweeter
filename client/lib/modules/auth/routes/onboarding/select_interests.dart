@@ -1,3 +1,4 @@
+import 'package:client/config/routes.dart';
 import 'package:client/modules/categories/bloc/categories_bloc.dart';
 import 'package:client/modules/categories/models/category_model.dart';
 import 'package:client/shared/theme/colors.dart';
@@ -70,6 +71,11 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
               setState(() {
                 selectedSubcategories = [];
               });
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                PrivateRoutes.rootHome,
+                (route) => false,
+              );
             }
           },
           builder: (context, state) {

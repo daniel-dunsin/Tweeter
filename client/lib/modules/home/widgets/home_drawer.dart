@@ -123,7 +123,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           children: [
                             WidgetSpan(
                               child: Text(
-                                "${followers?.length ?? 0} ",
+                                "${followers?.length ?? user.followers?.length ?? 0} ",
                                 style: TextStyle(
                                   color: appColors.foregroundColor,
                                   fontWeight: FontWeight.w600,
@@ -154,7 +154,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           children: [
                             WidgetSpan(
                               child: Text(
-                                "${followings?.length ?? 0} ",
+                                "${followings?.length ?? user.followings?.length ?? 0} ",
                                 style: TextStyle(
                                   color: appColors.foregroundColor,
                                   fontWeight: FontWeight.w600,

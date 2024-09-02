@@ -30,6 +30,7 @@ import { AuthGuard } from './guards/auth.guard';
     UserModule,
     TokenModule,
     MailModule,
+    ConfigModule,
   ],
   controllers: [AuthController],
   providers: [

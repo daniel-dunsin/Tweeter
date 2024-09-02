@@ -2,6 +2,7 @@ import 'package:client/modules/auth/bloc/auth_event.dart';
 import 'package:client/modules/auth/bloc/auth_state.dart';
 import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/auth/repository/auth_repository.dart';
+import 'package:client/modules/profile/utils/profile_utils.dart';
 import 'package:client/shared/constants/localstorage.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/utils/localstorage.dart';
@@ -38,6 +39,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
         await LocalStorage.setString(key: localStorageConstants.accessToken, value: accessToken);
         appCubit.setUser(user);
+        appCubit.setFollowers(followersToUsers(user.followers ?? []));
+        appCubit.setFollowings(followingsToUsers(user.followings ?? []));
 
         emit(AuthVerifyEmailSuccess(user: user));
       } catch (e) {
@@ -79,6 +82,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
         await LocalStorage.setString(key: localStorageConstants.accessToken, value: accessToken);
         appCubit.setUser(user);
+        appCubit.setFollowers(followersToUsers(user.followers ?? []));
+        appCubit.setFollowings(followingsToUsers(user.followings ?? []));
 
         emit(LoginSuccess(user: user));
       } catch (e) {
@@ -136,6 +141,30 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (e) {
         handleError(e: e);
         emit(UpdateProfilePictureError());
+      }
+    });
+
+    on<AuthWithGoogleRequested>((event, emit) async {
+      emit(AuthWithGoogleLoading());
+      try {
+        final response = await this.authRepository.authWithGoogle(event.accessToken);
+
+        final Map<String, dynamic> userMap = response["data"];
+        final String accessToken = response["meta"]["accessToken"];
+        final bool isNew = response["meta"]["isNew"];
+        final user = UserModel.fromMap(userMap);
+
+        await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
+        await LocalStorage.setString(key: localStorageConstants.accessToken, value: accessToken);
+
+        appCubit.setUser(user);
+        appCubit.setFollowers(followersToUsers(user.followers ?? []));
+        appCubit.setFollowings(followingsToUsers(user.followings ?? []));
+
+        emit(AuthWithGoogleSuccess(user: user, isNew: isNew));
+      } catch (e) {
+        handleError(e: e);
+        emit(AuthWithGoogleError());
       }
     });
   }

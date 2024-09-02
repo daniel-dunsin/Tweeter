@@ -39,7 +39,7 @@
     "class-validator": "^0.14.1",
     "cloudinary": "^2.4.0",
     "ejs": "^3.1.10",
-    "google-auth-library": "^9.14.0",
+    "googleapis": "^143.0.0",
     "joi": "^17.13.3",
     "nodemailer": "^6.9.14",
     "otp-generator": "^4.0.1",

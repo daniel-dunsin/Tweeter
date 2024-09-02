@@ -46,7 +46,7 @@ class ContainedButton extends StatelessWidget {
               size: 20,
             )
           : child,
-      icon: icon,
+      icon: loading == true ? null : icon,
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor ?? appColors.foregroundColor,
         overlayColor: backgroundColor ?? appColors.foregroundColor,

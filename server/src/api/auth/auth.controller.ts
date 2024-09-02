@@ -5,12 +5,12 @@ import {
   CheckEmailDto,
   CheckUserNameDto,
   SignUpDto,
+  AuthWithGoogleDto,
 } from './dtos/sign-up.dto';
 import { AuthProvider } from './auth.provider';
 import { LoginDto } from './dtos/login.dto';
 import { VerifyEmailDto } from './dtos/verify-email.dto';
 import {
-  AuthWithGoogleDto,
   ConfirmPasswordResetCode,
   ForgotPasswordDto,
   ResetPasswordDto,
@@ -85,6 +85,8 @@ export class AuthController {
   @Post('google')
   @IsPublic()
   async authWithGoogle(@Body() authWithGoogleDto: AuthWithGoogleDto) {
-    return await this.authProvider.authWithGoogle(authWithGoogleDto.idToken);
+    return await this.authProvider.authWithGoogle(
+      authWithGoogleDto.accessToken,
+    );
   }
 }

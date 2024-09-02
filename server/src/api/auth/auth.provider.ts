@@ -17,7 +17,7 @@ import { JwtService } from '@nestjs/jwt';
 import { SignJwtDto } from './dtos/jwt-sign.dto';
 import { VerifyEmailDto } from './dtos/verify-email.dto';
 import { ResetPasswordDto } from './dtos/forgot-password.dto';
-import * as google from 'google-auth-library';
+import { google } from 'googleapis';
 import { ConfigService } from '@nestjs/config';
 import DEFAULT_IMAGES from 'src/shared/constants/images.const';
 
@@ -250,34 +250,38 @@ export class AuthProvider {
     };
   }
 
-  async authWithGoogle(idToken: string) {
-    const GOOGLE_ANDROID_CLIENT_ID = this.configService.get<string>(
-      'GOOGLE_ANDROID_CLIENT_ID',
-    );
+  async authWithGoogle(access_token: string) {
+    const client = new google.auth.OAuth2({});
 
-    const client = new google.OAuth2Client();
+    client.setCredentials({ access_token });
 
-    const ticket = await client.verifyIdToken({
-      idToken,
-      audience: [GOOGLE_ANDROID_CLIENT_ID],
-    });
-
-    const googleUser = await ticket.getPayload();
+    const googleUser = await google
+      .oauth2({ auth: client, version: 'v2' })
+      .userinfo.get()
+      .then((user) => user.data);
 
     const userAuth = await this.authService.getAuth({
       email: googleUser.email,
     });
 
     if (!userAuth) {
+      const userName = await this.utilService.generateUniqueModelId(
+        googleUser?.given_name,
+        'Auth',
+        'userName',
+      );
+
       await this.authService.createAuth({
         email: googleUser.email,
         isVerified: true,
+        userName,
       });
 
       const user = await this.userService.createUser({
         name: googleUser.name,
         email: googleUser.email,
         profilePicture: googleUser.picture ?? DEFAULT_IMAGES.profilePicture,
+        userName,
       });
       const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
       await this.authService.upsertJwtToken(

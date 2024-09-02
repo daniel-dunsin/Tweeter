@@ -35,3 +35,8 @@ export class CheckCredentialDto {
   @IsString(false)
   credential: string;
 }
+
+export class AuthWithGoogleDto {
+  @IsString(false)
+  accessToken: string;
+}

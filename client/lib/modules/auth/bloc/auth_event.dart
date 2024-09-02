@@ -56,3 +56,9 @@ class UpdateProfilePictureRequested extends AuthEvent {
 
   UpdateProfilePictureRequested(this.profilePicture);
 }
+
+class AuthWithGoogleRequested extends AuthEvent {
+  final String accessToken;
+
+  AuthWithGoogleRequested({required this.accessToken});
+}

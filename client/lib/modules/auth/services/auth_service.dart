@@ -70,4 +70,10 @@ class AuthService {
       options: await getDefaulNetworkOptions(),
     );
   }
+
+  Future<Response> authWithGoogle(String accessToken) async {
+    return await httpInstance.post("${AppSecrets.serverUrl}/auth/google", data: {
+      "accessToken": accessToken
+    });
+  }
 }

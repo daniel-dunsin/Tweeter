@@ -65,4 +65,10 @@ class AuthRepository {
 
     return response.data;
   }
+
+  authWithGoogle(String accessToken) async {
+    final response = await this.authService.authWithGoogle(accessToken);
+
+    return response.data;
+  }
 }
