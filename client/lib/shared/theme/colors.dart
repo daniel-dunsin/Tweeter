@@ -27,8 +27,8 @@ class TweeterColors extends ThemeExtension<TweeterColors> {
   factory TweeterColors.light() {
     return TweeterColors.internal(
       backgroundColor: white,
-      secondaryBackgroundColor: lightGray,
-      inputBackgroundColor: lightGray,
+      secondaryBackgroundColor: extraLightGray,
+      inputBackgroundColor: extraLightGray,
       foregroundColor: black,
       secondaryForegroundColor: darkGray,
       iconColor: blue,
@@ -54,8 +54,7 @@ class TweeterColors extends ThemeExtension<TweeterColors> {
   }
 
   @override
-  ThemeExtension<TweeterColors> lerp(
-      covariant ThemeExtension<TweeterColors>? other, double t) {
+  ThemeExtension<TweeterColors> lerp(covariant ThemeExtension<TweeterColors>? other, double t) {
     return this;
   }
 }

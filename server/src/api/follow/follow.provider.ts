@@ -118,4 +118,6 @@ export class FollowProvider {
       data,
     };
   }
+
+  async followUser() {}
 }

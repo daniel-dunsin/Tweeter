@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
           },
         ),
         leadingWidth: double.maxFinite,
-        toolbarHeight: 150,
+        toolbarHeight: 50,
       ),
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {

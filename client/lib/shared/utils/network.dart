@@ -29,6 +29,8 @@ Future? handleError({
     } else {
       errorMessage = e.message ?? e.toString();
     }
+  } else {
+    errorMessage = e.toString();
   }
 
   toastification.show(

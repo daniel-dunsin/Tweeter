@@ -62,4 +62,11 @@ export class UtilService {
 
     return this.generateUniqueModelId(prefix, model, property);
   }
+
+  addUrlProtocol(url: string) {
+    if (!/^https?:\/\//i.test(url)) {
+      return 'https://' + url;
+    }
+    return url;
+  }
 }

@@ -1,0 +1,11 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    environment:
+      - NODE_ENV=PRODUCTION
+    ports:
+      - 3001:3001
+    container_name: tweeter-backend

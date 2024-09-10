@@ -5,7 +5,9 @@ import 'package:client/modules/profile/routes/edit_profile/edit_profile.dart';
 import 'package:client/modules/profile/routes/user_profile/widgets/tab_bar.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
+import 'package:client/shared/utils/misc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import "package:flutter_bloc/flutter_bloc.dart";
 import 'package:intl/intl.dart';
 
@@ -34,6 +36,8 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
     final loggedInUser = context.watch<AppCubit>().state.user;
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
     return StatefulBuilder(
       builder: (context, setState) {
@@ -99,11 +103,29 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                     child: Stack(
                       children: [
                         widget.user?.coverPicture != null
-                            ? Image(
-                                image: NetworkImage(widget.user?.coverPicture as String),
+                            ? Container(
                                 height: 150,
-                                width: double.maxFinite,
-                                fit: BoxFit.cover,
+                                child: Stack(
+                                  children: [
+                                    Image(
+                                      image: NetworkImage(widget.user?.coverPicture as String),
+                                      height: 150,
+                                      width: double.maxFinite,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: appColors.iconColor,
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color.fromRGBO(0, 0, 0, 0.4),
+                                            Color.fromRGBO(0, 0, 0, 0.5),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               )
                             : Container(
                                 color: appColors.iconColor,
@@ -201,12 +223,19 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                                 ),
                                 WidgetSpan(child: const SizedBox(width: 6)),
                                 WidgetSpan(
-                                  child: Text(
-                                    "${widget.user?.website}",
-                                    style: TextStyle(
-                                      color: appColors.iconColor,
-                                    ),
-                                  ),
+                                  child: widget.user?.website != null
+                                      ? GestureDetector(
+                                          onTap: () {
+                                            openUrl(widget.user?.website as String);
+                                          },
+                                          child: Text(
+                                            "${widget.user?.website}",
+                                            style: TextStyle(
+                                              color: appColors.iconColor,
+                                            ),
+                                          ),
+                                        )
+                                      : SizedBox.shrink(),
                                 ),
                               ],
                             ),
@@ -245,7 +274,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                               onTap: () {
                                 Navigator.of(context).pushNamed(PrivateRoutes.follows, arguments: {
                                   "user": widget.user,
-                                  "tab": FollowsTabs.followings,
+                                  "tab": FollowsTabs.followers,
                                 });
                               },
                               child: Text.rich(
@@ -275,7 +304,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                               onTap: () {
                                 Navigator.of(context).pushNamed(PrivateRoutes.follows, arguments: {
                                   "user": widget.user,
-                                  "tab": FollowsTabs.followers,
+                                  "tab": FollowsTabs.followings,
                                 });
                               },
                               child: Text.rich(

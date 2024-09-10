@@ -73,5 +73,15 @@
 				</array>
 			</dict>
 		</array>
+
+		<!-- URL LAUNCHER -->
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>sms</string>
+			<string>tel</string>
+			<string>mailto</string>
+			<string>facetime</string>
+			<string>https</string>
+		</array>
 	</dict>
 </plist>

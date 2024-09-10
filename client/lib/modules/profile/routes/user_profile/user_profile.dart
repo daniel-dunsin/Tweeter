@@ -6,6 +6,7 @@ import 'package:client/modules/profile/utils/profile_utils.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -122,24 +123,24 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
                         child: Container(
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            color: Color.fromRGBO(88, 88, 88, 0.503),
+                            color: Color.fromRGBO(88, 88, 88, 0.803),
                             borderRadius: BorderRadius.circular(50),
                           ),
                           child: Icon(
                             Icons.arrow_back,
-                            color: appColors.secondaryForegroundColor,
+                            color: appColors.foregroundColor,
                           ),
                         ),
                       ),
                       Container(
                         padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(88, 88, 88, 0.503),
+                          color: Color.fromRGBO(88, 88, 88, 0.803),
                           borderRadius: BorderRadius.circular(50),
                         ),
                         child: Icon(
                           Icons.search_outlined,
-                          color: appColors.secondaryForegroundColor,
+                          color: appColors.foregroundColor,
                         ),
                       )
                     ],

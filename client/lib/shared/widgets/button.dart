@@ -61,11 +61,12 @@ class ContainedButton extends StatelessWidget {
                 ? Size(double.maxFinite, height ?? 50)
                 : Size(width ?? 200, height ?? 50),
         shape: RoundedRectangleBorder(
-          side: BorderSide(
-            style: BorderStyle.solid,
-            width: 2,
-            color: disabled == true || loading == true ? Color.fromARGB(255, 100, 100, 100) : appColors.foregroundColor,
-          ),
+          side: borderSide ??
+              BorderSide(
+                style: BorderStyle.solid,
+                width: 1,
+                color: disabled == true || loading == true ? Color.fromARGB(255, 100, 100, 100) : appColors.foregroundColor,
+              ),
           borderRadius: const BorderRadius.all(
             Radius.circular(80),
           ),

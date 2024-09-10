@@ -53,6 +53,13 @@ export class UserProvider {
       delete updateUserDto.coverPicture;
     }
 
+    if (updateUserDto.website) {
+      updateUserDto.website = updateUserDto.website.toLowerCase();
+      updateUserDto.website = this.utilService.addUrlProtocol(
+        updateUserDto.website,
+      );
+    }
+
     const data = await this.userService.updateUser(
       { id: userId },
       updateUserDto,

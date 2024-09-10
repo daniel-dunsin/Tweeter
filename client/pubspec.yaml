@@ -22,6 +22,7 @@ dependencies:
   intl: ^0.18.1
   intrinsic_dimension: ^0.3.1
   google_sign_in: ^6.2.1
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:

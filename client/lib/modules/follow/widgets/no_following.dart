@@ -44,7 +44,6 @@ class NoFollowing extends StatelessWidget {
                   backgroundColor: Colors.transparent,
                   context: context,
                   isScrollControlled: true,
-                  showDragHandle: true,
                   enableDrag: true,
                   builder: (context) {
                     return SuggestedFollowings();

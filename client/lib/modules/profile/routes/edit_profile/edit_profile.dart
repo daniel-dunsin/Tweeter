@@ -70,6 +70,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     return FractionallySizedBox(
       heightFactor: 0.90,
+      widthFactor: 1,
       child: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state is EditProfileSuccess) {
@@ -86,6 +87,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 color: appColors.backgroundColor,
               ),
               height: double.maxFinite,
+              width: double.maxFinite,
               child: Column(
                 children: [
                   Padding(
