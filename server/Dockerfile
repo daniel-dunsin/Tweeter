@@ -14,4 +14,4 @@ EXPOSE 3001
 
 ENV NODE_ENV=production
 
-CMD ["npx", "prisma", "migrate", "deploy", "&&", "npm", "run", "build", "&&", "npm", "run", "start"]
+CMD ["npx", "prisma", "migrate", "deploy", "&&", "npm", "run", "build", "&&", "npm", "run", "start:prod"]
