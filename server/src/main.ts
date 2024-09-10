@@ -6,6 +6,7 @@ import { ConfigService } from '@nestjs/config';
 import { GlobalFilter } from './core/filters/global.filter';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationExceptions } from './core/exceptions/validation.exception';
+import * as express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -13,6 +14,8 @@ async function bootstrap() {
   app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
   app.enableCors();
   app.disable('x-powered-by');
+
+  app.use(express.json({ limit: '50mb' }));
 
   app.useGlobalPipes(
     new ValidationPipe({

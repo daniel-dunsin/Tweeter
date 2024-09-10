@@ -1,6 +1,5 @@
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class ProfileKeyValue extends StatelessWidget {
   final String profileKey;

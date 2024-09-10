@@ -56,5 +56,22 @@
 		<string>I need to use it to pick images for users to update profile picture</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>I need it for voice posts</string>
+		
+
+		<!-- Google Authentication -->
+		<key>GIDClientID</key>
+		<string>60752057965-c3k8els6tp3f7672a6pggqge0fd6lfej.apps.googleusercontent.com</string>
+
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.googleusercontent.apps.60752057965-c3k8els6tp3f7672a6pggqge0fd6lfej</string>
+				</array>
+			</dict>
+		</array>
 	</dict>
 </plist>

@@ -20,7 +20,9 @@ class _GoogleButtonState extends State<GoogleButton> {
     final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
     final GoogleSignInAuthentication? credentials = await googleSignInAccount?.authentication;
 
-    context.read<AuthBloc>().add(AuthWithGoogleRequested(accessToken: credentials?.accessToken as String));
+    if (credentials?.accessToken != null) {
+      context.read<AuthBloc>().add(AuthWithGoogleRequested(accessToken: credentials?.accessToken as String));
+    }
 
     await _googleSignIn.signOut();
   }
