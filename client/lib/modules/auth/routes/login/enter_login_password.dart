@@ -54,7 +54,7 @@ class _EnterLoginPasswordScreenState extends State<EnterLoginPasswordScreen> {
         child: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
           if (state is LoginSuccess) {
             handleSuccess("Welcome ${state.user.name}");
-            GoRouter.of(context).goNamed(PrivateRoutes.rootHome);
+            GoRouter.of(context).goNamed(PrivateRoutes.home);
           }
         }, builder: (context, state) {
           return Column(
@@ -104,11 +104,7 @@ class _EnterLoginPasswordScreenState extends State<EnterLoginPasswordScreen> {
                   },
                   child: Text(
                     "Forgot Password?",
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      decorationThickness: 2.5,
-                      decorationColor: appColors.secondaryForegroundColor,
-                    ),
+                    style: TextStyle(decoration: TextDecoration.underline, decorationThickness: 2.5, decorationColor: appColors.secondaryForegroundColor, fontWeight: FontWeight.bold),
                   ),
                 ),
               )

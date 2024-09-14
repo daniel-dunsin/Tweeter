@@ -1,3 +1,5 @@
+import 'package:client/modules/home/widgets/app_bar.dart';
+import 'package:client/modules/home/widgets/home_drawer.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -5,6 +7,9 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      drawer: const HomeDrawer(),
+      appBar: getHomeRoutesAppBar(context: context),
+    );
   }
 }

@@ -154,7 +154,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
           );
         },
       ),
-      bottomNavigationBar: const HomeBottomNav(),
+      // bottomNavigationBar: const HomeBottomNav(),
     );
   }
 }

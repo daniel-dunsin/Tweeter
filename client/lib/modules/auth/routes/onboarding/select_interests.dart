@@ -72,7 +72,7 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
               setState(() {
                 selectedSubcategories = [];
               });
-              GoRouter.of(context).goNamed(PrivateRoutes.rootHome);
+              GoRouter.of(context).goNamed(PrivateRoutes.home);
             }
           },
           builder: (context, state) {

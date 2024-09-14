@@ -60,30 +60,33 @@ class _AppState extends State<App> {
       minTextAdapt: true,
       splitScreenMode: true,
       designSize: const Size(329, 700),
-      child: ToastificationWrapper(
-        child: MaterialApp.router(
-          title: 'Tweeter',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            useMaterial3: true,
-            textTheme: ThemeData().textTheme.apply(
-                  fontFamily: FontFamily.poppins,
-                  bodyColor: mode.secondaryForegroundColor,
-                ),
-          ).copyWith(
-            extensions: [
-              mode,
-            ],
-            scaffoldBackgroundColor: mode.backgroundColor,
-            appBarTheme: const AppBarTheme().copyWith(
-              backgroundColor: mode.backgroundColor,
-              foregroundColor: mode.secondaryForegroundColor,
-              surfaceTintColor: Colors.transparent,
+      builder: (context, state) {
+        ScreenUtil.configure();
+        return ToastificationWrapper(
+          child: MaterialApp.router(
+            title: 'Tweeter',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              useMaterial3: true,
+              textTheme: ThemeData().textTheme.apply(
+                    fontFamily: FontFamily.poppins,
+                    bodyColor: mode.secondaryForegroundColor,
+                  ),
+            ).copyWith(
+              extensions: [
+                mode,
+              ],
+              scaffoldBackgroundColor: mode.backgroundColor,
+              appBarTheme: const AppBarTheme().copyWith(
+                backgroundColor: mode.backgroundColor,
+                foregroundColor: mode.secondaryForegroundColor,
+                surfaceTintColor: Colors.transparent,
+              ),
             ),
+            routerConfig: appRouter.copyWith(initialLocation: widget.initialRoute),
           ),
-          routerConfig: AppRoutes.initRouter(initialLocation: widget.initialRoute),
-        ),
-      ),
+        );
+      },
     );
   }
 }

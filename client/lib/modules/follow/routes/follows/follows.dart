@@ -38,11 +38,8 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
     super.initState();
   }
 
-
   @override
   void didChangeDependencies() {
-    final screenArgs = ModalRoute.settingsOf(context)?.arguments as Map<String, dynamic>?;
-
     if (widget.tab != null && currentTab == null) {
       setState(() {
         currentTab = widget.tab;
@@ -62,7 +59,7 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
     final user = screenArgs?["user"] as UserModel;
 
     return Scaffold(
-      bottomNavigationBar: const HomeBottomNav(),
+      // bottomNavigationBar: const HomeBottomNav(),
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {

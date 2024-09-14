@@ -46,7 +46,7 @@ class SelectSignUpScreen extends StatelessWidget {
                   if (state.isNew) {
                     GoRouter.of(context).pushNamed(AuthRoutes.updateDp);
                   } else {
-                    GoRouter.of(context).goNamed(PrivateRoutes.rootHome);
+                    GoRouter.of(context).goNamed(PrivateRoutes.home);
                   }
                 }
               },

@@ -11,8 +11,8 @@ class AppNavCubit extends Cubit<int> {
   setBottomNavIndex(int index, BuildContext context) {
     emit(index);
 
-    if (ModalRoute.of(context)?.settings.name != PrivateRoutes.rootHome) {
-      GoRouter.of(context).pushNamed(PrivateRoutes.rootHome);
+    if (ModalRoute.of(context)?.settings.name != PrivateRoutes.home) {
+      GoRouter.of(context).pushNamed(PrivateRoutes.home);
     }
   }
 }

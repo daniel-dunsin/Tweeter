@@ -16,7 +16,11 @@ class AuthRoutes {
 }
 
 class PrivateRoutes {
-  static String rootHome = "/private/home";
+  static String home = "/private/home";
+  static String search = "/private/search";
+  static String chat = "/private/chat";
+  static String notifications = "/private/notification";
+  static String communities = "/private/communities";
   static String profile = "/private/profile";
   static String follows = "/private/follows";
 }

@@ -50,7 +50,7 @@ Future<Map<String, dynamic>> getInitialRoute() async {
       final userMap = response["data"];
       if (userMap != null) {
         await LocalStorage.setString(key: localStorageConstants.user, value: jsonEncode(userMap));
-        initialRoute = PrivateRoutes.profile;
+        initialRoute = PrivateRoutes.home;
         user = UserModel.fromMap(userMap);
       } else {
         initialRoute = AuthRoutes.signUpInitial;
