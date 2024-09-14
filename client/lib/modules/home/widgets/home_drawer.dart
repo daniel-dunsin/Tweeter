@@ -117,10 +117,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        GoRouter.of(context).pushNamed(PrivateRoutes.follows, extra: {
-                          "user": user,
-                          "tab": FollowsTabs.followings
-                        });
+                        GoRouter.of(context).pushNamed(
+                          PrivateRoutes.follows,
+                          extra: {
+                            "user": user,
+                            "tab": FollowsTabs.followings
+                          },
+                        );
                       },
                       child: Text.rich(
                         TextSpan(
@@ -148,10 +151,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        GoRouter.of(context).pushNamed(PrivateRoutes.follows, extra: {
-                          "user": user,
-                          "tab": FollowsTabs.followers,
-                        });
+                        GoRouter.of(context).pushNamed(
+                          PrivateRoutes.follows,
+                          extra: {
+                            "user": user,
+                            "tab": FollowsTabs.followers,
+                          },
+                        );
                       },
                       child: Text.rich(
                         TextSpan(

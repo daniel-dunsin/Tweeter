@@ -273,10 +273,13 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                GoRouter.of(context).pushNamed(PrivateRoutes.follows, extra: {
-                                  "user": widget.user,
-                                  "tab": FollowsTabs.followers,
-                                });
+                                GoRouter.of(context).pushNamed(
+                                  PrivateRoutes.follows,
+                                  extra: {
+                                    "user": widget.user,
+                                    "tab": FollowsTabs.followers,
+                                  },
+                                );
                               },
                               child: Text.rich(
                                 TextSpan(
@@ -303,10 +306,13 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                             const SizedBox(width: 15),
                             GestureDetector(
                               onTap: () {
-                                GoRouter.of(context).pushNamed(PrivateRoutes.follows, extra: {
-                                  "user": widget.user,
-                                  "tab": FollowsTabs.followings,
-                                });
+                                GoRouter.of(context).pushNamed(
+                                  PrivateRoutes.follows,
+                                  extra: {
+                                    "user": widget.user,
+                                    "tab": FollowsTabs.followings,
+                                  },
+                                );
                               },
                               child: Text.rich(
                                 TextSpan(

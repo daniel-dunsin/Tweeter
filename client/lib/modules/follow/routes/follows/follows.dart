@@ -4,7 +4,6 @@ import 'package:client/modules/follow/enums/index.dart';
 import 'package:client/modules/follow/widgets/no_follower.dart';
 import 'package:client/modules/follow/widgets/no_following.dart';
 import 'package:client/modules/follow/widgets/users_list.dart';
-import 'package:client/modules/home/widgets/home_bottom_nav.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,11 +54,8 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
-    final screenArgs = ModalRoute.settingsOf(context)?.arguments as Map<String, dynamic>?;
-    final user = screenArgs?["user"] as UserModel;
 
     return Scaffold(
-      // bottomNavigationBar: const HomeBottomNav(),
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
@@ -69,7 +65,7 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
         ),
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: Text(user.name),
+        title: Text(widget.user.name),
         titleTextStyle: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: appColors.foregroundColor),
         shape: const Border(bottom: BorderSide(width: .6, color: Colors.grey)),
       ),

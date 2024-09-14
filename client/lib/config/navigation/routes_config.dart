@@ -9,6 +9,7 @@ import 'package:client/modules/auth/routes/onboarding/sign_up.dart';
 import 'package:client/modules/auth/routes/onboarding/update_profile_picture.dart';
 import 'package:client/modules/auth/routes/onboarding/verify_account.dart';
 import 'package:client/modules/auth/routes/onboarding/select_interests.dart';
+import 'package:client/modules/follow/routes/follows/follows.dart';
 import 'package:client/modules/home/routes/communities/communities.dart';
 import 'package:client/modules/home/routes/home/home.dart';
 import 'package:client/modules/home/routes/messages/messages.dart';
@@ -16,12 +17,22 @@ import 'package:client/modules/home/routes/notifications/notifications.dart';
 import 'package:client/modules/home/routes/root.dart';
 import 'package:client/modules/home/routes/search/search.dart';
 import 'package:client/modules/profile/routes/user_profile/user_profile.dart';
+import 'package:client/modules/root.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 GoRouter appRouter = GoRouter(
-  // navigatorKey: appNavKey,
+  navigatorKey: appNavKey,
   routes: [
+    GoRoute(
+      path: "/",
+      name: "/",
+      pageBuilder: (_, state) {
+        return const MaterialPage(
+          child: AppRoot(),
+        );
+      },
+    ),
     GoRoute(
       path: AuthRoutes.signUpInitial,
       name: AuthRoutes.signUpInitial,
@@ -155,6 +166,20 @@ GoRouter appRouter = GoRouter(
                 child: SearchScreen(),
               ),
             ),
+            GoRoute(
+              path: PrivateRoutes.follows,
+              name: PrivateRoutes.follows,
+              pageBuilder: (_, state) {
+                Map args = state.extra as Map;
+
+                return MaterialPage(
+                  child: FollowsScreen(
+                    tab: args["tab"],
+                    user: args["user"],
+                  ),
+                );
+              },
+            ),
           ],
         ),
         StatefulShellBranch(
@@ -190,21 +215,6 @@ GoRouter appRouter = GoRouter(
             ),
           ],
         ),
-
-        //   GoRoute(
-        //     path: PrivateRoutes.follows,
-        //     name: PrivateRoutes.follows,
-        //     pageBuilder: (_, state) {
-        //       Map args = state.extra as Map;
-
-        //       return MaterialPage(
-        //         child: FollowsScreen(
-        //           tab: args["tab"],
-        //           user: args["user"],
-        //         ),
-        //       );
-        //     },
-        //   ),
       ],
     ),
   ],

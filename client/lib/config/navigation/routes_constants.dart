@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PublicRoutes {}
 
 class AuthRoutes {
-  static String signUpInitial = "/";
+  static String signUpInitial = "/auth";
   static String signUp = "/auth/sign_up";
   static String login = "/auth/sign_in";
   static String loginPassword = "/auth/sign_in_password";

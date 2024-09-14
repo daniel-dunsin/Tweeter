@@ -1,7 +1,6 @@
-import 'package:client/shared/cubit/app_nav_cubit/app_nav_cubit.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 final List<IconData> bottomNavTabsIcons = [
@@ -18,6 +17,14 @@ final List<IconData> bottomNavTabsSelectedIcons = [
   Icons.people,
   Icons.notifications,
   Icons.mail,
+];
+
+final List<String> bottomNavRoutes = [
+  PrivateRoutes.home,
+  PrivateRoutes.search,
+  PrivateRoutes.communities,
+  PrivateRoutes.notifications,
+  PrivateRoutes.chat,
 ];
 
 class HomeBottomNav extends StatelessWidget {
@@ -50,7 +57,11 @@ class HomeBottomNav extends StatelessWidget {
           landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
           currentIndex: shell.currentIndex,
           onTap: (i) {
-            shell.goBranch(i);
+            if (i == shell.currentIndex) {
+              GoRouter.of(context).push(bottomNavRoutes[i]);
+            } else {
+              shell.goBranch(i);
+            }
           },
           items: [
             for (int i = 0; i < bottomNavTabsIcons.length; i++)
