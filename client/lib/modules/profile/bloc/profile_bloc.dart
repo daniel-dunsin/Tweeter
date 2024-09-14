@@ -16,6 +16,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc({required this.profileRepository, required this.appCubit}) : super(ProfileInitialState()) {
     on<GetProfileRequested>(
       (event, emit) async {
+        emit(GetProfileLoading());
         try {
           final response = await profileRepository.getUserProfile(event.userId);
 
@@ -36,7 +37,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     on<EditProfileRequested>((event, emit) async {
       emit(EditProfileLoading());
-      print("editing profile");
       try {
         final response = await profileRepository.editUserProfile(event.editProfileDto);
 

@@ -98,7 +98,7 @@ class UserModel {
       });
     }
     result.addAll({
-      'createdAt': createdAt.millisecondsSinceEpoch
+      'createdAt': createdAt.toIso8601String()
     });
     if (followers != null) {
       result.addAll({

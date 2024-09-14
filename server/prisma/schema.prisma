@@ -37,8 +37,8 @@ model User {
   updatedAt        DateTime      @default(now()) @updatedAt
   jwtToken         JwtToken?
   interests        SubCategory[]
-  followers        Follow[]      @relation("Followers")
-  followings       Follow[]      @relation("Followings")
+  followers        Follow[]      @relation("Followings")
+  followings       Follow[]      @relation("Followers")
 
   retweets   Tweet[] @relation("UserRetweet")
   tweets     Tweet[] @relation("Tweets")

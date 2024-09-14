@@ -1,6 +1,7 @@
 import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/follow/enums/index.dart';
+import 'package:client/modules/follow/widgets/follow_button.dart';
 import 'package:client/modules/profile/routes/edit_profile/edit_profile.dart';
 import 'package:client/modules/profile/routes/user_profile/widgets/tab_bar.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
@@ -140,8 +141,8 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                           top: 110,
                           left: 10,
                         ),
-                        Visibility(
-                          child: Positioned(
+                        Positioned(
+                          child: Visibility(
                             child: TextButton(
                               onPressed: () {
                                 showModalBottomSheet(
@@ -173,10 +174,11 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                                 foregroundColor: appColors.foregroundColor,
                               ),
                             ),
-                            top: 155,
-                            right: 20,
+                            replacement: FollowButton(user: widget.user!),
+                            visible: widget.user?.id == loggedInUser?.id,
                           ),
-                          visible: widget.user?.id == loggedInUser?.id,
+                          top: 155,
+                          right: 20,
                         ),
                       ],
                     ),

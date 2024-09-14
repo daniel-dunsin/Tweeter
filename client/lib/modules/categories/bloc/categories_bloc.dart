@@ -22,7 +22,6 @@ class CategoriesBloc extends Bloc<CategoriesEvents, CategoriesState> {
         final categories = categoriesMap.map((category) => CategoryModel.fromMap(category)).toList();
 
         emit(GetCategoriesSuccess(categories));
-        print(categories);
       } catch (e) {
         handleError(e: e);
         emit(GetCategoriesError());

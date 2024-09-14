@@ -130,7 +130,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           children: [
                             WidgetSpan(
                               child: Text(
-                                "${followers?.length ?? user.followers?.length ?? 0} ",
+                                "${followings?.length ?? user.followers?.length ?? 0} ",
                                 style: TextStyle(
                                   color: appColors.foregroundColor,
                                   fontWeight: FontWeight.w600,
@@ -139,7 +139,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             ),
                             const WidgetSpan(
                               child: Text(
-                                "Following    ",
+                                "Following",
                                 style: TextStyle(
                                   color: Colors.grey,
                                 ),
@@ -149,6 +149,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                         ),
                       ),
                     ),
+                    const SizedBox(width: 10),
                     GestureDetector(
                       onTap: () {
                         GoRouter.of(context).pushNamed(
@@ -164,7 +165,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           children: [
                             WidgetSpan(
                               child: Text(
-                                "${followings?.length ?? user.followings?.length ?? 0} ",
+                                "${followers?.length ?? user.followings?.length ?? 0} ",
                                 style: TextStyle(
                                   color: appColors.foregroundColor,
                                   fontWeight: FontWeight.w600,

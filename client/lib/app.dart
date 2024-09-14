@@ -8,7 +8,7 @@ import 'package:toastification/toastification.dart';
 class App extends StatelessWidget {
   App({super.key});
 
-  final mode = TweeterColors.dark();
+  final mode = TweeterColors.light();
 
   @override
   Widget build(BuildContext context) {

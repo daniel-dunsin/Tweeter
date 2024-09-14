@@ -51,7 +51,7 @@ class FollowsModel {
   factory FollowsModel.fromMap(Map<String, dynamic> map) {
     return FollowsModel(
       id: map['id'] ?? '',
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
+      createdAt: DateTime.parse(map['createdAt']),
       follower: UserModel.fromMap(map['follower']),
       following: UserModel.fromMap(map['following']),
     );

@@ -22,6 +22,7 @@ Future<Map<String, dynamic>> getInitialRoute() async {
 
     if (accessToken != null) {
       final response = await AuthRepository(AuthService()).getUser();
+
       final userMap = response["data"];
       if (userMap != null) {
         await LocalStorage.setString(key: localStorageConstants.user, value: jsonEncode(userMap));

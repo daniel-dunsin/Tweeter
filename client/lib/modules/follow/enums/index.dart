@@ -1,5 +1,5 @@
 enum FollowsTabs {
   verifiedFollowers,
-  followings,
   followers,
+  followings,
 }

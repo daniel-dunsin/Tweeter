@@ -1,10 +1,9 @@
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/follow/widgets/follow_button.dart';
-import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
-import 'package:client/shared/widgets/button.dart';
-import "package:flutter_bloc/flutter_bloc.dart";
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class UserListTile extends StatefulWidget {
   final UserModel user;
@@ -24,8 +23,18 @@ class _UserListTileState extends State<UserListTile> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            backgroundImage: NetworkImage(widget.user.profilePicture),
+          GestureDetector(
+            onTap: () {
+              GoRouter.of(context).pushNamed(
+                PrivateRoutes.profile,
+                extra: {
+                  "userId": widget.user.id
+                },
+              );
+            },
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(widget.user.profilePicture),
+            ),
           ),
           const SizedBox(width: 30),
           Expanded(
@@ -45,13 +54,15 @@ class _UserListTileState extends State<UserListTile> {
                           fontSize: 14,
                         ),
                       ),
-                      Text(
-                        widget.user.bio ?? "",
-                        style: TextStyle(
-                          color: appColors.secondaryForegroundColor,
-                          fontSize: 12,
-                        ),
-                      ),
+                      widget.user.bio != null && widget.user.bio!.isNotEmpty
+                          ? Text(
+                              widget.user.bio ?? "",
+                              style: TextStyle(
+                                color: appColors.secondaryForegroundColor,
+                                fontSize: 12,
+                              ),
+                            )
+                          : const SizedBox.shrink(),
                     ],
                   ),
                 ),

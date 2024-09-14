@@ -4,7 +4,9 @@ import 'package:client/modules/follow/enums/index.dart';
 import 'package:client/modules/follow/widgets/no_follower.dart';
 import 'package:client/modules/follow/widgets/no_following.dart';
 import 'package:client/modules/follow/widgets/users_list.dart';
+import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
+import 'package:client/shared/theme/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -54,6 +56,9 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
+    final appCubit = context.watch<AppCubit>().state;
+    final loggedInUserFollowings = appCubit.following;
+    final loggedInUser = appCubit.user;
 
     return Scaffold(
       appBar: AppBar(
@@ -112,22 +117,33 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
             builder: (context, state) {
               return Visibility(
                 child: Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      UsersList(
-                        users: verifiedFollowers,
-                        replacement: const NoFollower(),
-                      ),
-                      UsersList(
-                        users: followers,
-                        replacement: const NoFollower(),
-                      ),
-                      UsersList(
-                        users: followings,
-                        replacement: const NoFollowing(message: "You're not following anyone yet."),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: CustomTheme.majorScreenPadding,
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        UsersList(
+                          users: verifiedFollowers,
+                          replacement: const NoFollower(),
+                        ),
+                        UsersList(
+                          users: followers,
+                          replacement: const NoFollower(),
+                        ),
+                        UsersList(
+                          users: loggedInUser!.id == widget.user.id ? loggedInUserFollowings! : followings,
+                          replacement: loggedInUser.id == widget.user.id
+                              ? const NoFollowing(
+                                  message: "You're not following anyone yet.",
+                                  showSuggestion: true,
+                                )
+                              : NoFollowing(
+                                  message: "${widget.user.name} is not following anyone yet",
+                                  showSuggestion: false,
+                                ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 replacement: Container(
