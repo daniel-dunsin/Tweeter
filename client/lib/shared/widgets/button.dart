@@ -16,7 +16,7 @@ class ContainedButton extends StatelessWidget {
   final BorderSide? borderSide;
   final double? elevation;
 
-  ContainedButton({
+  const ContainedButton({
     super.key,
     required this.child,
     required this.onPressed,
@@ -65,7 +65,7 @@ class ContainedButton extends StatelessWidget {
               BorderSide(
                 style: BorderStyle.solid,
                 width: 1,
-                color: disabled == true || loading == true ? Color.fromARGB(255, 100, 100, 100) : appColors.foregroundColor,
+                color: disabled == true || loading == true ? const Color.fromARGB(255, 100, 100, 100) : appColors.foregroundColor,
               ),
           borderRadius: const BorderRadius.all(
             Radius.circular(80),
@@ -132,7 +132,7 @@ class SecondaryButton extends StatelessWidget {
           side: BorderSide(
             style: BorderStyle.solid,
             width: 2,
-            color: disabled == true || loading == true ? Color.fromARGB(255, 100, 100, 100) : appColors.foregroundColor,
+            color: disabled == true || loading == true ? const Color.fromARGB(255, 100, 100, 100) : appColors.foregroundColor,
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(80),

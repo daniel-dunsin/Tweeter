@@ -1,4 +1,4 @@
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/auth/bloc/auth_bloc.dart';
 import 'package:client/modules/auth/bloc/auth_event.dart';
 import 'package:client/modules/auth/bloc/auth_state.dart';
@@ -8,6 +8,7 @@ import 'package:client/shared/widgets/cancel_appbar_leading.dart';
 import 'package:client/shared/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -41,22 +42,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: CancelAppbarLeading(),
+        leading: const CancelAppbarLeading(),
         leadingWidth: double.maxFinite,
       ),
       body: Padding(
         padding: CustomTheme.majorScreenPadding,
         child: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
           if (state is ForgotPasswordSuccess) {
-            Navigator.of(context).pushNamed(AuthRoutes.forgotPasswordCode, arguments: {
-              "credential": credentialController.text
-            });
+            GoRouter.of(context).pushNamed(AuthRoutes.forgotPasswordCode);
           }
         }, builder: (context, state) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
+              const Text(
                 "Find your Tweeter account",
                 style: TextStyle(
                   fontSize: 18,
@@ -82,7 +81,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 alignment: Alignment.bottomRight,
                 child: ContainedButton(
                   disabled: credentialController.text.isEmpty,
-                  child: Text("Next"),
+                  child: const Text("Next"),
                   loading: state is ForgotPasswordLoading,
                   onPressed: () {
                     handleSubmit();

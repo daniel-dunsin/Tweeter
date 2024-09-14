@@ -6,7 +6,7 @@ class TweeterLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 30,
       height: 30,
       child: CircularProgressIndicator(

@@ -1,4 +1,4 @@
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/auth/bloc/auth_bloc.dart';
 import 'package:client/modules/auth/bloc/auth_event.dart';
 import 'package:client/modules/auth/bloc/auth_state.dart';
@@ -11,9 +11,15 @@ import 'package:client/shared/widgets/cancel_appbar_leading.dart';
 import 'package:client/shared/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class EnterLoginPasswordScreen extends StatefulWidget {
-  const EnterLoginPasswordScreen({super.key});
+  final String credential;
+
+  const EnterLoginPasswordScreen({
+    super.key,
+    required this.credential,
+  });
 
   @override
   State<EnterLoginPasswordScreen> createState() => _EnterLoginPasswordScreenState();
@@ -37,12 +43,10 @@ class _EnterLoginPasswordScreenState extends State<EnterLoginPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
-    final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, Object?>?;
-    final String? credential = arguments?["credential"] as String;
 
     return Scaffold(
       appBar: AppBar(
-        leading: CancelAppbarLeading(),
+        leading: const CancelAppbarLeading(),
         leadingWidth: double.maxFinite,
       ),
       body: Padding(
@@ -50,13 +54,13 @@ class _EnterLoginPasswordScreenState extends State<EnterLoginPasswordScreen> {
         child: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
           if (state is LoginSuccess) {
             handleSuccess("Welcome ${state.user.name}");
-            Navigator.pushNamedAndRemoveUntil(context, PrivateRoutes.rootHome, (route) => false);
+            GoRouter.of(context).goNamed(PrivateRoutes.rootHome);
           }
         }, builder: (context, state) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Enter your password",
                 style: TextStyle(
                   fontSize: 18,
@@ -67,7 +71,7 @@ class _EnterLoginPasswordScreenState extends State<EnterLoginPasswordScreen> {
               UnderlinedTextField(
                 fullWidth: true,
                 enabled: false,
-                initialValue: credential,
+                initialValue: widget.credential,
                 height: 45,
               ),
               const SizedBox(height: 20),
@@ -78,7 +82,7 @@ class _EnterLoginPasswordScreenState extends State<EnterLoginPasswordScreen> {
               ),
               const Spacer(),
               ContainedButton(
-                child: Text(
+                child: const Text(
                   "Log in",
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
@@ -86,7 +90,7 @@ class _EnterLoginPasswordScreenState extends State<EnterLoginPasswordScreen> {
                 ),
                 disabled: passwordController.text.isEmpty,
                 onPressed: () {
-                  handleSubmit(credential!);
+                  handleSubmit(widget.credential);
                 },
                 loading: state is LoginLoading,
                 fullWidth: true,
@@ -96,7 +100,7 @@ class _EnterLoginPasswordScreenState extends State<EnterLoginPasswordScreen> {
                 alignment: Alignment.center,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(AuthRoutes.forgotPassword);
+                    GoRouter.of(context).pushNamed(AuthRoutes.forgotPassword);
                   },
                   child: Text(
                     "Forgot Password?",

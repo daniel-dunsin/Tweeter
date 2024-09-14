@@ -1,10 +1,11 @@
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/follow/enums/index.dart';
 import 'package:client/modules/home/widgets/drawer_nav_item.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 final navs = <DrawerNavItem>[
   DrawerNavItem(
@@ -12,17 +13,17 @@ final navs = <DrawerNavItem>[
     label: "Profile",
     route: PrivateRoutes.profile,
   ),
-  DrawerNavItem(
+  const DrawerNavItem(
     icon: Icons.workspace_premium_outlined,
     label: "Premium",
     route: "/private/premium",
   ),
-  DrawerNavItem(
+  const DrawerNavItem(
     icon: Icons.bookmark_outline_outlined,
     label: "Bookmarks",
     route: "/private/profile",
   ),
-  DrawerNavItem(
+  const DrawerNavItem(
     icon: Icons.list_alt_outlined,
     label: "Lists",
     route: "/private/lists",
@@ -30,13 +31,13 @@ final navs = <DrawerNavItem>[
 ];
 
 final settingsNav = <DrawerNavItem>[
-  DrawerNavItem(
+  const DrawerNavItem(
     icon: Icons.settings_outlined,
     label: "Settings",
     route: "/private/profile",
     isSubItem: true,
   ),
-  DrawerNavItem(
+  const DrawerNavItem(
     icon: Icons.help_outlined,
     label: "Help Center",
     route: "/private/premium",
@@ -65,11 +66,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
     return Drawer(
       width: MediaQuery.of(context).size.width * .8,
       backgroundColor: appColors.secondaryBackgroundColor,
-      shape: RoundedRectangleBorder(),
+      shape: const RoundedRectangleBorder(),
       child: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               vertical: 10,
               horizontal: 20,
             ),
@@ -81,9 +82,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushNamed(PrivateRoutes.profile, arguments: {
-                          "userId": user.id
-                        });
+                        GoRouter.of(context).pushNamed(
+                          PrivateRoutes.profile,
+                          extra: {
+                            "userId": user.id
+                          },
+                        );
                       },
                       child: CircleAvatar(
                         radius: 20,
@@ -102,7 +106,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     const SizedBox(height: 2),
                     Text(
                       "@${user.userName}",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.grey,
                       ),
                     ),
@@ -113,7 +117,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushNamed(PrivateRoutes.follows, arguments: {
+                        GoRouter.of(context).pushNamed(PrivateRoutes.follows, extra: {
                           "user": user,
                           "tab": FollowsTabs.followings
                         });
@@ -130,7 +134,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 ),
                               ),
                             ),
-                            WidgetSpan(
+                            const WidgetSpan(
                               child: Text(
                                 "Following    ",
                                 style: TextStyle(
@@ -144,7 +148,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushNamed(PrivateRoutes.follows, arguments: {
+                        GoRouter.of(context).pushNamed(PrivateRoutes.follows, extra: {
                           "user": user,
                           "tab": FollowsTabs.followers,
                         });
@@ -161,7 +165,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 ),
                               ),
                             ),
-                            WidgetSpan(
+                            const WidgetSpan(
                               child: Text(
                                 "Followers",
                                 style: TextStyle(
@@ -178,7 +182,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 const SizedBox(height: 50),
                 for (int i = 0; i < navs.length; i++) navs[i],
                 const SizedBox(height: 30),
-                Divider(),
+                const Divider(),
                 const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -199,7 +203,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       },
                       child: AnimatedRotation(
                         turns: settingsOpen ? .5 : 0,
-                        duration: Duration(milliseconds: 400),
+                        duration: const Duration(milliseconds: 400),
                         child: Icon(
                           Icons.keyboard_arrow_down_outlined,
                           color: settingsOpen ? appColors.iconColor : appColors.foregroundColor,
@@ -212,7 +216,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 const SizedBox(height: 10),
                 AnimatedOpacity(
                   opacity: settingsOpen ? 1 : 0,
-                  duration: Duration(milliseconds: 400),
+                  duration: const Duration(milliseconds: 400),
                   child: Column(
                     children: [
                       for (int i = 0; i < settingsNav.length; i++) settingsNav[i],

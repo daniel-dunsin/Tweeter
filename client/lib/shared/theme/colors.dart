@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class TweeterColors extends ThemeExtension<TweeterColors> {
-  static Color blue = Color.fromRGBO(29, 161, 242, 1);
-  static Color black = Color.fromRGBO(7, 7, 7, 1);
-  static Color darkGray = Color.fromRGBO(60, 64, 72, 1);
-  static Color lightGray = Color.fromRGBO(170, 184, 194, 1);
-  static Color extraLightGray = Color.fromRGBO(216, 218, 219, 1);
-  static Color white = Color.fromRGBO(245, 248, 250, 1);
+  static Color blue = const Color.fromRGBO(29, 161, 242, 1);
+  static Color black = const Color.fromRGBO(7, 7, 7, 1);
+  static Color darkGray = const Color.fromRGBO(60, 64, 72, 1);
+  static Color lightGray = const Color.fromRGBO(170, 184, 194, 1);
+  static Color extraLightGray = const Color.fromRGBO(216, 218, 219, 1);
+  static Color white = const Color.fromRGBO(245, 248, 250, 1);
 
   final Color backgroundColor;
   final Color secondaryBackgroundColor;
@@ -46,6 +46,7 @@ class TweeterColors extends ThemeExtension<TweeterColors> {
     );
   }
 
+  @override
   ThemeExtension<TweeterColors> copyWith({bool? lightMode}) {
     if (lightMode == null || lightMode == true) {
       return TweeterColors.light();

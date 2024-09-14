@@ -1,6 +1,8 @@
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class AlreadyHaveAnAccount extends StatelessWidget {
   const AlreadyHaveAnAccount({super.key});
@@ -13,18 +15,18 @@ class AlreadyHaveAnAccount extends StatelessWidget {
         Text(
           "Already have an account? ",
           style: TextStyle(
-            fontSize: 13,
+            fontSize: 11.sp,
             color: appColors.secondaryForegroundColor,
           ),
         ),
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, AuthRoutes.login);
+            GoRouter.of(context).pushNamed(AuthRoutes.login);
           },
           child: Text(
             "Log in",
             style: TextStyle(
-              fontSize: 13,
+              fontSize: 11.sp,
               color: appColors.iconColor,
             ),
           ),

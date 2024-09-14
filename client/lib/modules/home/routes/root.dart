@@ -21,7 +21,7 @@ class RootHome extends StatelessWidget {
     final appBottomNavIndex = context.watch<AppNavCubit>().state;
 
     return Scaffold(
-      drawer: HomeDrawer(),
+      drawer: const HomeDrawer(),
       appBar: AppBar(
         leading: Builder(
           builder: (context) {
@@ -32,7 +32,7 @@ class RootHome extends StatelessWidget {
                 }
               },
               child: Padding(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 child: CircleAvatar(
                   radius: 50,
                   backgroundImage: NetworkImage(
@@ -44,9 +44,9 @@ class RootHome extends StatelessWidget {
           },
         ),
         centerTitle: true,
-        title: Logo(),
+        title: const Logo(),
       ),
-      bottomNavigationBar: HomeBottomNav(),
+      bottomNavigationBar: const HomeBottomNav(),
       body: SafeArea(
         child: IndexedStack(
           children: screens,
@@ -58,9 +58,9 @@ class RootHome extends StatelessWidget {
 }
 
 final List<Widget> screens = [
-  HomeScreen(),
-  SearchScreen(),
-  CommunitiesScreen(),
-  NotificationsScreen(),
-  MessagesScreen(),
+  const HomeScreen(),
+  const SearchScreen(),
+  const CommunitiesScreen(),
+  const NotificationsScreen(),
+  const MessagesScreen(),
 ];

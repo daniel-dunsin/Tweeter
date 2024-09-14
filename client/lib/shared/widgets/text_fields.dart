@@ -1,7 +1,7 @@
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-final focusBorder = Border();
+const focusBorder = Border();
 
 class UnderlinedTextField extends StatelessWidget {
   final TextEditingController? controller;
@@ -61,7 +61,7 @@ class UnderlinedTextField extends StatelessWidget {
         initialValue: initialValue,
         decoration: InputDecoration(
           labelText: labelText,
-          labelStyle: TextStyle(
+          labelStyle: const TextStyle(
             color: Colors.grey,
             fontSize: 13,
           ),
@@ -81,7 +81,7 @@ class UnderlinedTextField extends StatelessWidget {
               color: appColors.iconColor,
             ),
           ),
-          errorBorder: UnderlineInputBorder(
+          errorBorder: const UnderlineInputBorder(
             borderSide: BorderSide(
               width: 1.4,
               color: Colors.red,

@@ -2,7 +2,6 @@ import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/follow/bloc/follows_bloc.dart';
 import 'package:client/modules/follow/widgets/user.dart';
 import 'package:client/shared/theme/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -48,9 +47,9 @@ class _SuggestedFollowingsState extends State<SuggestedFollowings> {
             ),
           ),
           const SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-            child: const Text(
+          const Padding(
+            padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+            child: Text(
               "When you follow someone, you'll see their tweets in your home timeline",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -91,7 +90,7 @@ class _SuggestedFollowingsState extends State<SuggestedFollowings> {
               return Visibility(
                 child: Expanded(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         final UserModel user = users[index];

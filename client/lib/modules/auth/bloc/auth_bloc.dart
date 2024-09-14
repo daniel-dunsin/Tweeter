@@ -18,7 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSignUp>((event, emit) async {
       emit(AuthSignUpLoading());
       try {
-        await this.authRepository.signUp(event.signUpDto);
+        await authRepository.signUp(event.signUpDto);
 
         emit(AuthSignUpSuccess());
       } on DioException catch (e) {
@@ -30,7 +30,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<VerifyEmailRequested>((event, emit) async {
       emit(AuthVerifyEmailLoading());
       try {
-        final response = await this.authRepository.verifyEmail(event.verifyEmailDto);
+        final response = await authRepository.verifyEmail(event.verifyEmailDto);
 
         final Map<String, dynamic> userMap = response["data"];
         final user = UserModel.fromMap(userMap);
@@ -53,12 +53,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthCheckCredentialLoading());
 
       try {
-        final response = await this.authRepository.checkCredential(event.credential);
+        final response = await authRepository.checkCredential(event.credential);
 
         final bool accountExists = response["data"]["exists"];
 
         emit(AuthCheckCredentialSuccess(accountExists: accountExists));
-        await Future.delayed(Duration(seconds: 2), () {
+        await Future.delayed(const Duration(seconds: 2), () {
           if (!accountExists) {
             emit(AuthInitialState());
           }
@@ -73,7 +73,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(LoginLoading());
 
       try {
-        final response = await this.authRepository.login(event.loginDto);
+        final response = await authRepository.login(event.loginDto);
 
         final Map<String, dynamic> userMap = response["data"];
         final user = UserModel.fromMap(userMap);
@@ -96,7 +96,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(ForgotPasswordLoading());
 
       try {
-        await this.authRepository.forgotPassword(event.credential);
+        await authRepository.forgotPassword(event.credential);
 
         emit(ForgotPasswordSuccess());
       } catch (e) {
@@ -109,7 +109,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(ConfirmPasswordResetCodeLoading());
 
       try {
-        await this.authRepository.confirmPasswordResetCode(event.code);
+        await authRepository.confirmPasswordResetCode(event.code);
 
         emit(ConfirmPasswordResetCodeSuccess());
       } catch (e) {
@@ -122,7 +122,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(ResetPasswordLoading());
 
       try {
-        await this.authRepository.resetPassword(event.resetPasswordDto);
+        await authRepository.resetPassword(event.resetPasswordDto);
 
         emit(ResetPasswordSuccess());
       } catch (e) {
@@ -135,7 +135,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(UpdateProfilePictureLoading());
 
       try {
-        await this.authRepository.updateUserProfilePicture(event.profilePicture);
+        await authRepository.updateUserProfilePicture(event.profilePicture);
 
         emit(UpdateProfilePictureSuccess());
       } catch (e) {
@@ -147,7 +147,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthWithGoogleRequested>((event, emit) async {
       emit(AuthWithGoogleLoading());
       try {
-        final response = await this.authRepository.authWithGoogle(event.accessToken);
+        final response = await authRepository.authWithGoogle(event.accessToken);
 
         final Map<String, dynamic> userMap = response["data"];
         final String accessToken = response["meta"]["accessToken"];

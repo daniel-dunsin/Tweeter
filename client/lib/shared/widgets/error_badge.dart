@@ -15,8 +15,8 @@ class ErrorBadge extends StatelessWidget {
     return AnimatedOpacity(
       child: Container(
         width: double.maxFinite,
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
+        padding: const EdgeInsets.all(10),
+        decoration: const BoxDecoration(
           color: Colors.red,
         ),
         child: Text(message),

@@ -13,61 +13,61 @@ class AuthRepository {
   const AuthRepository(this.authService);
 
   signUp(SignUpModel signUpDto) async {
-    final response = await this.authService.signUp(signUpDto.toMap());
+    final response = await authService.signUp(signUpDto.toMap());
 
     return response.data;
   }
 
   verifyEmail(VerifyEmailModel verifyEmailDto) async {
-    final response = await this.authService.verifyEmail(verifyEmailDto.toMap());
+    final response = await authService.verifyEmail(verifyEmailDto.toMap());
 
     return response.data;
   }
 
   checkCredential(String credential) async {
-    final response = await this.authService.checkCredential(credential);
+    final response = await authService.checkCredential(credential);
 
     return response.data;
   }
 
   login(LoginModel loginDto) async {
-    final response = await this.authService.login(loginDto.toMap());
+    final response = await authService.login(loginDto.toMap());
 
     return response.data;
   }
 
   forgotPassword(String credential) async {
-    final response = await this.authService.forgotPassword(credential);
+    final response = await authService.forgotPassword(credential);
 
     return response.data;
   }
 
   confirmPasswordResetCode(String code) async {
-    final response = await this.authService.confirmPasswordResetCode(code);
+    final response = await authService.confirmPasswordResetCode(code);
 
     return response.data;
   }
 
   resetPassword(ResetPasswordModel resetPasswordDto) async {
-    final response = await this.authService.resetPassword(resetPasswordDto.toMap());
+    final response = await authService.resetPassword(resetPasswordDto.toMap());
 
     return response.data;
   }
 
   updateUserProfilePicture(File profilePicture) async {
-    final response = await this.authService.updateProfilePicture(convertImageToBase64(profilePicture));
+    final response = await authService.updateProfilePicture(convertImageToBase64(profilePicture));
 
     return response.data;
   }
 
   getUser() async {
-    final response = await this.authService.getUser();
+    final response = await authService.getUser();
 
     return response.data;
   }
 
   authWithGoogle(String accessToken) async {
-    final response = await this.authService.authWithGoogle(accessToken);
+    final response = await authService.authWithGoogle(accessToken);
 
     return response.data;
   }

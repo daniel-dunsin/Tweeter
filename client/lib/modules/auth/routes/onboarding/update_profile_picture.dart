@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/auth/bloc/auth_bloc.dart';
 import 'package:client/modules/auth/bloc/auth_event.dart';
 import 'package:client/modules/auth/bloc/auth_state.dart';
@@ -10,9 +10,10 @@ import 'package:client/shared/widgets/button.dart';
 import 'package:client/shared/widgets/cancel_appbar_leading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class UpdateProfilePictureScreen extends StatefulWidget {
-  UpdateProfilePictureScreen({super.key});
+  const UpdateProfilePictureScreen({super.key});
 
   @override
   State<UpdateProfilePictureScreen> createState() => _UpdateProfilePictureScreenState();
@@ -39,7 +40,7 @@ class _UpdateProfilePictureScreenState extends State<UpdateProfilePictureScreen>
         actions: [
           SkipAppBarAction(
             onPressed: () {
-              Navigator.of(context).pushNamed(AuthRoutes.selectInterests);
+              GoRouter.of(context).pushNamed(AuthRoutes.selectInterests);
             },
           ),
         ],
@@ -47,17 +48,13 @@ class _UpdateProfilePictureScreenState extends State<UpdateProfilePictureScreen>
       ),
       child: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
         if (state is UpdateProfilePictureSuccess) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            AuthRoutes.selectInterests,
-            (route) => route.settings.name == AuthRoutes.login,
-          );
+          GoRouter.of(context).goNamed(AuthRoutes.selectInterests);
         }
       }, builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
+            const Text(
               "Pick a profile picture",
               style: TextStyle(
                 fontSize: 18,
@@ -65,7 +62,7 @@ class _UpdateProfilePictureScreenState extends State<UpdateProfilePictureScreen>
               ),
             ),
             const SizedBox(height: 10),
-            Text(
+            const Text(
               "Have a favourite selfie? Upload it now",
               style: TextStyle(color: Colors.grey),
             ),
@@ -96,7 +93,7 @@ class _UpdateProfilePictureScreenState extends State<UpdateProfilePictureScreen>
                               pickedImage!,
                             ),
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
                     replacement: Stack(
                       children: [
                         Container(
@@ -106,7 +103,7 @@ class _UpdateProfilePictureScreenState extends State<UpdateProfilePictureScreen>
                             borderRadius: BorderRadius.circular(500),
                             color: Colors.grey,
                           ),
-                          child: Align(
+                          child: const Align(
                             alignment: Alignment.bottomCenter,
                             child: Icon(
                               Icons.person,
@@ -121,7 +118,7 @@ class _UpdateProfilePictureScreenState extends State<UpdateProfilePictureScreen>
                             borderRadius: BorderRadius.circular(500),
                             color: const Color.fromARGB(150, 0, 0, 0),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Icon(
                               Icons.photo_camera_outlined,
                               color: Colors.white,
@@ -139,7 +136,7 @@ class _UpdateProfilePictureScreenState extends State<UpdateProfilePictureScreen>
             const Spacer(),
             ContainedButton(
               disabled: pickedImage == null,
-              child: Text("Upload"),
+              child: const Text("Upload"),
               onPressed: () {
                 submit();
               },

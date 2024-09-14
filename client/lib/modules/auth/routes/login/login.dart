@@ -1,4 +1,4 @@
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/auth/bloc/auth_bloc.dart';
 import 'package:client/modules/auth/bloc/auth_event.dart';
 import 'package:client/modules/auth/bloc/auth_state.dart';
@@ -9,6 +9,7 @@ import 'package:client/shared/widgets/error_badge.dart';
 import 'package:client/shared/widgets/text_fields.dart';
 import "package:flutter_bloc/flutter_bloc.dart";
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -35,9 +36,9 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         leading: CancelAppbarLeading(
           onTap: () {
-            final navigator = Navigator.of(context);
+            final navigator = GoRouter.of(context);
 
-            navigator.canPop() ? navigator.pop() : navigator.popAndPushNamed(AuthRoutes.signUpInitial);
+            navigator.canPop() ? navigator.pop() : navigator.replace(AuthRoutes.signUpInitial);
           },
         ),
         leadingWidth: double.maxFinite,
@@ -47,9 +48,9 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) {
           if (state is AuthCheckCredentialSuccess) {
             if (state.accountExists == true) {
-              Navigator.of(context).pushNamed(
+              GoRouter.of(context).pushNamed(
                 AuthRoutes.loginPassword,
-                arguments: {
+                extra: {
                   "credential": credentialsController.text
                 },
               );
@@ -83,13 +84,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(AuthRoutes.forgotPassword);
-                      },
-                      child: Text("Forgot Password?")),
+                    onTap: () {
+                      GoRouter.of(context).pushNamed(AuthRoutes.forgotPassword);
+                    },
+                    child: const Text("Forgot Password?"),
+                  ),
                   ContainedButton(
                     disabled: credentialsController.text.isEmpty,
-                    child: Text("Next"),
+                    child: const Text("Next"),
                     loading: state is AuthCheckCredentialLoading,
                     onPressed: () async {
                       authBloc.add(CheckCredentialRequested(credentialsController.text));

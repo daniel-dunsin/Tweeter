@@ -21,9 +21,9 @@ class UserProfileTabBar extends StatelessWidget {
         indicatorColor: appColors.iconColor,
         unselectedLabelColor: Colors.grey,
         labelColor: appColors.foregroundColor,
-        labelStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+        labelStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
         indicatorSize: TabBarIndicatorSize.tab,
-        tabs: [
+        tabs: const [
           Tab(text: "Posts"),
           Tab(text: "Replies"),
           Tab(text: "Media"),

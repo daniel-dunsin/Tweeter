@@ -37,7 +37,7 @@ class _GoogleButtonState extends State<GoogleButton> {
           width: 20,
           height: 20,
         ),
-        child: Text(
+        child: const Text(
           "Continue with google",
           style: TextStyle(fontWeight: FontWeight.w600),
         ),

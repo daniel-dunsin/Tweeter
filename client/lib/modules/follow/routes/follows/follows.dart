@@ -8,10 +8,18 @@ import 'package:client/modules/home/widgets/home_bottom_nav.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class FollowsScreen extends StatefulWidget {
-  const FollowsScreen({super.key});
+  final FollowsTabs? tab;
+  final UserModel user;
+
+  const FollowsScreen({
+    super.key,
+    required this.tab,
+    required this.user,
+  });
 
   @override
   State<FollowsScreen> createState() => _FollowsScreenState();
@@ -30,25 +38,19 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   void didChangeDependencies() {
     final screenArgs = ModalRoute.settingsOf(context)?.arguments as Map<String, dynamic>?;
-    final FollowsTabs? tab = screenArgs?["tab"];
-    final user = screenArgs?["user"] as UserModel;
 
-    if (tab != null && currentTab == null) {
+    if (widget.tab != null && currentTab == null) {
       setState(() {
-        currentTab = tab;
-        _tabController.index = tabs.indexOf(tab);
+        currentTab = widget.tab;
+        _tabController.index = tabs.indexOf(widget.tab!);
       });
     }
 
-    context.read<FollowsBloc>().add(GetUserFollowsRequested(userId: user.id));
+    context.read<FollowsBloc>().add(GetUserFollowsRequested(userId: widget.user.id));
 
     super.didChangeDependencies();
   }
@@ -64,15 +66,15 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.pop(context);
+            GoRouter.of(context).pop();
           },
-          child: Icon(Icons.arrow_back),
+          child: const Icon(Icons.arrow_back),
         ),
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: Text("${user.name}"),
+        title: Text(user.name),
         titleTextStyle: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: appColors.foregroundColor),
-        shape: Border(bottom: BorderSide(width: .6, color: Colors.grey)),
+        shape: const Border(bottom: BorderSide(width: .6, color: Colors.grey)),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -84,7 +86,7 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
             ),
             child: TabBar(
               controller: _tabController,
-              tabs: [
+              tabs: const [
                 Tab(
                   text: "Verified Followers",
                 ),
@@ -98,8 +100,8 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
               indicatorColor: appColors.iconColor,
               labelColor: appColors.foregroundColor,
               unselectedLabelColor: Colors.grey,
-              labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-              unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
+              labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
               indicatorSize: TabBarIndicatorSize.tab,
               isScrollable: false,
             ),
@@ -126,17 +128,17 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
                       ),
                       UsersList(
                         users: followers,
-                        replacement: NoFollower(),
+                        replacement: const NoFollower(),
                       ),
                       UsersList(
                         users: followings,
-                        replacement: NoFollowing(message: "You're not following anyone yet."),
+                        replacement: const NoFollowing(message: "You're not following anyone yet."),
                       ),
                     ],
                   ),
                 ),
                 replacement: Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: LoadingAnimationWidget.discreteCircle(
                     color: appColors.iconColor,
                     secondRingColor: appColors.iconColor,

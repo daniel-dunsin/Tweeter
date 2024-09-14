@@ -7,25 +7,25 @@ class ProfileRepository {
   ProfileRepository(this.profileService);
 
   getUserProfile(String userId) async {
-    final response = await this.profileService.getUserProfile(userId);
+    final response = await profileService.getUserProfile(userId);
 
     return response.data;
   }
 
   editUserProfile(EditProfileModel editProfileDto) async {
-    final response = await this.profileService.editUserProfile(editProfileDto.toMap());
+    final response = await profileService.editUserProfile(editProfileDto.toMap());
 
     return response.data;
   }
 
   deleteProfilePicture() async {
-    final response = await this.profileService.deleteProfilePicture();
+    final response = await profileService.deleteProfilePicture();
 
     return response.data;
   }
 
   deleteCoverPicture() async {
-    final response = await this.profileService.deleteCoverPicture();
+    final response = await profileService.deleteCoverPicture();
 
     return response.data;
   }

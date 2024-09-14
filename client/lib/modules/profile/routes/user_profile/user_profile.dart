@@ -6,12 +6,16 @@ import 'package:client/modules/profile/utils/profile_utils.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+  final String userId;
+  const UserProfileScreen({
+    super.key,
+    required this.userId,
+  });
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -43,19 +47,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
 
   _loadUser() async {
     if (user == null) {
-      final userId = (ModalRoute.of(context)?.settings.arguments as Map<String, String?>)["userId"];
       final loggedInUser = context.read<AppCubit>().state.user;
       final loggedInUserFollowers = context.read<AppCubit>().state.followers;
       final loggedInUserFollowings = context.read<AppCubit>().state.following;
 
-      if (userId == loggedInUser?.id) {
+      if (widget.userId == loggedInUser?.id) {
         setState(() {
           user = loggedInUser;
           followers = loggedInUserFollowers;
           followings = loggedInUserFollowings;
         });
       } else {
-        context.read<ProfileBloc>().add(GetProfileRequested(userId!));
+        context.read<ProfileBloc>().add(GetProfileRequested(widget.userId));
       }
     }
   }
@@ -77,7 +80,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
           }
 
           if (state is GetProfileError) {
-            Navigator.of(context).pop();
+            GoRouter.of(context).pop();
           }
         },
         builder: (context, state) {
@@ -95,7 +98,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
                             followings: followings,
                             tabController: _tabController,
                           ),
-                          SliverToBoxAdapter(
+                          const SliverToBoxAdapter(
                             child: SizedBox(height: 1000),
                           )
                         ],
@@ -118,12 +121,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          GoRouter.of(context).pop();
                         },
                         child: Container(
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            color: Color.fromRGBO(88, 88, 88, 0.803),
+                            color: const Color.fromRGBO(88, 88, 88, 0.803),
                             borderRadius: BorderRadius.circular(50),
                           ),
                           child: Icon(
@@ -133,9 +136,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(88, 88, 88, 0.803),
+                          color: const Color.fromRGBO(88, 88, 88, 0.803),
                           borderRadius: BorderRadius.circular(50),
                         ),
                         child: Icon(
@@ -151,7 +154,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
           );
         },
       ),
-      bottomNavigationBar: HomeBottomNav(),
+      bottomNavigationBar: const HomeBottomNav(),
     );
   }
 }

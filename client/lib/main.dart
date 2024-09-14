@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:client/app.dart';
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/auth/bloc/auth_bloc.dart';
 import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/auth/repository/auth_repository.dart';
@@ -50,7 +50,7 @@ Future<Map<String, dynamic>> getInitialRoute() async {
       final userMap = response["data"];
       if (userMap != null) {
         await LocalStorage.setString(key: localStorageConstants.user, value: jsonEncode(userMap));
-        initialRoute = PrivateRoutes.rootHome;
+        initialRoute = PrivateRoutes.profile;
         user = UserModel.fromMap(userMap);
       } else {
         initialRoute = AuthRoutes.signUpInitial;

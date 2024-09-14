@@ -1,5 +1,6 @@
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TermsAndCondition extends StatelessWidget {
   const TermsAndCondition({super.key});
@@ -16,35 +17,35 @@ class TermsAndCondition extends StatelessWidget {
         Text(
           "By signing up, you agree to our ",
           style: TextStyle(
-            fontSize: 13,
+            fontSize: 11.sp,
             color: appColors.secondaryForegroundColor,
           ),
         ),
         Text(
           "terms, ",
           style: TextStyle(
-            fontSize: 13,
+            fontSize: 11.sp,
             color: appColors.iconColor,
           ),
         ),
         Text(
           "privacy policy ",
           style: TextStyle(
-            fontSize: 13,
+            fontSize: 11.sp,
             color: appColors.iconColor,
           ),
         ),
         Text(
           "and ",
           style: TextStyle(
-            fontSize: 13,
+            fontSize: 11.sp,
             color: appColors.secondaryForegroundColor,
           ),
         ),
         Text(
           "cookie use",
           style: TextStyle(
-            fontSize: 13,
+            fontSize: 11.sp,
             color: appColors.iconColor,
           ),
         )

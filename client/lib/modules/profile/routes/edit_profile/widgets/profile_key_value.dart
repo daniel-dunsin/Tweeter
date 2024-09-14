@@ -20,15 +20,15 @@ class ProfileKeyValue extends StatelessWidget {
     final appColors = Theme.of(context).appColors;
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: this.enforceMinLine == true ? 2 : 5, horizontal: 8),
+      padding: EdgeInsets.symmetric(vertical: enforceMinLine == true ? 2 : 5, horizontal: 8),
       child: Row(
         crossAxisAlignment: enforceMinLine == true ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         children: [
           SizedBox(
             width: 70,
             child: Text(
-              "$profileKey",
-              style: TextStyle(
+              profileKey,
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -48,7 +48,7 @@ class ProfileKeyValue extends StatelessWidget {
               ),
               decoration: InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.all(1),
+                contentPadding: const EdgeInsets.all(1),
                 counterText: enforceMinLine == true ? '' : null,
               ),
             ),

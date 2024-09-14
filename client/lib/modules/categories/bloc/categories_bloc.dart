@@ -33,12 +33,12 @@ class CategoriesBloc extends Bloc<CategoriesEvents, CategoriesState> {
       emit(SelectInterestLoading());
 
       try {
-        await this.categoriesRepository.selectUserInterests(event.interests);
+        await categoriesRepository.selectUserInterests(event.interests);
 
         emit(SelectInterestSuccess());
       } catch (e) {
         handleError(e: e);
-        throw e;
+        rethrow;
       }
     });
   }

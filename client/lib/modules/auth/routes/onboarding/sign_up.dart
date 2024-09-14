@@ -1,4 +1,4 @@
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/auth/bloc/auth_bloc.dart';
 import 'package:client/modules/auth/bloc/auth_event.dart';
 import 'package:client/modules/auth/bloc/auth_state.dart';
@@ -11,9 +11,10 @@ import 'package:client/shared/widgets/button.dart';
 import 'package:client/shared/widgets/date_selector.dart';
 import 'package:client/shared/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatefulWidget {
-  SignUpScreen({super.key});
+  const SignUpScreen({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -64,7 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthSignUpSuccess) {
-          Navigator.of(context).pushNamed(AuthRoutes.verifyEmail, arguments: {
+          GoRouter.of(context).pushNamed(AuthRoutes.verifyEmail, extra: {
             "email": emailController.text,
           });
         }
@@ -77,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
+                const Text(
                   "Create your account",
                   style: TextStyle(
                     fontSize: 18,
@@ -145,7 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.bottomRight,
                   child: ContainedButton(
                     disabled: nameController.text.isEmpty || emailController.text.isEmpty || userNameController.text.isEmpty || passwordController.text.isEmpty || dateOfBirth == null,
-                    child: Text("Next"),
+                    child: const Text("Next"),
                     loading: state is AuthSignUpLoading,
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {

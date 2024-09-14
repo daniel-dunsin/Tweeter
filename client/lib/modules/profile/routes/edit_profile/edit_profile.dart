@@ -8,6 +8,7 @@ import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/utils/file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final UserModel initialUser;
@@ -74,7 +75,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       child: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state is EditProfileSuccess) {
-            Navigator.pop(context);
+            GoRouter.of(context).pop();
           }
         },
         builder: (context, state) {
@@ -91,14 +92,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.pop(context);
+                              GoRouter.of(context).pop();
                             },
                             child: Text(
                               "Cancel",
@@ -140,7 +141,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 180,
                     child: Stack(
                       children: [
@@ -184,7 +185,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         profileBloc.add(DeleteCoverPictureRequested());
                                       }
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.delete,
                                     ),
                                   ),
@@ -223,7 +224,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               radius: 30,
                               child: Container(
                                 decoration: BoxDecoration(
-                                  gradient: LinearGradient(
+                                  gradient: const LinearGradient(
                                     colors: [
                                       Color.fromRGBO(0, 0, 0, 0.5),
                                       Color.fromRGBO(0, 0, 0, 0.5),
@@ -231,7 +232,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   ),
                                   borderRadius: BorderRadius.circular(30),
                                 ),
-                                child: Center(
+                                child: const Center(
                                   child: Icon(
                                     Icons.photo_camera_outlined,
                                     color: Colors.white,
@@ -253,11 +254,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       profileBloc.add(DeleteProfilePictureRequested());
                                     }
                                   },
-                                  icon: Icon(Icons.delete),
+                                  icon: const Icon(Icons.delete),
                                   color: appColors.iconColor,
                                 ),
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                       ],
                     ),
                   ),
@@ -272,20 +273,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             enforceMinLine: true,
                             controller: nameController,
                           ),
-                          Divider(height: 0.5, color: Colors.grey),
+                          const Divider(height: 0.5, color: Colors.grey),
                           const Divider(height: 0.5, color: Colors.grey),
                           ProfileKeyValue(
                             profileKey: "Bio",
                             controller: bioController,
                           ),
-                          Divider(height: 0.5, color: Colors.grey),
+                          const Divider(height: 0.5, color: Colors.grey),
                           const Divider(height: 0.5, color: Colors.grey),
                           ProfileKeyValue(
                             profileKey: "Website",
                             enforceMinLine: true,
                             controller: websiteController,
                           ),
-                          Divider(height: 0.5, color: Colors.grey),
+                          const Divider(height: 0.5, color: Colors.grey),
                         ],
                       ),
                     ),

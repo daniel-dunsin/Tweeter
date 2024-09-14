@@ -1,4 +1,4 @@
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/auth/bloc/auth_bloc.dart';
 import 'package:client/modules/auth/bloc/auth_event.dart';
 import 'package:client/modules/auth/bloc/auth_state.dart';
@@ -8,6 +8,7 @@ import 'package:client/shared/widgets/custom_app_bar.dart';
 import 'package:client/shared/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class EnterForgotPasswordCodeScreen extends StatefulWidget {
   const EnterForgotPasswordCodeScreen({super.key});
@@ -44,9 +45,12 @@ class _EnterForgotPasswordCodeScreenState extends State<EnterForgotPasswordCodeS
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is ConfirmPasswordResetCodeSuccess) {
-            Navigator.of(context).popAndPushNamed(AuthRoutes.resetPassword, arguments: {
-              "code": _codeController.text
-            });
+            GoRouter.of(context).replaceNamed(
+              AuthRoutes.resetPassword,
+              extra: {
+                "code": _codeController.text
+              },
+            );
           }
 
           if (state is ConfirmPasswordResetCodeError) {
@@ -57,7 +61,7 @@ class _EnterForgotPasswordCodeScreenState extends State<EnterForgotPasswordCodeS
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
+              const Text(
                 "We sent you a code",
                 style: TextStyle(
                   fontSize: 18,
@@ -65,7 +69,7 @@ class _EnterForgotPasswordCodeScreenState extends State<EnterForgotPasswordCodeS
                 ),
               ),
               const SizedBox(height: 10),
-              Text(
+              const Text(
                 "Check your email to get your confirmation code. If you need to request a new code, go back and reselect a confirmation.",
                 style: TextStyle(
                   fontSize: 13,
@@ -84,12 +88,12 @@ class _EnterForgotPasswordCodeScreenState extends State<EnterForgotPasswordCodeS
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop();
+                      GoRouter.of(context).pop();
                     },
                     child: const Text("Back"),
                   ),
                   ContainedButton(
-                    child: Text("Next"),
+                    child: const Text("Next"),
                     loading: state is ForgotPasswordLoading,
                     disabled: _codeController.text.isEmpty,
                     onPressed: () {

@@ -19,7 +19,7 @@ class FollowsBloc extends Bloc<FollowsEvents, FollowsState> {
         emit(GetUserFollowsLoading());
 
         try {
-          final response = await this.followRepository.getUserFollows(event.userId);
+          final response = await followRepository.getUserFollows(event.userId);
 
           final Map<String, dynamic>? data = response["data"];
 
@@ -51,7 +51,7 @@ class FollowsBloc extends Bloc<FollowsEvents, FollowsState> {
       emit(GetSuggestedFollowsLoading());
 
       try {
-        final response = await this.followRepository.getSuggestedFollows();
+        final response = await followRepository.getSuggestedFollows();
 
         final usersMap = response["data"] as List<dynamic>;
 

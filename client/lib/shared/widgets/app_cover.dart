@@ -1,5 +1,6 @@
 import 'package:client/shared/theme/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppCover extends StatelessWidget {
   final Widget child;
@@ -16,7 +17,7 @@ class AppCover extends StatelessWidget {
           child: ConstrainedBox(
             constraints: BoxConstraints(
               minWidth: MediaQuery.of(context).size.width,
-              minHeight: MediaQuery.of(context).size.height - 50 - (appBar?.toolbarHeight ?? 0),
+              minHeight: MediaQuery.of(context).size.height - 50.sp - (appBar?.toolbarHeight ?? 0),
             ),
             child: IntrinsicHeight(
               child: Padding(

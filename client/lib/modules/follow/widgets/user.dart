@@ -2,7 +2,6 @@ import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/widgets/button.dart';
-import 'package:flutter/cupertino.dart';
 import "package:flutter_bloc/flutter_bloc.dart";
 import 'package:flutter/material.dart';
 
@@ -27,7 +26,7 @@ class _UserListTileState extends State<UserListTile> {
     final bool followsYou = followers.where((follower) => follower.id == widget.user.id).toList().isNotEmpty;
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,7 +44,7 @@ class _UserListTileState extends State<UserListTile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${widget.user.name}",
+                        widget.user.name,
                         style: TextStyle(
                           color: appColors.foregroundColor,
                           fontWeight: FontWeight.w600,
@@ -69,17 +68,17 @@ class _UserListTileState extends State<UserListTile> {
                       showMenu(
                         color: appColors.backgroundColor,
                         shadowColor: appColors.secondaryForegroundColor,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(40)),
                         ),
                         context: context,
-                        position: RelativeRect.fromLTRB(100, 300, 0, 0), // Position the menu
+                        position: const RelativeRect.fromLTRB(100, 300, 0, 0), // Position the menu
                         items: [
                           PopupMenuItem(
                             child: Center(
                               child: Text(
                                 'Unfollow @${widget.user.userName}',
-                                style: TextStyle(color: Colors.red),
+                                style: const TextStyle(color: Colors.red),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -99,13 +98,13 @@ class _UserListTileState extends State<UserListTile> {
                         : followsYou
                             ? "Follow Back"
                             : "Follow",
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                   ),
                   height: 30,
                   width: double.minPositive,
                   backgroundColor: youFollow ? Colors.transparent : null,
                   foregroundColor: youFollow ? appColors.foregroundColor : null,
-                  borderSide: youFollow ? BorderSide(width: 1, color: Colors.grey) : null,
+                  borderSide: youFollow ? const BorderSide(width: 1, color: Colors.grey) : null,
                 ),
               ],
             ),

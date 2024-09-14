@@ -1,0 +1,24 @@
+import 'package:flutter/material.dart';
+
+class PublicRoutes {}
+
+class AuthRoutes {
+  static String signUpInitial = "/";
+  static String signUp = "/auth/sign_up";
+  static String login = "/auth/sign_in";
+  static String loginPassword = "/auth/sign_in_password";
+  static String forgotPassword = "/auth/forgot_password";
+  static String forgotPasswordCode = "/auth/forgot_password_code";
+  static String resetPassword = "/auth/forgot_password_reset";
+  static String verifyEmail = "/auth/verify_email";
+  static String selectInterests = "/auth/select_interests";
+  static String updateDp = "/auth/update_dp";
+}
+
+class PrivateRoutes {
+  static String rootHome = "/private/home";
+  static String profile = "/private/profile";
+  static String follows = "/private/follows";
+}
+
+final GlobalKey<NavigatorState> appNavKey = GlobalKey<NavigatorState>();

@@ -2,6 +2,7 @@ import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class DrawerNavItem extends StatelessWidget {
   final IconData icon;
@@ -9,7 +10,7 @@ class DrawerNavItem extends StatelessWidget {
   final String route;
   final bool isSubItem;
 
-  const DrawerNavItem({
+  const DrawerNavItem({super.key, 
     required this.icon,
     required this.label,
     required this.route,
@@ -23,11 +24,14 @@ class DrawerNavItem extends StatelessWidget {
 
     return ListTile(
       onTap: () {
-        Navigator.pushNamed(context, route, arguments: {
-          "userId": user?.id
-        });
+        GoRouter.of(context).pushNamed(
+          route,
+          extra: {
+            "userId": user?.id
+          },
+        );
       },
-      contentPadding: EdgeInsets.symmetric(vertical: 3),
+      contentPadding: const EdgeInsets.symmetric(vertical: 3),
       leading: Icon(
         icon,
         color: appColors.foregroundColor,

@@ -1,4 +1,4 @@
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/categories/bloc/categories_bloc.dart';
 import 'package:client/modules/categories/models/category_model.dart';
 import 'package:client/shared/theme/colors.dart';
@@ -9,6 +9,7 @@ import 'package:client/shared/widgets/cancel_appbar_leading.dart';
 import 'package:client/shared/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class SelectInterestScreen extends StatefulWidget {
   const SelectInterestScreen({super.key});
@@ -51,7 +52,7 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        actions: [
+        actions: const [
           SkipAppBarAction()
         ],
         surfaceTintColor: Colors.transparent,
@@ -71,18 +72,14 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
               setState(() {
                 selectedSubcategories = [];
               });
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                PrivateRoutes.rootHome,
-                (route) => false,
-              );
+              GoRouter.of(context).goNamed(PrivateRoutes.rootHome);
             }
           },
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
+                const Text(
                   "What are you interested in? ",
                   style: TextStyle(
                     fontSize: 18,
@@ -90,7 +87,7 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                Text("Select some topics you're interested in to help personalize your Tweeter experience, starting with finding people to follow"),
+                const Text("Select some topics you're interested in to help personalize your Tweeter experience, starting with finding people to follow"),
                 const SizedBox(height: 30),
                 Expanded(
                   child: Visibility(
@@ -105,7 +102,7 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
                                 children: [
                                   Text(
                                     category.name,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -150,7 +147,7 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
                         ),
                       ),
                     ),
-                    replacement: TweeterLoader(),
+                    replacement: const TweeterLoader(),
                     visible: state is! GetCategoriesLoading,
                   ),
                 ),
@@ -158,9 +155,9 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
                   elevation: 3,
                   color: Colors.transparent,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     child: ContainedButton(
-                      child: Text("Done"),
+                      child: const Text("Done"),
                       onPressed: () {
                         submit();
                       },

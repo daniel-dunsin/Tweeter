@@ -10,10 +10,10 @@ Future<File?> pickImage() async {
 
     final XFile? image = await imagePicker?.pickImage(source: ImageSource.gallery);
 
-    return image != null ? await File(image.path) : null;
+    return image != null ? File(image.path) : null;
   } catch (e) {
     handleError(e: e);
-    throw e;
+    rethrow;
   }
 }
 
@@ -23,10 +23,10 @@ String convertImageToBase64(File file) {
 
     final encodedImage = base64Encode(bytes);
 
-    return "data:image/png;base64,${encodedImage}";
+    return "data:image/png;base64,$encodedImage";
   } catch (e) {
     handleError(e: e);
-    throw e;
+    rethrow;
   }
 }
 
@@ -41,6 +41,6 @@ File convertBase64ToImage(String base64String) {
     return file;
   } catch (e) {
     handleError(e: e);
-    throw e;
+    rethrow;
   }
 }

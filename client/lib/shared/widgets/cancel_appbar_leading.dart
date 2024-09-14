@@ -1,5 +1,6 @@
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CancelAppbarLeading extends StatelessWidget {
   final String text;
@@ -14,14 +15,14 @@ class CancelAppbarLeading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 15, left: 15),
+      padding: const EdgeInsets.only(top: 15, left: 15),
       child: GestureDetector(
         onTap: () {
-          onTap == null ? Navigator.pop(context) : onTap!();
+          onTap == null ? GoRouter.of(context).pop() : onTap!();
         },
         child: Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 13,
           ),
         ),

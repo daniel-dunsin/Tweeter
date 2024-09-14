@@ -29,8 +29,8 @@ class NoFollowing extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ContainedButton(
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
+              child: const Padding(
+                padding: EdgeInsets.all(2.0),
                 child: Text(
                   "Suggested Users",
                   style: TextStyle(
@@ -46,7 +46,7 @@ class NoFollowing extends StatelessWidget {
                   isScrollControlled: true,
                   enableDrag: true,
                   builder: (context) {
-                    return SuggestedFollowings();
+                    return const SuggestedFollowings();
                   },
                 );
               },

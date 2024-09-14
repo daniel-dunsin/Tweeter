@@ -4,7 +4,7 @@ import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final appColors = Theme.of(context).appColors;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60),
+        preferredSize: const Size.fromHeight(60),
         child: Container(
           decoration: BoxDecoration(
             border: Border(
@@ -42,11 +42,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               indicatorColor: appColors.iconColor,
               indicatorSize: TabBarIndicatorSize.label,
               indicatorWeight: 4,
-              labelStyle: TextStyle(
+              labelStyle: const TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
               ),
-              tabs: [
+              tabs: const [
                 Tab(text: "For you"),
                 Tab(text: "Following")
               ],
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ),
       body: TabBarView(
         controller: tabController,
-        children: [
+        children: const [
           ForYou(),
           Following(),
         ],

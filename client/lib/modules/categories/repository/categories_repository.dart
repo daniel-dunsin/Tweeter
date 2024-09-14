@@ -12,7 +12,7 @@ class CategoriesRepository {
   }
 
   selectUserInterests(List<String> subCategories) async {
-    final response = await this.categoriesService.updateInterests(subCategories);
+    final response = await categoriesService.updateInterests(subCategories);
 
     return response.data;
   }

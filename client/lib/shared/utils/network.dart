@@ -1,5 +1,4 @@
-import 'package:client/app.dart';
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/shared/constants/localstorage.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/utils/localstorage.dart';
@@ -17,7 +16,7 @@ Future? handleError({
     if (e.response != null) {
       if (e.response?.statusCode == 403) {
         errorMessage = "Session Expired! Login Again";
-        navigatorKey.currentState?.pushNamedAndRemoveUntil(AuthRoutes.login, (route) => false);
+        appNavKey.currentState?.pushNamedAndRemoveUntil(AuthRoutes.login, (route) => false);
         await LocalStorage.removeEntry(key: localStorageConstants.user);
         await LocalStorage.removeEntry(key: localStorageConstants.accessToken);
       } else {
@@ -35,12 +34,12 @@ Future? handleError({
 
   toastification.show(
     closeOnClick: true,
-    icon: Icon(Icons.error, color: Colors.white),
-    backgroundColor: Color.fromRGBO(255, 0, 0, 1),
+    icon: const Icon(Icons.error, color: Colors.white),
+    backgroundColor: const Color.fromRGBO(255, 0, 0, 1),
     foregroundColor: Colors.white,
     title: Text(
       errorMessage,
-      style: TextStyle(fontSize: 12),
+      style: const TextStyle(fontSize: 12),
     ),
     alignment: Alignment.topCenter,
     dismissDirection: DismissDirection.vertical,

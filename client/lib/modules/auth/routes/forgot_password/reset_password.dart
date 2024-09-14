@@ -1,4 +1,4 @@
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/auth/bloc/auth_bloc.dart';
 import 'package:client/modules/auth/bloc/auth_event.dart';
 import 'package:client/modules/auth/bloc/auth_state.dart';
@@ -11,9 +11,14 @@ import 'package:client/shared/widgets/custom_app_bar.dart';
 import 'package:client/shared/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+  final String code;
+  const ResetPasswordScreen({
+    super.key,
+    required this.code,
+  });
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -56,16 +61,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, String> params = ModalRoute.of(context)?.settings.arguments as Map<String, String>;
-    final code = params["code"]!;
-
     return AppCover(
       appBar: customAppBar,
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is ResetPasswordSuccess) {
             handleSuccess("Password reset successful");
-            Navigator.pushNamed(context, AuthRoutes.login);
+            GoRouter.of(context).pushNamed(AuthRoutes.login);
           }
         },
         builder: (context, state) {
@@ -74,7 +76,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
+                const Text(
                   "Choose a new password",
                   style: TextStyle(
                     fontSize: 18,
@@ -82,7 +84,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text(
+                const Text(
                   "Make sure your new password is 8 characters or more. Try including numbers, letters, and punctuation marks for a strong password.",
                   style: TextStyle(
                     fontSize: 13,
@@ -90,7 +92,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                Text(
+                const Text(
                   "You'll be logged out of all active sessions after your password is changed.",
                   style: TextStyle(
                     fontSize: 13,
@@ -123,13 +125,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
                 const Spacer(),
                 ContainedButton(
-                  child: Text("Change Password"),
+                  child: const Text("Change Password"),
                   fullWidth: true,
                   loading: state is ResetPasswordLoading,
                   disabled: _passwordController.text.isEmpty || _confirmPasswordController.text.isEmpty,
                   onPressed: () {
                     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-                      handleSubmit(code);
+                      handleSubmit(widget.code);
                     }
                   },
                 )

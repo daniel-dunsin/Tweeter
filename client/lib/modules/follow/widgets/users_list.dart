@@ -16,8 +16,8 @@ class UsersList extends StatelessWidget {
         },
         itemCount: users.length,
       ),
-      visible: this.users.length > 0,
-      replacement: replacement ?? SizedBox.shrink(),
+      visible: users.isNotEmpty,
+      replacement: replacement ?? const SizedBox.shrink(),
     );
   }
 }

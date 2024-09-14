@@ -1,4 +1,4 @@
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/auth/bloc/auth_bloc.dart';
 import 'package:client/modules/auth/bloc/auth_event.dart';
 import 'package:client/modules/auth/bloc/auth_state.dart';
@@ -10,9 +10,15 @@ import 'package:client/shared/widgets/button.dart';
 import 'package:client/shared/widgets/cancel_appbar_leading.dart';
 import 'package:client/shared/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class VerifyAccountScreen extends StatefulWidget {
-  const VerifyAccountScreen({super.key});
+  final String email;
+
+  const VerifyAccountScreen({
+    super.key,
+    required this.email,
+  });
 
   @override
   State<VerifyAccountScreen> createState() => _VerifyAccountScreenState();
@@ -31,13 +37,11 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String? email = (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?)?["email"];
-
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthVerifyEmailSuccess) {
           handleSuccess("Welcome ${state.user.name}");
-          Navigator.of(context).pushNamedAndRemoveUntil(AuthRoutes.updateDp, (route) => false);
+          GoRouter.of(context).goNamed(AuthRoutes.updateDp);
         }
       },
       builder: (context, state) {
@@ -45,11 +49,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
           appBar: AppBar(
             leading: CancelAppbarLeading(
               onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  AuthRoutes.signUp,
-                  (route) => false,
-                );
+                GoRouter.of(context).goNamed(AuthRoutes.signUp);
               },
             ),
             toolbarHeight: 30,
@@ -58,7 +58,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
+              const Text(
                 "We sent you a code",
                 style: TextStyle(
                   fontSize: 18,
@@ -67,8 +67,8 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                "Check your email ($email) to get your email verification code.",
-                style: TextStyle(
+                "Check your email (${widget.email}) to get your email verification code.",
+                style: const TextStyle(
                   fontSize: 13,
                   color: Colors.grey,
                 ),
@@ -84,14 +84,14 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ContainedButton(
-                    child: Text("Next"),
+                    child: const Text("Next"),
                     onPressed: () {
                       context.read<AuthBloc>().add(
                             VerifyEmailRequested(
                               VerifyEmailModel.fromMap(
                                 {
                                   "code": codeController.text,
-                                  "email": email!,
+                                  "email": widget.email,
                                 },
                               ),
                             ),

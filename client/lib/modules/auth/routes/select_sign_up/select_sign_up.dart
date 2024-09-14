@@ -1,4 +1,4 @@
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/auth/bloc/auth_bloc.dart';
 import 'package:client/modules/auth/bloc/auth_state.dart';
 import 'package:client/modules/auth/routes/select_sign_up/widgets/already_have_an_account.dart';
@@ -11,6 +11,7 @@ import 'package:client/shared/widgets/app_cover.dart';
 import 'package:client/shared/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class SelectSignUpScreen extends StatelessWidget {
   const SelectSignUpScreen({super.key});
@@ -23,7 +24,7 @@ class SelectSignUpScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Spacer(),
+            const Spacer(),
             Text(
               "See what's happening in the world right now.",
               style: TextStyle(
@@ -32,41 +33,41 @@ class SelectSignUpScreen extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             const SizedBox(height: 20),
-            GoogleButton(),
-            SizedBox(height: 20),
-            OrDivider(),
-            SizedBox(height: 20),
+            const GoogleButton(),
+            const SizedBox(height: 20),
+            const OrDivider(),
+            const SizedBox(height: 20),
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state is AuthWithGoogleSuccess) {
                   handleSuccess("Welcome ${state.user.name}");
                   if (state.isNew) {
-                    Navigator.pushNamed(context, AuthRoutes.updateDp);
+                    GoRouter.of(context).pushNamed(AuthRoutes.updateDp);
                   } else {
-                    Navigator.pushNamedAndRemoveUntil(context, PrivateRoutes.rootHome, (route) => false);
+                    GoRouter.of(context).goNamed(PrivateRoutes.rootHome);
                   }
                 }
               },
               builder: (context, state) {
                 return ContainedButton(
-                  child: Text(
+                  child: const Text(
                     "Create Account",
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                   fullWidth: true,
                   onPressed: () {
-                    Navigator.of(context).pushNamed(AuthRoutes.signUp);
+                    GoRouter.of(context).pushNamed(AuthRoutes.signUp);
                   },
                   disabled: state is AuthWithGoogleLoading,
                 );
               },
             ),
-            SizedBox(height: 15),
-            TermsAndCondition(),
+            const SizedBox(height: 15),
+            const TermsAndCondition(),
             const SizedBox(height: 20),
-            AlreadyHaveAnAccount(),
+            const AlreadyHaveAnAccount(),
           ],
         ),
       ),

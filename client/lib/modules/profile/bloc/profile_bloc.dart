@@ -17,7 +17,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<GetProfileRequested>(
       (event, emit) async {
         try {
-          final response = await this.profileRepository.getUserProfile(event.userId);
+          final response = await profileRepository.getUserProfile(event.userId);
 
           final Map<String, dynamic>? userMap = response["data"];
 
@@ -38,7 +38,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(EditProfileLoading());
       print("editing profile");
       try {
-        final response = await this.profileRepository.editUserProfile(event.editProfileDto);
+        final response = await profileRepository.editUserProfile(event.editProfileDto);
 
         final Map<String, dynamic> userMap = response["data"];
         final UserModel user = UserModel.fromMap(userMap);
@@ -55,7 +55,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(DeleteProfilePictureLoading());
 
       try {
-        final response = await this.profileRepository.deleteProfilePicture();
+        final response = await profileRepository.deleteProfilePicture();
 
         final Map<String, dynamic> userMap = response["data"];
         final UserModel user = UserModel.fromMap(userMap);
@@ -72,7 +72,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(DeleteCoverPictureLoading());
 
       try {
-        final response = await this.profileRepository.deleteCoverPicture();
+        final response = await profileRepository.deleteCoverPicture();
 
         final Map<String, dynamic> userMap = response["data"];
         final UserModel user = UserModel.fromMap(userMap);

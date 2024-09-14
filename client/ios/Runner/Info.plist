@@ -83,5 +83,14 @@
 			<string>facetime</string>
 			<string>https</string>
 		</array>
+
+			<!-- Internet permission -->
+		<key>NSAppTransportSecurity</key>
+            <dict>
+                <key>NSAllowsArbitraryLoads</key>
+                <true/>
+                <key>NSAllowsArbitraryLoadsInWebContent</key>
+                <true/>
+            </dict>
 	</dict>
 </plist>

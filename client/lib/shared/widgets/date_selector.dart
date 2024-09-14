@@ -7,7 +7,7 @@ class DateSelector extends StatefulWidget {
   final DateTime? date;
   final Function(DateTime? date)? onChangeDate;
 
-  DateSelector({super.key, this.date, this.onChangeDate});
+  const DateSelector({super.key, this.date, this.onChangeDate});
 
   @override
   State<DateSelector> createState() => _DateSelectorState();
@@ -21,11 +21,11 @@ class _DateSelectorState extends State<DateSelector> {
     final appColors = Theme.of(context).appColors;
 
     return Container(
-      padding: EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 15),
+      padding: const EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 15),
       decoration: BoxDecoration(
         color: appColors.secondaryBackgroundColor,
         shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(40),
           topRight: Radius.circular(40),
         ),

@@ -1,4 +1,4 @@
-import 'package:client/config/routes.dart';
+import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/follow/enums/index.dart';
 import 'package:client/modules/profile/routes/edit_profile/edit_profile.dart';
@@ -9,6 +9,7 @@ import 'package:client/shared/utils/misc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import "package:flutter_bloc/flutter_bloc.dart";
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class UserProfileAppBar extends StatefulWidget {
@@ -69,13 +70,13 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                                     children: [
                                       Text(
                                         "${widget.user?.name}",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 16,
                                         ),
                                       ),
                                       const SizedBox(height: 3),
-                                      Text(
+                                      const Text(
                                         "196 posts",
                                         style: TextStyle(
                                           fontSize: 12,
@@ -92,18 +93,18 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                       ],
                     ),
                   )
-                : SizedBox(),
+                : const SizedBox(),
             background: Opacity(
               opacity: widget.scrollController.hasClients && widget.scrollController.offset < 120 ? 1 : 0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 210,
                     child: Stack(
                       children: [
                         widget.user?.coverPicture != null
-                            ? Container(
+                            ? SizedBox(
                                 height: 150,
                                 child: Stack(
                                   children: [
@@ -116,7 +117,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                                     Container(
                                       decoration: BoxDecoration(
                                         color: appColors.iconColor,
-                                        gradient: LinearGradient(
+                                        gradient: const LinearGradient(
                                           colors: [
                                             Color.fromRGBO(0, 0, 0, 0.4),
                                             Color.fromRGBO(0, 0, 0, 0.5),
@@ -146,7 +147,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                                 showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,
-                                  sheetAnimationStyle: AnimationStyle(duration: Duration(milliseconds: 500)),
+                                  sheetAnimationStyle: AnimationStyle(duration: const Duration(milliseconds: 500)),
                                   builder: (context) {
                                     return EditProfileScreen(
                                       initialUser: widget.user!,
@@ -154,17 +155,17 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                                   },
                                 );
                               },
-                              child: Text(
+                              child: const Text(
                                 "Edit Profile",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                               style: TextButton.styleFrom(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(40),
-                                  side: BorderSide(
+                                  side: const BorderSide(
                                     color: Colors.grey,
                                     width: 1.5,
                                   ),
@@ -181,7 +182,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -195,7 +196,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                         ),
                         Text(
                           "@${widget.user?.userName}",
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.grey,
                             fontSize: 14,
                           ),
@@ -214,14 +215,14 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                           child: Text.rich(
                             TextSpan(
                               children: [
-                                WidgetSpan(
+                                const WidgetSpan(
                                   alignment: PlaceholderAlignment.middle,
                                   child: Icon(
                                     Icons.link,
                                     color: Colors.grey,
                                   ),
                                 ),
-                                WidgetSpan(child: const SizedBox(width: 6)),
+                                const WidgetSpan(child: SizedBox(width: 6)),
                                 WidgetSpan(
                                   child: widget.user?.website != null
                                       ? GestureDetector(
@@ -235,11 +236,11 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                                             ),
                                           ),
                                         )
-                                      : SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
                                 ),
                               ],
                             ),
-                            style: TextStyle(color: Colors.grey),
+                            style: const TextStyle(color: Colors.grey),
                             softWrap: true,
                           ),
                           visible: widget.user?.website != null,
@@ -248,14 +249,14 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                         Text.rich(
                           TextSpan(
                             children: [
-                              WidgetSpan(
+                              const WidgetSpan(
                                 alignment: PlaceholderAlignment.middle,
                                 child: Icon(
                                   Icons.calendar_month_outlined,
                                   color: Colors.grey,
                                 ),
                               ),
-                              WidgetSpan(child: const SizedBox(width: 6)),
+                              const WidgetSpan(child: SizedBox(width: 6)),
                               WidgetSpan(
                                 child: Text(
                                   "Joined ${DateFormat.yMMMM().format(widget.user?.createdAt as DateTime)}",
@@ -263,7 +264,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                               ),
                             ],
                           ),
-                          style: TextStyle(color: Colors.grey),
+                          style: const TextStyle(color: Colors.grey),
                           softWrap: true,
                         ),
                         const SizedBox(height: 8),
@@ -272,7 +273,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Navigator.of(context).pushNamed(PrivateRoutes.follows, arguments: {
+                                GoRouter.of(context).pushNamed(PrivateRoutes.follows, extra: {
                                   "user": widget.user,
                                   "tab": FollowsTabs.followers,
                                 });
@@ -289,20 +290,20 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                                         ),
                                       ),
                                     ),
-                                    WidgetSpan(
+                                    const WidgetSpan(
                                       child: Text(
                                         " Following",
                                       ),
                                     ),
                                   ],
                                 ),
-                                style: TextStyle(color: Colors.grey),
+                                style: const TextStyle(color: Colors.grey),
                               ),
                             ),
                             const SizedBox(width: 15),
                             GestureDetector(
                               onTap: () {
-                                Navigator.of(context).pushNamed(PrivateRoutes.follows, arguments: {
+                                GoRouter.of(context).pushNamed(PrivateRoutes.follows, extra: {
                                   "user": widget.user,
                                   "tab": FollowsTabs.followings,
                                 });
@@ -319,7 +320,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                                         ),
                                       ),
                                     ),
-                                    WidgetSpan(
+                                    const WidgetSpan(
                                       child: Text(
                                         " Followers",
                                       ),

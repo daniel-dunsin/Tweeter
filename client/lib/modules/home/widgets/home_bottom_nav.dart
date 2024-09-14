@@ -61,7 +61,7 @@ class HomeBottomNav extends StatelessWidget {
           ],
           indicatorColor: Colors.transparent,
           backgroundColor: appColors.backgroundColor,
-          animationDuration: Duration(milliseconds: 300),
+          animationDuration: const Duration(milliseconds: 300),
           selectedIndex: appNavCubit.state,
           onDestinationSelected: (int screen) {
             appNavCubit.setBottomNavIndex(screen, context);
