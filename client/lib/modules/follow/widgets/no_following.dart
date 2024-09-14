@@ -41,7 +41,7 @@ class NoFollowing extends StatelessWidget {
               ),
               onPressed: () {
                 showModalBottomSheet(
-                  backgroundColor: Colors.transparent,
+                  barrierColor: Color.fromRGBO(43, 43, 43, 0.6),
                   context: context,
                   isScrollControlled: true,
                   enableDrag: true,

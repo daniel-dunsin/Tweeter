@@ -29,7 +29,7 @@ class _SuggestedFollowingsState extends State<SuggestedFollowings> {
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
     return Container(
-      color: appColors.secondaryBackgroundColor,
+      color: appColors.backgroundColor,
       width: double.maxFinite,
       height: MediaQuery.of(context).size.height * .7,
       child: Column(

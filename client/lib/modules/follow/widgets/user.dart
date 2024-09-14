@@ -52,11 +52,11 @@ class _UserListTileState extends State<UserListTile> {
                           fontSize: 12,
                         ),
                       ),
-                      FollowButton(user: widget.user)
                     ],
                   ),
                 ),
                 const SizedBox(width: 5),
+                FollowButton(user: widget.user)
               ],
             ),
           ),

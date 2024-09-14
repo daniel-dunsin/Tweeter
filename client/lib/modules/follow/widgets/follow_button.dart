@@ -4,6 +4,7 @@ import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FollowButton extends StatefulWidget {
   final UserModel user;
@@ -27,49 +28,56 @@ class _FollowButtonState extends State<FollowButton> {
 
     final bool youFollow = followings.where((following) => following.id == widget.user.id).toList().isNotEmpty;
     final bool followsYou = followers.where((follower) => follower.id == widget.user.id).toList().isNotEmpty;
-    return ContainedButton(
-      onPressed: () {
+    return GestureDetector(
+      onTapDown: (details) {
+        final offset = details.globalPosition;
+
         if (!youFollow) {
           showMenu(
-            color: appColors.backgroundColor,
-            shadowColor: appColors.secondaryForegroundColor,
+            color: appColors.secondaryBackgroundColor,
+            // shadowColor: appColors.secondaryForegroundColor,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(40)),
             ),
             context: context,
-            position: const RelativeRect.fromLTRB(100, 300, 0, 0), // Position the menu
+            position: RelativeRect.fromLTRB(offset.dx, offset.dy + 20, 0, 0), // Position the menu
             items: [
               PopupMenuItem(
                 child: Center(
                   child: Text(
                     'Unfollow @${widget.user.userName}',
-                    style: const TextStyle(color: Colors.red),
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 9.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ),
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 6),
                 height: 2,
-                onTap: () {
-                  // Handle unfollow action
-                },
+                onTap: () {},
               ),
             ],
           );
         }
       },
-      child: Text(
-        youFollow
-            ? "Unfollow"
-            : followsYou
-                ? "Follow Back"
-                : "Follow",
-        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+      child: ContainedButton(
+        child: Text(
+          youFollow
+              ? "Unfollow"
+              : followsYou
+                  ? "Follow Back"
+                  : "Follow",
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+        ),
+        onPressed: null,
+        height: 30,
+        width: double.minPositive,
+        disabledBackgroundColor: youFollow ? Colors.transparent : appColors.foregroundColor,
+        disabledForegroundColor: youFollow ? appColors.foregroundColor : appColors.backgroundColor,
+        borderSide: youFollow ? const BorderSide(width: 1, color: Colors.grey) : null,
       ),
-      height: 30,
-      width: double.minPositive,
-      backgroundColor: youFollow ? Colors.transparent : null,
-      foregroundColor: youFollow ? appColors.foregroundColor : null,
-      borderSide: youFollow ? const BorderSide(width: 1, color: Colors.grey) : null,
     );
   }
 }

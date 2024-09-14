@@ -15,6 +15,8 @@ class ContainedButton extends StatelessWidget {
   final Color? foregroundColor;
   final BorderSide? borderSide;
   final double? elevation;
+  final Color? disabledBackgroundColor;
+  final Color? disabledForegroundColor;
 
   const ContainedButton({
     super.key,
@@ -30,6 +32,8 @@ class ContainedButton extends StatelessWidget {
     this.foregroundColor,
     this.borderSide,
     this.elevation,
+    this.disabledBackgroundColor,
+    this.disabledForegroundColor,
   });
 
   @override
@@ -52,8 +56,8 @@ class ContainedButton extends StatelessWidget {
         overlayColor: backgroundColor ?? appColors.foregroundColor,
         foregroundColor: foregroundColor ?? appColors.secondaryBackgroundColor,
         iconColor: foregroundColor ?? appColors.secondaryBackgroundColor,
-        disabledBackgroundColor: const Color.fromARGB(255, 100, 100, 100),
-        disabledForegroundColor: const Color.fromARGB(255, 39, 38, 38),
+        disabledBackgroundColor: disabledBackgroundColor ?? const Color.fromARGB(255, 100, 100, 100),
+        disabledForegroundColor: disabledForegroundColor ?? const Color.fromARGB(255, 39, 38, 38),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
         minimumSize: fullWidth == null && width == null && height == null
             ? null
@@ -90,22 +94,10 @@ class SecondaryButton extends StatelessWidget {
   final Color? foregroundColor;
   final BorderSide? borderSide;
   final double? elevation;
+  final Color? disabledBackgroundColor;
+  final Color? disabledForegroundColor;
 
-  const SecondaryButton({
-    super.key,
-    required this.child,
-    required this.onPressed,
-    this.width,
-    this.height,
-    this.fullWidth,
-    this.icon,
-    this.disabled,
-    this.loading,
-    this.backgroundColor,
-    this.foregroundColor,
-    this.borderSide,
-    this.elevation,
-  });
+  const SecondaryButton({super.key, required this.child, required this.onPressed, this.width, this.height, this.fullWidth, this.icon, this.disabled, this.loading, this.backgroundColor, this.foregroundColor, this.borderSide, this.elevation, this.disabledBackgroundColor, this.disabledForegroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -120,8 +112,8 @@ class SecondaryButton extends StatelessWidget {
         overlayColor: backgroundColor ?? appColors.backgroundColor,
         foregroundColor: foregroundColor ?? appColors.foregroundColor,
         iconColor: foregroundColor ?? appColors.foregroundColor,
-        disabledBackgroundColor: const Color.fromARGB(255, 100, 100, 100),
-        disabledForegroundColor: const Color.fromARGB(255, 39, 38, 38),
+        disabledBackgroundColor: disabledBackgroundColor ?? const Color.fromARGB(255, 100, 100, 100),
+        disabledForegroundColor: disabledForegroundColor ?? const Color.fromARGB(255, 39, 38, 38),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
         minimumSize: fullWidth == null && width == null && height == null
             ? null
