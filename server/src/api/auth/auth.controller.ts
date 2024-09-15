@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
   CheckCredentialDto,
@@ -125,5 +125,21 @@ export class AuthController {
       user,
       verifyPasswordDto.password,
     );
+  }
+
+  @Put('change-username')
+  async changeUserName(
+    @Body() changeUserNameDto: CheckUserNameDto,
+    @Auth() user: User,
+  ) {
+    return await this.authProvider.changeUsername(
+      user,
+      changeUserNameDto.userName,
+    );
+  }
+
+  @Put('change-email')
+  async changeEmail(@Body() changeEmailDto: CheckEmailDto, @Auth() user: User) {
+    return await this.authProvider.changeEmail(user, changeEmailDto.email);
   }
 }
