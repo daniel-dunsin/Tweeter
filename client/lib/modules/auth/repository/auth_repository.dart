@@ -71,4 +71,10 @@ class AuthRepository {
 
     return response.data;
   }
+
+  reactivateAccount() async {
+    final response = await authService.reactivateAccount();
+
+    return response.data;
+  }
 }

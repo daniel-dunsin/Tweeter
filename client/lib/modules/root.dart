@@ -19,8 +19,9 @@ Future<Map<String, dynamic>> getInitialRoute() async {
 
   try {
     final accessToken = await LocalStorage.getString(key: localStorageConstants.accessToken);
+    final userJson = await LocalStorage.getString(key: localStorageConstants.user);
 
-    if (accessToken != null) {
+    if (accessToken != null && userJson != null) {
       final response = await AuthRepository(AuthService()).getUser();
 
       final userMap = response["data"];
@@ -31,15 +32,18 @@ Future<Map<String, dynamic>> getInitialRoute() async {
       } else {
         initialRoute = AuthRoutes.signUpInitial;
         await LocalStorage.removeEntry(key: localStorageConstants.accessToken);
+        await LocalStorage.removeEntry(key: localStorageConstants.user);
       }
     } else {
       initialRoute = AuthRoutes.signUpInitial;
       await LocalStorage.removeEntry(key: localStorageConstants.accessToken);
+      await LocalStorage.removeEntry(key: localStorageConstants.user);
     }
   } catch (e) {
     print(e);
     initialRoute = AuthRoutes.signUpInitial;
     await LocalStorage.removeEntry(key: localStorageConstants.accessToken);
+    await LocalStorage.removeEntry(key: localStorageConstants.user);
   } finally {
     FlutterNativeSplash.remove();
   }

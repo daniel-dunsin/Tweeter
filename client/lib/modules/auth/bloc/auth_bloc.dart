@@ -75,17 +75,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final response = await authRepository.login(event.loginDto);
 
-        final Map<String, dynamic> userMap = response["data"];
-        final user = UserModel.fromMap(userMap);
         final String accessToken = response["meta"]["accessToken"];
+        final bool deactivated = response["meta"]["deactivated"];
+        final String? deactivatedAt = response["meta"]["deactivatedAt"];
+        UserModel? user = null;
 
-        await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
+        if (!deactivated) {
+          final Map<String, dynamic> userMap = response["data"];
+          user = UserModel.fromMap(userMap);
+          await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
+          appCubit.setUser(user);
+          appCubit.setFollowers(followersToUsers(user.followers ?? []));
+          appCubit.setFollowings(followingsToUsers(user.followings ?? []));
+        }
+
         await LocalStorage.setString(key: localStorageConstants.accessToken, value: accessToken);
-        appCubit.setUser(user);
-        appCubit.setFollowers(followersToUsers(user.followers ?? []));
-        appCubit.setFollowings(followingsToUsers(user.followings ?? []));
 
-        emit(LoginSuccess(user: user));
+        emit(
+          LoginSuccess(
+            user: user,
+            deactivated: deactivated,
+            deactivatedAt: deactivatedAt != null ? DateTime.parse(deactivatedAt) : null,
+          ),
+        );
       } catch (e) {
         handleError(e: e);
         emit(LoginError());
@@ -170,6 +182,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (e) {
         handleError(e: e);
         emit(AuthWithGoogleError());
+      }
+    });
+
+    on<ReactivateAccountRequested>((event, emit) async {
+      emit(ReActivateAccountLoading());
+
+      try {
+        final response = await authRepository.reactivateAccount();
+
+        final String accessToken = response["meta"]["accessToken"];
+
+        final Map<String, dynamic> userMap = response["data"];
+        final user = UserModel.fromMap(userMap);
+
+        await LocalStorage.setString(key: localStorageConstants.accessToken, value: accessToken);
+        await LocalStorage.setString(key: localStorageConstants.accessToken, value: accessToken);
+        await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
+
+        appCubit.setUser(user);
+        appCubit.setFollowers(followersToUsers(user.followers ?? []));
+        appCubit.setFollowings(followingsToUsers(user.followings ?? []));
+
+        emit(ReActivateAccountSuccess(user: user));
+      } catch (e) {
+        handleError(e: e);
+        emit(ReActivateAccountError());
       }
     });
   }

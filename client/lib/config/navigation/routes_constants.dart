@@ -7,6 +7,7 @@ class AuthRoutes {
   static String signUp = "/auth/sign_up";
   static String login = "/auth/sign_in";
   static String loginPassword = "/auth/sign_in_password";
+  static String reactivateAccount = "/auth/account/reactivate";
   static String forgotPassword = "/auth/forgot_password";
   static String forgotPasswordCode = "/auth/forgot_password_code";
   static String resetPassword = "/auth/forgot_password_reset";

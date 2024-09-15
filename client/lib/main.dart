@@ -11,6 +11,9 @@ import 'package:client/modules/follow/service/follow_service.dart';
 import 'package:client/modules/profile/bloc/profile_bloc.dart';
 import 'package:client/modules/profile/repositories/profile_repository.dart';
 import 'package:client/modules/profile/services/profile_service.dart';
+import 'package:client/modules/settings/bloc/settings_bloc.dart';
+import 'package:client/modules/settings/repository/settings_repository.dart';
+import 'package:client/modules/settings/services/settings_service.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,6 +44,7 @@ class _MyAppState extends State<MyApp> {
         RepositoryProvider(create: (context) => CategoriesRepository(CategoriesService())),
         RepositoryProvider(create: (context) => FollowRepository(FollowService())),
         RepositoryProvider(create: (context) => ProfileRepository(ProfileService())),
+        RepositoryProvider(create: (context) => SettingsRepository(SettingsService()))
       ],
       child: MultiBlocProvider(
         providers: [
@@ -63,6 +67,12 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(
             create: (context) => FollowsBloc(
               followRepository: context.read<FollowRepository>(),
+              appCubit: context.read<AppCubit>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => SettingsBloc(
+              settingsRepository: context.read<SettingsRepository>(),
               appCubit: context.read<AppCubit>(),
             ),
           )

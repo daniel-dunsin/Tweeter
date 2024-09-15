@@ -1,9 +1,13 @@
+import 'package:client/config/navigation/routes_constants.dart';
+import 'package:client/modules/settings/bloc/settings_bloc.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/widgets/custom_app_bar.dart';
+import 'package:client/shared/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class DeactivateAccountScreen extends StatelessWidget {
   const DeactivateAccountScreen({super.key});
@@ -101,15 +105,70 @@ class DeactivateAccountScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Center(
-                  child: Text(
-                    "Deactivate",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12.sp,
-                      color: Colors.red,
-                    ),
-                  ),
+                BlocConsumer<SettingsBloc, SettingsState>(
+                  listener: (context, state) {
+                    if (state is DeactivateAccountSuccessful) {
+                      GoRouter.of(context).goNamed(AuthRoutes.login);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is DeactivateAccountLoading) {
+                      return const Center(child: TweeterLoader());
+                    }
+
+                    return Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog.adaptive(
+                                backgroundColor: appColors.backgroundColor,
+                                title: const Text("Are you sure you want to deactivate your account?"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      context.pop();
+                                    },
+                                    child: Text(
+                                      "No",
+                                      style: TextStyle(
+                                        color: appColors.iconColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.sp,
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      context.read<SettingsBloc>().add(DeactivateAccountRequested());
+                                      context.pop();
+                                    },
+                                    child: Text(
+                                      "Yes",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.sp,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        child: Text(
+                          "Deactivate",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.sp,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 20),
               ],

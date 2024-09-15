@@ -35,9 +35,11 @@ class AuthCheckCredentialError extends AuthState {}
 class LoginLoading extends AuthState {}
 
 class LoginSuccess extends AuthState {
-  final UserModel user;
+  final UserModel? user;
+  final bool deactivated;
+  final DateTime? deactivatedAt;
 
-  LoginSuccess({required this.user});
+  LoginSuccess({required this.user, required this.deactivated, this.deactivatedAt});
 }
 
 class LoginError extends AuthState {}
@@ -76,3 +78,13 @@ class AuthWithGoogleSuccess extends AuthState {
 }
 
 class AuthWithGoogleError extends AuthState {}
+
+class ReActivateAccountLoading extends AuthState {}
+
+class ReActivateAccountSuccess extends AuthState {
+  final UserModel user;
+
+  ReActivateAccountSuccess({required this.user});
+}
+
+class ReActivateAccountError extends AuthState {}

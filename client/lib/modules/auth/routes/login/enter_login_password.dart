@@ -51,66 +51,78 @@ class _EnterLoginPasswordScreenState extends State<EnterLoginPasswordScreen> {
       ),
       body: Padding(
         padding: CustomTheme.majorScreenPadding,
-        child: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
-          if (state is LoginSuccess) {
-            handleSuccess("Welcome ${state.user.name}");
-            GoRouter.of(context).goNamed(PrivateRoutes.home);
-          }
-        }, builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Enter your password",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 14),
-              UnderlinedTextField(
-                fullWidth: true,
-                enabled: false,
-                initialValue: widget.credential,
-                height: 45,
-              ),
-              const SizedBox(height: 20),
-              UnderlinedPasswordTextField(
-                fullWidth: true,
-                labelText: "Password",
-                controller: passwordController,
-              ),
-              const Spacer(),
-              ContainedButton(
-                child: const Text(
-                  "Log in",
+        child: BlocConsumer<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is LoginSuccess && state.deactivated) {
+              GoRouter.of(context).goNamed(
+                AuthRoutes.reactivateAccount,
+                extra: {
+                  "deactivatedAt": state.deactivatedAt
+                },
+              );
+              return;
+            }
+            if (state is LoginSuccess && state.user != null) {
+              handleSuccess("Welcome ${state.user!.name}");
+              GoRouter.of(context).goNamed(PrivateRoutes.home);
+            }
+          },
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Enter your password",
                   style: TextStyle(
+                    fontSize: 18,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                disabled: passwordController.text.isEmpty,
-                onPressed: () {
-                  handleSubmit(widget.credential);
-                },
-                loading: state is LoginLoading,
-                fullWidth: true,
-              ),
-              const SizedBox(height: 15),
-              Align(
-                alignment: Alignment.center,
-                child: GestureDetector(
-                  onTap: () {
-                    GoRouter.of(context).pushNamed(AuthRoutes.forgotPassword);
-                  },
-                  child: Text(
-                    "Forgot Password?",
-                    style: TextStyle(decoration: TextDecoration.underline, decorationThickness: 2.5, decorationColor: appColors.secondaryForegroundColor, fontWeight: FontWeight.bold),
-                  ),
+                const SizedBox(height: 14),
+                UnderlinedTextField(
+                  fullWidth: true,
+                  enabled: false,
+                  initialValue: widget.credential,
+                  height: 45,
                 ),
-              )
-            ],
-          );
-        }),
+                const SizedBox(height: 20),
+                UnderlinedPasswordTextField(
+                  fullWidth: true,
+                  labelText: "Password",
+                  controller: passwordController,
+                ),
+                const Spacer(),
+                ContainedButton(
+                  child: const Text(
+                    "Log in",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  disabled: passwordController.text.isEmpty,
+                  onPressed: () {
+                    handleSubmit(widget.credential);
+                  },
+                  loading: state is LoginLoading,
+                  fullWidth: true,
+                ),
+                const SizedBox(height: 15),
+                Align(
+                  alignment: Alignment.center,
+                  child: GestureDetector(
+                    onTap: () {
+                      GoRouter.of(context).pushNamed(AuthRoutes.forgotPassword);
+                    },
+                    child: Text(
+                      "Forgot Password?",
+                      style: TextStyle(decoration: TextDecoration.underline, decorationThickness: 2.5, decorationColor: appColors.secondaryForegroundColor, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                )
+              ],
+            );
+          },
+        ),
       ),
     );
   }

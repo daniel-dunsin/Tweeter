@@ -22,6 +22,10 @@ class AppCubit extends Cubit<AppCubitState> {
     emit(state.copyWith(following: following));
   }
 
+  signOut() {
+    emit(AppCubitState(isLightMode: state.isLightMode));
+  }
+
   setAppMode(BuildContext context, AppBrightness _brightness) async {
     if (_brightness == AppBrightness.deviceSettings) {
       final deviceBrightness = MediaQuery.of(context).platformBrightness;

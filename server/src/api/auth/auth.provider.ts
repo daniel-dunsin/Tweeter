@@ -114,6 +114,7 @@ export class AuthProvider {
         meta: {
           accessToken,
           deactivated: true,
+          deactivatedAt: userExists.deactivatedAt,
         },
       };
     }

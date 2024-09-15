@@ -62,3 +62,5 @@ class AuthWithGoogleRequested extends AuthEvent {
 
   AuthWithGoogleRequested({required this.accessToken});
 }
+
+class ReactivateAccountRequested extends AuthEvent {}

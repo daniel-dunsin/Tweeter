@@ -4,6 +4,7 @@ import 'package:client/modules/auth/routes/forgot_password/forgot_password.dart'
 import 'package:client/modules/auth/routes/forgot_password/reset_password.dart';
 import 'package:client/modules/auth/routes/login/enter_login_password.dart';
 import 'package:client/modules/auth/routes/login/login.dart';
+import 'package:client/modules/auth/routes/login/reactivate_account.dart';
 import 'package:client/modules/auth/routes/select_sign_up/select_sign_up.dart';
 import 'package:client/modules/auth/routes/onboarding/sign_up.dart';
 import 'package:client/modules/auth/routes/onboarding/update_profile_picture.dart';
@@ -77,6 +78,18 @@ GoRouter appRouter = GoRouter(
         return MaterialPage(
           child: EnterLoginPasswordScreen(
             credential: args["credential"]!,
+          ),
+        );
+      },
+    ),
+    GoRoute(
+      path: AuthRoutes.reactivateAccount,
+      name: AuthRoutes.reactivateAccount,
+      pageBuilder: (_, state) {
+        Map args = state.extra as Map;
+        return MaterialPage(
+          child: ReactivateAccountScreen(
+            deactivatedAt: args["deactivatedAt"]!,
           ),
         );
       },

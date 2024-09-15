@@ -76,4 +76,11 @@ class AuthService {
       "accessToken": accessToken
     });
   }
+
+  Future<Response> reactivateAccount() async {
+    return await httpInstance.post(
+      "${AppSecrets.serverUrl}/auth/account/activate",
+      options: await getDefaulNetworkOptions(),
+    );
+  }
 }
