@@ -12,7 +12,6 @@ import 'package:client/modules/profile/bloc/profile_bloc.dart';
 import 'package:client/modules/profile/repositories/profile_repository.dart';
 import 'package:client/modules/profile/services/profile_service.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
-import 'package:client/shared/cubit/app_nav_cubit/app_nav_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -46,7 +45,6 @@ class _MyAppState extends State<MyApp> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => AppCubit()),
-          BlocProvider(create: (context) => AppNavCubit()),
           BlocProvider(
             create: (context) => AuthBloc(
               authRepository: context.read<AuthRepository>(),

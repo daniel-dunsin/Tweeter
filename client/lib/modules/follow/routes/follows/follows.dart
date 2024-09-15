@@ -3,6 +3,7 @@ import 'package:client/modules/follow/bloc/follows_bloc.dart';
 import 'package:client/modules/follow/enums/index.dart';
 import 'package:client/modules/follow/widgets/no_follower.dart';
 import 'package:client/modules/follow/widgets/no_following.dart';
+import 'package:client/modules/follow/widgets/suggested_followings.dart';
 import 'package:client/modules/follow/widgets/users_list.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
@@ -73,6 +74,22 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
         title: Text(widget.user.name),
         titleTextStyle: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: appColors.foregroundColor),
         shape: const Border(bottom: BorderSide(width: .6, color: Colors.grey)),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showModalBottomSheet(
+                barrierColor: const Color.fromRGBO(43, 43, 43, 0.6),
+                context: context,
+                isScrollControlled: true,
+                enableDrag: true,
+                builder: (context) {
+                  return const SuggestedFollowings();
+                },
+              );
+            },
+            icon: const Icon(Icons.person_add_alt_1_outlined),
+          ),
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

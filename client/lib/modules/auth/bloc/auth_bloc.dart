@@ -135,7 +135,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(UpdateProfilePictureLoading());
 
       try {
-        await authRepository.updateUserProfilePicture(event.profilePicture);
+        final response = await authRepository.updateUserProfilePicture(event.profilePicture);
+
+        final Map<String, dynamic> userMap = response["data"];
+        final user = UserModel.fromMap(userMap);
+        await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
+        appCubit.setUser(user);
 
         emit(UpdateProfilePictureSuccess());
       } catch (e) {

@@ -6,22 +6,21 @@ class AppCubitState {
   final UserModel? user;
   final List<UserModel>? followers;
   final List<UserModel>? following;
+  final bool isLightMode;
 
   AppCubitState({
     this.user,
     this.followers,
     this.following,
+    this.isLightMode = true,
   });
 
-  AppCubitState copyWith({
-    UserModel? user,
-    List<UserModel>? followers,
-    List<UserModel>? following,
-  }) {
+  AppCubitState copyWith({UserModel? user, List<UserModel>? followers, List<UserModel>? following, bool? isLightMode}) {
     return AppCubitState(
       user: user ?? this.user,
       followers: followers ?? this.followers,
       following: following ?? this.following,
+      isLightMode: isLightMode ?? this.isLightMode,
     );
   }
 
@@ -44,15 +43,15 @@ class AppCubitState {
       });
     }
 
+    result.addAll({
+      "isLightMode": isLightMode,
+    });
+
     return result;
   }
 
   factory AppCubitState.fromMap(Map<String, dynamic> map) {
-    return AppCubitState(
-      user: map['user'] != null ? UserModel.fromMap(map['user']) : null,
-      followers: map['followers'] != null ? List<UserModel>.from(map['followers']?.map((x) => UserModel.fromMap(x))) : null,
-      following: map['following'] != null ? List<UserModel>.from(map['following']?.map((x) => UserModel.fromMap(x))) : null,
-    );
+    return AppCubitState(user: map['user'] != null ? UserModel.fromMap(map['user']) : null, followers: map['followers'] != null ? List<UserModel>.from(map['followers']?.map((x) => UserModel.fromMap(x))) : null, following: map['following'] != null ? List<UserModel>.from(map['following']?.map((x) => UserModel.fromMap(x))) : null, isLightMode: map["isLightMode"]);
   }
 
   String toJson() => json.encode(toMap());

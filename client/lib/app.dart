@@ -1,17 +1,42 @@
 import 'package:client/config/navigation/routes_config.dart';
+import 'package:client/shared/constants/localstorage.dart';
+import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/theme/font.dart';
+import 'package:client/shared/utils/localstorage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toastification/toastification.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   App({super.key});
 
-  final mode = TweeterColors.light();
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+  void initState() {
+    super.initState();
+    _loadAppMode();
+  }
+
+  _loadAppMode() async {
+    final _brightness = await LocalStorage.getString(key: localStorageConstants.appBrightness);
+    if (_brightness != null) {
+      final AppBrightness brightness = AppBrightness.values.firstWhere((val) => val.name == _brightness);
+
+      context.read<AppCubit>().setAppMode(context, brightness);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final bool isLightMode = context.watch<AppCubit>().state.isLightMode;
+    final TweeterColors mode = isLightMode ? TweeterColors.light() : TweeterColors.dark();
+
     return ScreenUtilInit(
       minTextAdapt: true,
       splitScreenMode: true,
