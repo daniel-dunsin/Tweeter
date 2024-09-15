@@ -439,7 +439,7 @@ export class AuthProvider {
   }
 
   async changeEmail(user: User, email: string) {
-    if (email == user.email) {
+    if (email.toLowerCase() == user.email.toLowerCase()) {
       throw new BadRequestException(
         'This email address already belongs to you',
       );
@@ -475,7 +475,7 @@ export class AuthProvider {
   }
 
   async changeUsername(user: User, userName: string) {
-    if (userName == user.userName) {
+    if (userName.toLowerCase() == user.userName?.toLowerCase()) {
       throw new BadRequestException('This username already belongs to you');
     }
 

@@ -23,4 +23,22 @@ class SettingsRepository {
 
     return response.data;
   }
+
+  updateUserName(String userName) async {
+    final response = await this.settingsService.updateUserName(userName);
+
+    return response.data;
+  }
+
+  updateEmail(String email) async {
+    final response = await this.settingsService.updateUserEmail(email);
+
+    return response.data;
+  }
+
+  verifyPassword(String password) async {
+    final response = await this.settingsService.verifyPassword(password);
+
+    return response.data;
+  }
 }

@@ -26,4 +26,34 @@ class SettingsService {
           options: await getDefaulNetworkOptions(),
         );
   }
+
+  Future<Response> updateUserName(String userName) async {
+    return await this.httpInstance.put(
+          "${AppSecrets.serverUrl}/auth/change-username",
+          data: {
+            "userName": userName
+          },
+          options: await getDefaulNetworkOptions(),
+        );
+  }
+
+  Future<Response> updateUserEmail(String email) async {
+    return await this.httpInstance.put(
+          "${AppSecrets.serverUrl}/auth/change-email",
+          data: {
+            "email": email
+          },
+          options: await getDefaulNetworkOptions(),
+        );
+  }
+
+  Future<Response> verifyPassword(String password) async {
+    return await this.httpInstance.post(
+          "${AppSecrets.serverUrl}/auth/verify-password",
+          data: {
+            "password": password,
+          },
+          options: await getDefaulNetworkOptions(),
+        );
+  }
 }

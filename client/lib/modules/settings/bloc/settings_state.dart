@@ -22,3 +22,21 @@ class SignOutLoading extends SettingsState {}
 class SignOutSuccessful extends SettingsState {}
 
 class SignOutError extends SettingsState {}
+
+class VerifyPasswordLoading extends SettingsState {}
+
+class VerifyPasswordSuccessful extends SettingsState {}
+
+class VerifyPasswordError extends SettingsState {}
+
+class UpdateUsernameLoading extends SettingsState {}
+
+class UpdateUsernameSuccessful extends SettingsState {}
+
+class UpdateUsernameError extends SettingsState {}
+
+class UpdateEmailLoading extends SettingsState {}
+
+class UpdateEmailSuccessful extends SettingsState {}
+
+class UpdateEmailError extends SettingsState {}

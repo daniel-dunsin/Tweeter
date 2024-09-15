@@ -1,3 +1,4 @@
+import 'package:client/modules/auth/models/user_model.dart';
 import 'package:client/modules/settings/models/change_password_model.dart';
 import 'package:client/modules/settings/repository/settings_repository.dart';
 import 'package:client/shared/constants/localstorage.dart';
@@ -68,6 +69,62 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
         } catch (e) {
           handleError(e: e);
           emit(SignOutError());
+        }
+      },
+    );
+
+    on<UpdateUserNameRequested>(
+      (event, emit) async {
+        emit(UpdateUsernameLoading());
+        try {
+          final response = await this.settingsRepository.updateUserName(event.userName);
+
+          final Map<String, dynamic> userMap = response["data"];
+          final String accessToken = response["meta"]["accessToken"];
+          final user = UserModel.fromMap(userMap);
+
+          appCubit.setUser(user);
+          await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
+          await LocalStorage.setString(key: localStorageConstants.accessToken, value: accessToken);
+          emit(UpdateUsernameSuccessful());
+        } catch (e) {
+          handleError(e: e);
+          emit(UpdateUsernameError());
+        }
+      },
+    );
+
+    on<UpdateEmailRequested>(
+      (event, emit) async {
+        emit(UpdateEmailLoading());
+        try {
+          final response = await this.settingsRepository.updateEmail(event.email);
+
+          final Map<String, dynamic> userMap = response["data"];
+          final String accessToken = response["meta"]["accessToken"];
+          final user = UserModel.fromMap(userMap);
+
+          appCubit.setUser(user);
+          await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
+          await LocalStorage.setString(key: localStorageConstants.accessToken, value: accessToken);
+          emit(UpdateEmailSuccessful());
+        } catch (e) {
+          handleError(e: e);
+          emit(UpdateEmailError());
+        }
+      },
+    );
+
+    on<VerifyPasswordRequested>(
+      (event, emit) async {
+        emit(VerifyPasswordLoading());
+        try {
+          await this.settingsRepository.verifyPassword(event.password);
+
+          emit(VerifyPasswordSuccessful());
+        } catch (e) {
+          handleError(e: e);
+          emit(VerifyPasswordError());
         }
       },
     );

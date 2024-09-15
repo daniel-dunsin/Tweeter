@@ -12,3 +12,21 @@ class ChangePasswordRequested extends SettingsEvent {
 }
 
 class SignOutRequested extends SettingsEvent {}
+
+class UpdateUserNameRequested extends SettingsEvent {
+  final String userName;
+
+  UpdateUserNameRequested(this.userName);
+}
+
+class UpdateEmailRequested extends SettingsEvent {
+  final String email;
+
+  UpdateEmailRequested(this.email);
+}
+
+class VerifyPasswordRequested extends SettingsEvent {
+  final String password;
+
+  VerifyPasswordRequested(this.password);
+}
