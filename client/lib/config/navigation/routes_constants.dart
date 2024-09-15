@@ -30,6 +30,9 @@ class PrivateRoutes {
   static String accountInformation = "/private/settings/account/information";
   static String changePassword = "/private/settings/account/change-password";
   static String deactivateAccount = "/private/settings/account/deactivate";
+  static String updateEmail = "/private/settings/account/update-email";
+  static String updateUserName = "/private/settings/account/update-username";
+  static String verifyPassword = "/private/settings/account/verify-password";
 }
 
 final GlobalKey<NavigatorState> appNavKey = GlobalKey<NavigatorState>();

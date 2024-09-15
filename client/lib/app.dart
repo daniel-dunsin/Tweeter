@@ -10,7 +10,7 @@ import 'package:toastification/toastification.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class App extends StatefulWidget {
-  App({super.key});
+  const App({super.key});
 
   @override
   State<App> createState() => _AppState();

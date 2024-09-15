@@ -20,6 +20,9 @@ import 'package:client/modules/profile/routes/user_profile/user_profile.dart';
 import 'package:client/modules/root.dart';
 import 'package:client/modules/settings/routes/purchases/purchases.dart';
 import 'package:client/modules/settings/routes/settings/account_settings/account_information/account_information.dart';
+import 'package:client/modules/settings/routes/settings/account_settings/account_information/update_email/update_email.dart';
+import 'package:client/modules/settings/routes/settings/account_settings/account_information/update_username/update_username.dart';
+import 'package:client/modules/settings/routes/settings/account_settings/account_information/verify_password/verify_password.dart';
 import 'package:client/modules/settings/routes/settings/account_settings/account_settings.dart';
 import 'package:client/modules/settings/routes/settings/account_settings/change_password/change_password.dart';
 import 'package:client/modules/settings/routes/settings/account_settings/deactivate_account/deactivate_account.dart';
@@ -226,6 +229,30 @@ GoRouter appRouter = GoRouter(
               name: PrivateRoutes.deactivateAccount,
               pageBuilder: (context, state) {
                 return const MaterialPage(child: DeactivateAccountScreen());
+              },
+            ),
+            GoRoute(
+              path: PrivateRoutes.updateEmail,
+              name: PrivateRoutes.updateEmail,
+              pageBuilder: (context, state) {
+                return const MaterialPage(child: UpdateEmailScreen());
+              },
+            ),
+            GoRoute(
+              path: PrivateRoutes.updateUserName,
+              name: PrivateRoutes.updateUserName,
+              pageBuilder: (context, state) {
+                return const MaterialPage(child: UpdateUsernameScreen());
+              },
+            ),
+            GoRoute(
+              path: PrivateRoutes.verifyPassword,
+              name: PrivateRoutes.verifyPassword,
+              pageBuilder: (context, state) {
+                Map args = state.extra as Map;
+                return MaterialPage(
+                  child: VerifyPassword(nextRoute: args["nextRoute"]!),
+                );
               },
             ),
           ],

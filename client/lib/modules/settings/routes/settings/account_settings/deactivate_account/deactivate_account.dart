@@ -52,7 +52,7 @@ class DeactivateAccountScreen extends StatelessWidget {
                     backgroundImage: NetworkImage(user.profilePicture),
                   ),
                   title: Text(
-                    "${user.name}",
+                    user.name,
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: appColors.foregroundColor,

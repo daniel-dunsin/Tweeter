@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
             ),
           )
         ],
-        child: App(),
+        child: const App(),
       ),
     );
   }
