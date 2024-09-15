@@ -8,6 +8,7 @@ import 'package:client/modules/follow/widgets/users_list.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/theme/index.dart';
+import 'package:client/shared/widgets/custom_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -63,12 +64,7 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
 
     return Scaffold(
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            GoRouter.of(context).pop();
-          },
-          child: const Icon(Icons.arrow_back),
-        ),
+        leading: const CustomBackButton(),
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text(widget.user.name),

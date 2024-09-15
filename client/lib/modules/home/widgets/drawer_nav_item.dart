@@ -1,5 +1,6 @@
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
+import 'package:client/shared/utils/misc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -9,12 +10,15 @@ class DrawerNavItem extends StatelessWidget {
   final String label;
   final String route;
   final bool isSubItem;
+  final bool isExternalUrl;
 
-  const DrawerNavItem({super.key, 
+  const DrawerNavItem({
+    super.key,
     required this.icon,
     required this.label,
     required this.route,
     this.isSubItem = false,
+    this.isExternalUrl = false,
   });
 
   @override
@@ -24,12 +28,16 @@ class DrawerNavItem extends StatelessWidget {
 
     return ListTile(
       onTap: () {
-        GoRouter.of(context).pushNamed(
-          route,
-          extra: {
-            "userId": user?.id
-          },
-        );
+        if (!isExternalUrl) {
+          GoRouter.of(context).pushNamed(
+            route,
+            extra: {
+              "userId": user?.id
+            },
+          );
+        } else {
+          openUrl(route);
+        }
       },
       contentPadding: const EdgeInsets.symmetric(vertical: 3),
       leading: Icon(

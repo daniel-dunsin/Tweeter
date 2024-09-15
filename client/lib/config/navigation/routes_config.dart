@@ -18,6 +18,7 @@ import 'package:client/modules/home/routes/root.dart';
 import 'package:client/modules/home/routes/search/search.dart';
 import 'package:client/modules/profile/routes/user_profile/user_profile.dart';
 import 'package:client/modules/root.dart';
+import 'package:client/modules/settings/routes/purchases/purchases.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -178,6 +179,13 @@ GoRouter appRouter = GoRouter(
                     user: args["user"],
                   ),
                 );
+              },
+            ),
+            GoRoute(
+              path: PrivateRoutes.purchases,
+              name: PrivateRoutes.purchases,
+              pageBuilder: (context, state) {
+                return const MaterialPage(child: PurchasesScreen());
               },
             ),
           ],

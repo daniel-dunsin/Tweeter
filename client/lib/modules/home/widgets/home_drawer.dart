@@ -42,13 +42,14 @@ final settingsNav = <DrawerNavItem>[
   const DrawerNavItem(
     icon: Icons.help_outlined,
     label: "Help Center",
-    route: "/private/premium",
+    route: "https://help.x.com",
     isSubItem: true,
+    isExternalUrl: true,
   ),
-  const DrawerNavItem(
+  DrawerNavItem(
     icon: Icons.shopping_cart_outlined,
     label: "Purchases",
-    route: "/private/purchases",
+    route: PrivateRoutes.purchases,
     isSubItem: true,
   ),
 ];

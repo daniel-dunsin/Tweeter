@@ -23,6 +23,7 @@ class PrivateRoutes {
   static String communities = "/private/communities";
   static String profile = "/private/profile";
   static String follows = "/private/follows";
+  static String purchases = "/private/purchases";
 }
 
 final GlobalKey<NavigatorState> appNavKey = GlobalKey<NavigatorState>();
