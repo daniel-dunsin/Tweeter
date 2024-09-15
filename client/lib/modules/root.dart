@@ -79,7 +79,7 @@ class _AppRootState extends State<AppRoot> {
       appCubit.setFollowings(followingsToUsers(user.followings ?? []));
     }
 
-    GoRouter.of(context).pushNamed(initialRoute);
+    GoRouter.of(context).goNamed(initialRoute);
   }
 
   @override

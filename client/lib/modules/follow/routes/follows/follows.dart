@@ -8,10 +8,9 @@ import 'package:client/modules/follow/widgets/users_list.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/theme/index.dart';
-import 'package:client/shared/widgets/custom_back_button.dart';
+import 'package:client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class FollowsScreen extends StatefulWidget {
@@ -63,13 +62,9 @@ class _FollowsScreenState extends State<FollowsScreen> with TickerProviderStateM
     final loggedInUser = appCubit.user;
 
     return Scaffold(
-      appBar: AppBar(
-        leading: const CustomBackButton(),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
+      appBar: getMiscScreensAppBar(
+        context,
         title: Text(widget.user.name),
-        titleTextStyle: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: appColors.foregroundColor),
-        shape: const Border(bottom: BorderSide(width: .6, color: Colors.grey)),
         actions: [
           IconButton(
             onPressed: () {

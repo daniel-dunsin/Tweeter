@@ -3,6 +3,102 @@ import 'package:flutter/material.dart';
 
 const focusBorder = Border();
 
+class ContainedTextField extends StatelessWidget {
+  final TextEditingController? controller;
+  final void Function(String? value)? onChangeValue;
+  final String? labelText;
+  final FormFieldValidator<String?>? validator;
+  final bool? fullWidth;
+  final bool? obscureText;
+  final double? width;
+  final double? height;
+  final TextInputType? keyboardType;
+  final bool? isTextArea;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final Color? accentColor;
+  final bool? enabled;
+  final String? initialValue;
+  final bool? centerLabel;
+
+  const ContainedTextField({
+    super.key,
+    this.controller,
+    this.onChangeValue,
+    this.labelText,
+    this.validator,
+    this.fullWidth,
+    this.obscureText,
+    this.width,
+    this.height,
+    this.keyboardType,
+    this.isTextArea,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.accentColor,
+    this.enabled,
+    this.initialValue,
+    this.centerLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final appColors = Theme.of(context).appColors;
+
+    final containedBorder = OutlineInputBorder(
+      borderSide: BorderSide(
+        width: 0,
+        color: appColors.secondaryForegroundColor,
+      ),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(40),
+      ),
+    );
+
+    return SizedBox(
+      height: height ?? 64,
+      width: fullWidth == true ? double.maxFinite : width ?? 200,
+      child: TextFormField(
+        onChanged: onChangeValue,
+        keyboardType: keyboardType,
+        validator: validator,
+        controller: controller,
+        style: TextStyle(
+          color: enabled == false ? appColors.secondaryForegroundColor : appColors.iconColor,
+          fontSize: 12,
+        ),
+        cursorColor: appColors.secondaryForegroundColor,
+        enabled: enabled,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        obscureText: obscureText ?? false,
+        initialValue: initialValue,
+        decoration: InputDecoration(
+          fillColor: const Color.fromARGB(99, 67, 67, 67),
+          filled: true,
+          label: centerLabel == true
+              ? Center(
+                  child: Text(labelText ?? ""),
+                )
+              : Text(labelText ?? ""),
+          labelStyle: TextStyle(
+            color: appColors.secondaryForegroundColor,
+            fontSize: 15,
+          ),
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+          enabledBorder: containedBorder,
+          focusedBorder: containedBorder,
+          prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
+          suffixIconColor: accentColor,
+          prefixIconColor: accentColor,
+        ),
+        maxLines: isTextArea == true ? 4 : 1,
+        minLines: isTextArea == true ? 4 : 1,
+      ),
+    );
+  }
+}
+
 class UnderlinedTextField extends StatelessWidget {
   final TextEditingController? controller;
   final void Function(String? value)? onChangeValue;

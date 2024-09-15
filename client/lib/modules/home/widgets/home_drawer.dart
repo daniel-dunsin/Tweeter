@@ -33,10 +33,10 @@ final navs = <DrawerNavItem>[
 ];
 
 final settingsNav = <DrawerNavItem>[
-  const DrawerNavItem(
+  DrawerNavItem(
     icon: Icons.settings_outlined,
     label: "Settings",
-    route: "/private/profile",
+    route: PrivateRoutes.settings,
     isSubItem: true,
   ),
   const DrawerNavItem(

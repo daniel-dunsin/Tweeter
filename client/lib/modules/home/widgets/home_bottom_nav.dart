@@ -46,11 +46,9 @@ class HomeBottomNav extends StatelessWidget {
         highlightColor: Colors.transparent,
       ),
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           border: Border(
-            top: BorderSide(
-              color: appColors.secondaryForegroundColor,
-            ),
+            top: BorderSide(color: Colors.grey, width: .5),
           ),
         ),
         child: BottomNavigationBar(

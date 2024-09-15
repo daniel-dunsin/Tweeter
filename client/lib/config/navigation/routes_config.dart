@@ -19,6 +19,11 @@ import 'package:client/modules/home/routes/search/search.dart';
 import 'package:client/modules/profile/routes/user_profile/user_profile.dart';
 import 'package:client/modules/root.dart';
 import 'package:client/modules/settings/routes/purchases/purchases.dart';
+import 'package:client/modules/settings/routes/settings/account_settings/account_information/account_information.dart';
+import 'package:client/modules/settings/routes/settings/account_settings/account_settings.dart';
+import 'package:client/modules/settings/routes/settings/account_settings/change_password/change_password.dart';
+import 'package:client/modules/settings/routes/settings/account_settings/deactivate_account/deactivate_account.dart';
+import 'package:client/modules/settings/routes/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -186,6 +191,41 @@ GoRouter appRouter = GoRouter(
               name: PrivateRoutes.purchases,
               pageBuilder: (context, state) {
                 return const MaterialPage(child: PurchasesScreen());
+              },
+            ),
+            GoRoute(
+              path: PrivateRoutes.settings,
+              name: PrivateRoutes.settings,
+              pageBuilder: (context, state) {
+                return const MaterialPage(child: SettingsScreen());
+              },
+            ),
+            GoRoute(
+              path: PrivateRoutes.accountSettings,
+              name: PrivateRoutes.accountSettings,
+              pageBuilder: (context, state) {
+                return const MaterialPage(child: AccountSettingsScreen());
+              },
+            ),
+            GoRoute(
+              path: PrivateRoutes.accountInformation,
+              name: PrivateRoutes.accountInformation,
+              pageBuilder: (context, state) {
+                return const MaterialPage(child: AccountInformationScreen());
+              },
+            ),
+            GoRoute(
+              path: PrivateRoutes.changePassword,
+              name: PrivateRoutes.changePassword,
+              pageBuilder: (context, state) {
+                return const MaterialPage(child: ChangePasswordScreen());
+              },
+            ),
+            GoRoute(
+              path: PrivateRoutes.deactivateAccount,
+              name: PrivateRoutes.deactivateAccount,
+              pageBuilder: (context, state) {
+                return const MaterialPage(child: DeactivateAccountScreen());
               },
             ),
           ],

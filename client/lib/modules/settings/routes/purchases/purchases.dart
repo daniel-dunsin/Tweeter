@@ -1,8 +1,7 @@
 import 'package:client/shared/theme/colors.dart';
-import 'package:client/shared/theme/index.dart';
 import 'package:client/shared/utils/misc.dart';
 import 'package:client/shared/widgets/app_cover.dart';
-import 'package:client/shared/widgets/custom_back_button.dart';
+import 'package:client/shared/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,12 +13,9 @@ class PurchasesScreen extends StatelessWidget {
     final appColors = Theme.of(context).appColors;
 
     return AppCover(
-      appBar: AppBar(
-        toolbarHeight: 50,
-        leading: const CustomBackButton(),
+      appBar: getMiscScreensAppBar(
+        context,
         title: const Text("Purchases"),
-        titleTextStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold, color: appColors.foregroundColor),
-        shape: const Border(bottom: BorderSide(width: .6, color: Colors.grey)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -24,6 +24,12 @@ class PrivateRoutes {
   static String profile = "/private/profile";
   static String follows = "/private/follows";
   static String purchases = "/private/purchases";
+
+  static String settings = "/private/settings";
+  static String accountSettings = "/private/settings/account";
+  static String accountInformation = "/private/settings/account/information";
+  static String changePassword = "/private/settings/account/change-password";
+  static String deactivateAccount = "/private/settings/account/deactivate";
 }
 
 final GlobalKey<NavigatorState> appNavKey = GlobalKey<NavigatorState>();

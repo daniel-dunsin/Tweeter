@@ -245,7 +245,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                             style: const TextStyle(color: Colors.grey),
                             softWrap: true,
                           ),
-                          visible: widget.user?.website != null,
+                          visible: widget.user?.website != null && widget.user!.website?.trim() != "",
                         ),
                         const SizedBox(height: 3),
                         Text.rich(
