@@ -1,3 +1,4 @@
+import 'package:client/modules/settings/models/change_password_model.dart';
 import 'package:client/modules/settings/services/settings_service.dart';
 
 class SettingsRepository {
@@ -7,6 +8,12 @@ class SettingsRepository {
 
   deactivateAccount() async {
     final response = await this.settingsService.deactivateAccount();
+
+    return response.data;
+  }
+
+  changePassword(ChangePasswordModel changePasswordDto) async {
+    final response = await this.settingsService.changePassword(changePasswordDto.toMap());
 
     return response.data;
   }

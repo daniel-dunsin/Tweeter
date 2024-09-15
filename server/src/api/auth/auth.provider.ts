@@ -311,6 +311,7 @@ export class AuthProvider {
         meta: {
           accessToken,
           isNew: true,
+          deactivated: false,
         },
       };
     }
@@ -321,10 +322,12 @@ export class AuthProvider {
 
     return {
       message: 'google sign in successful',
-      data: user,
+      data: userAuth.deactivatedAt ? undefined : user,
       meta: {
         accessToken,
         isNew: false,
+        deactivated: !!userAuth.deactivatedAt,
+        deactivatedAt: userAuth.deactivatedAt,
       },
     };
   }

@@ -166,19 +166,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final response = await authRepository.authWithGoogle(event.accessToken);
 
-        final Map<String, dynamic> userMap = response["data"];
+        final Map<String, dynamic>? userMap = response["data"];
         final String accessToken = response["meta"]["accessToken"];
         final bool isNew = response["meta"]["isNew"];
-        final user = UserModel.fromMap(userMap);
+        final bool deactivated = response["meta"]["deactivated"];
+        final String? deactivatedAt = response["meta"]["deactivatedAt"];
+        UserModel? user = null;
 
-        await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
+        if (!deactivated) {
+          user = UserModel.fromMap(userMap!);
+
+          await LocalStorage.setString(key: localStorageConstants.user, value: user.toJson());
+
+          appCubit.setUser(user);
+          appCubit.setFollowers(followersToUsers(user.followers ?? []));
+          appCubit.setFollowings(followingsToUsers(user.followings ?? []));
+        }
         await LocalStorage.setString(key: localStorageConstants.accessToken, value: accessToken);
 
-        appCubit.setUser(user);
-        appCubit.setFollowers(followersToUsers(user.followers ?? []));
-        appCubit.setFollowings(followingsToUsers(user.followings ?? []));
-
-        emit(AuthWithGoogleSuccess(user: user, isNew: isNew));
+        emit(
+          AuthWithGoogleSuccess(
+            user: user,
+            isNew: isNew,
+            deactivated: deactivated,
+            deactivatedAt: deactivatedAt != null ? DateTime.parse(deactivatedAt) : null,
+          ),
+        );
       } catch (e) {
         handleError(e: e);
         emit(AuthWithGoogleError());

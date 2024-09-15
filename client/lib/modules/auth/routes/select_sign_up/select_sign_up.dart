@@ -42,11 +42,21 @@ class SelectSignUpScreen extends StatelessWidget {
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state is AuthWithGoogleSuccess) {
-                  handleSuccess("Welcome ${state.user.name}");
                   if (state.isNew) {
                     GoRouter.of(context).pushNamed(AuthRoutes.updateDp);
+                    handleSuccess("Welcome ${state.user?.name}");
                   } else {
-                    GoRouter.of(context).goNamed(PrivateRoutes.home);
+                    if (state.deactivated) {
+                      GoRouter.of(context).pushNamed(
+                        AuthRoutes.reactivateAccount,
+                        extra: {
+                          "deactivatedAt": state.deactivatedAt,
+                        },
+                      );
+                    } else {
+                      GoRouter.of(context).goNamed(PrivateRoutes.home);
+                      handleSuccess("Welcome ${state.user?.name}");
+                    }
                   }
                 }
               },

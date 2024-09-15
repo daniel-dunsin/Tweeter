@@ -71,10 +71,17 @@ class UpdateProfilePictureError extends AuthState {}
 class AuthWithGoogleLoading extends AuthState {}
 
 class AuthWithGoogleSuccess extends AuthState {
-  final UserModel user;
+  final UserModel? user;
   final bool isNew;
+  final bool deactivated;
+  final DateTime? deactivatedAt;
 
-  AuthWithGoogleSuccess({required this.user, required this.isNew});
+  AuthWithGoogleSuccess({
+    this.user,
+    required this.isNew,
+    required this.deactivated,
+    this.deactivatedAt,
+  });
 }
 
 class AuthWithGoogleError extends AuthState {}

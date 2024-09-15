@@ -9,6 +9,7 @@ class ProfileKeyValue extends StatelessWidget {
   final double keyWidth;
   final String? placeholder;
   final bool obscureInput;
+  final FormFieldValidator<String?>? validator;
 
   const ProfileKeyValue({
     super.key,
@@ -19,6 +20,7 @@ class ProfileKeyValue extends StatelessWidget {
     this.keyWidth = 70,
     this.placeholder,
     this.obscureInput = false,
+    this.validator,
   });
 
   @override
@@ -53,6 +55,7 @@ class ProfileKeyValue extends StatelessWidget {
                 color: appColors.iconColor,
                 fontSize: 15,
               ),
+              validator: validator,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.all(1),

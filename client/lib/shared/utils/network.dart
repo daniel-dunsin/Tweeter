@@ -5,6 +5,7 @@ import 'package:client/shared/utils/localstorage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
+import 'package:go_router/go_router.dart';
 
 Future? handleError({
   required Object e,
@@ -12,11 +13,12 @@ Future? handleError({
 }) async {
   print(e);
   String errorMessage = "Oops! an error occured";
+
   if (e is DioException) {
     if (e.response != null) {
       if (e.response?.statusCode == 403) {
         errorMessage = "Session Expired! Login Again";
-        appNavKey.currentState?.pushNamedAndRemoveUntil(AuthRoutes.login, (route) => false);
+        GoRouter.of(appNavKey.currentContext!).replace(AuthRoutes.login);
         await LocalStorage.removeEntry(key: localStorageConstants.user);
         await LocalStorage.removeEntry(key: localStorageConstants.accessToken);
       } else {

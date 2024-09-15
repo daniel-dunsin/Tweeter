@@ -11,4 +11,12 @@ class SettingsService {
           options: await getDefaulNetworkOptions(),
         );
   }
+
+  Future<Response> changePassword(Map data) async {
+    return await this.httpInstance.post(
+          "${AppSecrets.serverUrl}/auth/change-password",
+          data: data,
+          options: await getDefaulNetworkOptions(),
+        );
+  }
 }
