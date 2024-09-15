@@ -10,3 +10,5 @@ class ChangePasswordRequested extends SettingsEvent {
 
   ChangePasswordRequested(this.changePasswordModel);
 }
+
+class SignOutRequested extends SettingsEvent {}

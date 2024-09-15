@@ -17,4 +17,10 @@ class SettingsRepository {
 
     return response.data;
   }
+
+  signOut() async {
+    final response = await this.settingsService.signOut();
+
+    return response.data;
+  }
 }

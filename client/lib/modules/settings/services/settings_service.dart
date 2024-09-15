@@ -19,4 +19,11 @@ class SettingsService {
           options: await getDefaulNetworkOptions(),
         );
   }
+
+  Future<Response> signOut() async {
+    return await this.httpInstance.get(
+          "${AppSecrets.serverUrl}/auth/sign-out",
+          options: await getDefaulNetworkOptions(),
+        );
+  }
 }

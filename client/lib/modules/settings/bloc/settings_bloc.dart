@@ -52,5 +52,24 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
         }
       },
     );
+
+    on<SignOutRequested>(
+      (event, emit) async {
+        emit(SignOutLoading());
+
+        try {
+          await this.settingsRepository.signOut();
+
+          await LocalStorage.removeEntry(key: localStorageConstants.accessToken);
+          await LocalStorage.removeEntry(key: localStorageConstants.user);
+          appCubit.signOut();
+
+          emit(SignOutSuccessful());
+        } catch (e) {
+          handleError(e: e);
+          emit(SignOutError());
+        }
+      },
+    );
   }
 }

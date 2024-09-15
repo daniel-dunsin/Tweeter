@@ -1,5 +1,6 @@
 import 'package:client/config/navigation/routes_constants.dart';
 import 'package:client/modules/settings/bloc/settings_bloc.dart';
+import 'package:client/modules/settings/widgets/binary_confirmation_dialog.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/widgets/custom_app_bar.dart';
@@ -122,38 +123,12 @@ class DeactivateAccountScreen extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return AlertDialog.adaptive(
-                                backgroundColor: appColors.backgroundColor,
-                                title: const Text("Are you sure you want to deactivate your account?"),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      context.pop();
-                                    },
-                                    child: Text(
-                                      "No",
-                                      style: TextStyle(
-                                        color: appColors.iconColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp,
-                                      ),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      context.read<SettingsBloc>().add(DeactivateAccountRequested());
-                                      context.pop();
-                                    },
-                                    child: Text(
-                                      "Yes",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp,
-                                      ),
-                                    ),
-                                  )
-                                ],
+                              return BinaryConfirmationDialog(
+                                onYes: () {
+                                  context.read<SettingsBloc>().add(DeactivateAccountRequested());
+                                  context.pop();
+                                },
+                                message: "Are you sure you want to deactivate your account?",
                               );
                             },
                           );

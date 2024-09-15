@@ -9,6 +9,7 @@ class AccountInfoTile extends StatelessWidget {
   final String tileValue;
   final String tileNextScreen;
   final bool nextScreenNeedsGuard;
+  final bool disabled;
 
   const AccountInfoTile({
     super.key,
@@ -16,6 +17,7 @@ class AccountInfoTile extends StatelessWidget {
     required this.tileValue,
     required this.tileNextScreen,
     this.nextScreenNeedsGuard = false,
+    this.disabled = false,
   });
 
   @override
@@ -38,6 +40,8 @@ class AccountInfoTile extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
+              if (disabled) return;
+
               if (nextScreenNeedsGuard) {
                 GoRouter.of(context).pushNamed(
                   PrivateRoutes.verifyPassword,
