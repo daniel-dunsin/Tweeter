@@ -17,3 +17,16 @@ export class ResetPasswordDto {
   @IsString(false)
   password: string;
 }
+
+export class ChangePasswordDto {
+  @IsString(false)
+  newPassword: string;
+
+  @IsString(false)
+  oldPassword: string;
+}
+
+export class VerifyPasswordDto {
+  @IsString(false)
+  password: string;
+}

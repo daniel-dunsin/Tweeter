@@ -8,7 +8,7 @@ import { SignUpDto } from './dtos/sign-up.dto';
 import { UtilService } from 'src/shared/utils/utils.service';
 import { UserService } from '../user/user.service';
 import { TokenService } from '../token/token.service';
-import { TokenTypes } from '@prisma/client';
+import { TokenTypes, User } from '@prisma/client';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { AppEvents } from 'src/shared/events/event.enum';
 import { ISendMailOptions } from 'src/shared/mail/interfaces/mail.interface';
@@ -16,7 +16,10 @@ import { LoginDto } from './dtos/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { SignJwtDto } from './dtos/jwt-sign.dto';
 import { VerifyEmailDto } from './dtos/verify-email.dto';
-import { ResetPasswordDto } from './dtos/forgot-password.dto';
+import {
+  ChangePasswordDto,
+  ResetPasswordDto,
+} from './dtos/forgot-password.dto';
 import { google } from 'googleapis';
 import { ConfigService } from '@nestjs/config';
 import DEFAULT_IMAGES from 'src/shared/constants/images.const';
@@ -104,12 +107,24 @@ export class AuthProvider {
     const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
     await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
 
+    if (userExists.deactivatedAt) {
+      return {
+        success: true,
+        message: 'Account deactivated',
+        meta: {
+          accessToken,
+          deactivated: true,
+        },
+      };
+    }
+
     return {
       success: true,
       message: 'Login successful',
       data: user,
       meta: {
         accessToken,
+        deactivated: false,
       },
     };
   }
@@ -309,6 +324,182 @@ export class AuthProvider {
       meta: {
         accessToken,
         isNew: false,
+      },
+    };
+  }
+
+  async activateAccount(user: User) {
+    await this.authService.updateAuth(
+      { email: user.email },
+      { deactivatedAt: null },
+    );
+
+    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
+    await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
+
+    return {
+      message: 'account activated',
+      data: user,
+      meta: {
+        accessToken,
+      },
+    };
+  }
+
+  async deActivateAcccount(userId: string) {
+    const user = await this.userService.getUser({ id: userId });
+
+    if (!user) throw new NotFoundException('user not found');
+
+    await this.authService.updateAuth(
+      { email: user.email },
+      { deactivatedAt: new Date() },
+    );
+
+    await this.authService.deleteJwtToken({ userId });
+
+    return {
+      message: 'Account deactivated',
+    };
+  }
+
+  async logOut(userId: string) {
+    await this.authService.deleteJwtToken({ userId });
+
+    return {
+      message: 'logged out successfully',
+    };
+  }
+
+  async changePassword(user: User, changePasswordDto: ChangePasswordDto) {
+    const auth = await this.authService.getAuth({ email: user.email });
+
+    if (!auth) throw new NotFoundException('User not found');
+
+    if (!auth.password) {
+      throw new BadRequestException(
+        'Only google auth has been configured for this account, reset your password',
+      );
+    }
+
+    const passwordMatch = await this.utilService.comparePassword(
+      changePasswordDto.oldPassword,
+      auth.password,
+    );
+
+    if (!passwordMatch)
+      throw new BadRequestException('Current password is incorrect');
+
+    const hashedPassword = await this.utilService.hashPassword(
+      changePasswordDto.newPassword,
+    );
+
+    await this.authService.updateAuth(
+      { id: auth.id },
+      { password: hashedPassword },
+    );
+
+    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
+    await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
+
+    return {
+      message: 'password changed successfully',
+      meta: {
+        accessToken,
+      },
+    };
+  }
+
+  async verifyPassword(user: User, password: string) {
+    const auth = await this.authService.getAuth({ email: user.email });
+
+    if (!auth) throw new NotFoundException('User not found');
+
+    if (!auth.password) {
+      throw new BadRequestException(
+        'Only google auth has been configured for this account, reset your password',
+      );
+    }
+
+    const passwordMatch = await this.utilService.comparePassword(
+      password,
+      auth.password,
+    );
+
+    if (!passwordMatch)
+      throw new BadRequestException('Current password is incorrect');
+
+    return {
+      message: 'password verified',
+    };
+  }
+
+  async changeEmail(user: User, email: string) {
+    if (email == user.email) {
+      throw new BadRequestException(
+        'This email address already belongs to you',
+      );
+    }
+
+    const prevUser = await this.userService.getUser({
+      id: { not: user.id },
+      email: email,
+    });
+
+    if (prevUser)
+      throw new BadRequestException(
+        'Oops! another user is already registered with this email address',
+      );
+
+    const [newUser] = await Promise.all([
+      this.userService.updateUser({ id: user.id }, { email }),
+      this.authService.updateAuth({ email: user.email }, { email }),
+    ]);
+
+    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{
+      user: newUser,
+    });
+    await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
+
+    return {
+      message: 'Email changed successfully',
+      data: newUser,
+      meta: {
+        accessToken,
+      },
+    };
+  }
+
+  async changeUsername(user: User, userName: string) {
+    if (userName == user.userName) {
+      throw new BadRequestException('This username already belongs to you');
+    }
+
+    const prevUser = await this.userService.getUser({
+      id: { not: user.id },
+      userName,
+    });
+
+    if (prevUser)
+      throw new BadRequestException(
+        'Oops! another user is already registered with this username',
+      );
+
+    const [newUser] = await Promise.all([
+      this.userService.updateUser({ id: user.id }, { userName }),
+      this.authService.updateAuth({ email: user.email }, { userName }),
+    ]);
+
+    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{
+      user: newUser,
+    });
+    await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
+
+    return {
+      message: 'Username changed successfully',
+      data: newUser,
+      meta: {
+        accessToken,
       },
     };
   }

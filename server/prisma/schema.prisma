@@ -8,13 +8,14 @@ datasource db {
 }
 
 model Auth {
-  id         String   @id @default(uuid())
-  email      String   @unique
-  userName   String?
-  password   String?
-  isVerified Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id            String    @id @default(uuid())
+  email         String    @unique
+  userName      String?
+  password      String?
+  isVerified    Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deactivatedAt DateTime?
 
   @@index([email])
   @@map("auths")

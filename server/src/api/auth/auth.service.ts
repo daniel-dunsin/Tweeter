@@ -39,4 +39,8 @@ export class AuthService {
       create: { ...where, ...data } as Prisma.JwtTokenCreateInput,
     });
   }
+
+  async deleteJwtToken(where: Prisma.JwtTokenWhereUniqueInput) {
+    return await this.prisma.jwtToken.delete({ where });
+  }
 }

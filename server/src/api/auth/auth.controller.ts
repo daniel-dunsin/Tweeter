@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
   CheckCredentialDto,
@@ -11,11 +11,14 @@ import { AuthProvider } from './auth.provider';
 import { LoginDto } from './dtos/login.dto';
 import { VerifyEmailDto } from './dtos/verify-email.dto';
 import {
+  ChangePasswordDto,
   ConfirmPasswordResetCode,
   ForgotPasswordDto,
   ResetPasswordDto,
+  VerifyPasswordDto,
 } from './dtos/forgot-password.dto';
-import { IsPublic } from 'src/core/decorators/auth.decorator';
+import { Auth, IsPublic } from 'src/core/decorators/auth.decorator';
+import { User } from '@prisma/client';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -87,6 +90,40 @@ export class AuthController {
   async authWithGoogle(@Body() authWithGoogleDto: AuthWithGoogleDto) {
     return await this.authProvider.authWithGoogle(
       authWithGoogleDto.accessToken,
+    );
+  }
+
+  @Post('account/activate')
+  async activateAccount(@Auth() user: User) {
+    return await this.authProvider.activateAccount(user);
+  }
+
+  @Post('account/deactivate')
+  async deActivateAccount(@Auth('id') userId: string) {
+    return await this.authProvider.deActivateAcccount(userId);
+  }
+
+  @Get('sign-out')
+  async logOut(@Auth('id') userId: string) {
+    return await this.authProvider.logOut(userId);
+  }
+
+  @Post('change-password')
+  async changePassword(
+    @Body() changePasswordDto: ChangePasswordDto,
+    @Auth() user: User,
+  ) {
+    return await this.authProvider.changePassword(user, changePasswordDto);
+  }
+
+  @Post('verify-password')
+  async verifyPassword(
+    @Body() verifyPasswordDto: VerifyPasswordDto,
+    @Auth() user: User,
+  ) {
+    return await this.authProvider.verifyPassword(
+      user,
+      verifyPasswordDto.password,
     );
   }
 }
