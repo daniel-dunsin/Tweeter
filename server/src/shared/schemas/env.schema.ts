@@ -19,5 +19,5 @@ export const envSchema = Joi.object({
   CLOUDINARY_API_KEY: Joi.string().required(),
   CLOUDINARY_API_SECRET: Joi.string().required(),
   CLOUDINARY_CLOUD_NAME: Joi.string().required(),
-  GOOGLE_ANDROID_CLIENT_ID: Joi.string().required(),
+  GIPHY_API_KEY: Joi.string().required(),
 }).strict();

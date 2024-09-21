@@ -263,7 +263,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 },
                 icon: Icon(
                   Icons.dark_mode_outlined,
-                  size: 25.h,
+                  size: 20.h,
                   color: appColors.foregroundColor,
                 ),
               ),

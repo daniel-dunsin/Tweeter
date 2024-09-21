@@ -4,11 +4,13 @@ import { genSalt, hash, compare } from 'bcryptjs';
 import { UploadApiOptions, v2 } from 'cloudinary';
 import { generate } from 'otp-generator';
 import { PrismaService } from '../prisma/prisma.service';
+import { CLOUDINARY_PROVIDER } from './cloudinary.provider';
+import { DefaultQueryDto } from '../dtos';
 
 @Injectable()
 export class UtilService {
   constructor(
-    @Inject('Cloudinary') private readonly cloudinary: typeof v2,
+    @Inject(CLOUDINARY_PROVIDER) private readonly cloudinary: typeof v2,
     private readonly prisma: PrismaService,
   ) {}
 
@@ -68,5 +70,23 @@ export class UtilService {
       return 'https://' + url;
     }
     return url;
+  }
+
+  resolvePaginationQuery(query: DefaultQueryDto, count?: number) {
+    const page = Number(query?.page ?? '1') || 1;
+    const limit = Number(query?.limit ?? '20') || 20;
+    const skip = (page - 1) * limit;
+    let totalPages = Infinity;
+
+    if (count) {
+      totalPages = Math.ceil(count / limit);
+    }
+
+    return {
+      skip,
+      limit,
+      count,
+      totalPages,
+    };
   }
 }

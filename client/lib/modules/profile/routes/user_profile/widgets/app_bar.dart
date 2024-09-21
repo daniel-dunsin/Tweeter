@@ -148,6 +148,7 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                                 showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,
+                                  useRootNavigator: true,
                                   sheetAnimationStyle: AnimationStyle(duration: const Duration(milliseconds: 500)),
                                   builder: (context) {
                                     return EditProfileScreen(

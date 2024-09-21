@@ -150,13 +150,14 @@ enum TweetMediaType {
   image
   video
   audio
+  gif
 }
 
 model TweetMedia {
   id       String         @id @default(uuid())
   type     TweetMediaType
   url      String
-  publicId String
+  publicId String?
   tweetId  String
   tweet    Tweet          @relation(references: [id], fields: [tweetId])
 

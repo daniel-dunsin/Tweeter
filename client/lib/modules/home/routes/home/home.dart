@@ -3,6 +3,7 @@ import 'package:client/modules/home/routes/home/widgets/for_you.dart';
 import 'package:client/modules/home/widgets/app_bar.dart';
 import 'package:client/modules/home/widgets/home_drawer.dart';
 import 'package:client/shared/theme/colors.dart';
+import 'package:client/shared/widgets/floating_action_buttons.dart';
 import 'package:client/shared/widgets/logo.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final appColors = Theme.of(context).appColors;
 
     return Scaffold(
+      floatingActionButton: const CreateTweetFloatingActionButton(),
       drawer: const HomeDrawer(),
       appBar: getHomeRoutesAppBar(context: context, title: const Logo()),
       body: Column(

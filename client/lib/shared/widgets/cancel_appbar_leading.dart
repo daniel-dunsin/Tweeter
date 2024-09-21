@@ -1,6 +1,7 @@
 import 'package:client/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CancelAppbarLeading extends StatelessWidget {
   final String text;
@@ -14,6 +15,8 @@ class CancelAppbarLeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).appColors;
+
     return Container(
       padding: const EdgeInsets.only(top: 15, left: 15),
       child: GestureDetector(
@@ -22,8 +25,9 @@ class CancelAppbarLeading extends StatelessWidget {
         },
         child: Text(
           text,
-          style: const TextStyle(
-            fontSize: 13,
+          style: TextStyle(
+            fontSize: 12.h,
+            color: appColors.foregroundColor,
           ),
         ),
       ),

@@ -4,8 +4,16 @@ import { AuthModule } from './auth/auth.module';
 import { TokenModule } from './token/token.module';
 import { CategoryModule } from './category/category.module';
 import { FollowModule } from './follow/follow.module';
+import { GifModule } from './gif/gif.module';
 
 @Module({
-  imports: [UserModule, AuthModule, TokenModule, CategoryModule, FollowModule],
+  imports: [
+    UserModule,
+    AuthModule,
+    TokenModule,
+    CategoryModule,
+    FollowModule,
+    GifModule,
+  ],
 })
 export class ApiModule {}
