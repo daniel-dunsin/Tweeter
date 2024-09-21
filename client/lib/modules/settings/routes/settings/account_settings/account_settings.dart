@@ -24,7 +24,7 @@ class AccountSettingsScreen extends StatelessWidget {
             Text(
               "Your account",
               style: TextStyle(
-                fontSize: 14.sp,
+                fontSize: 14.h,
                 fontWeight: FontWeight.bold,
                 color: appColors.foregroundColor,
               ),
@@ -33,7 +33,7 @@ class AccountSettingsScreen extends StatelessWidget {
             Text(
               "@${user.userName}",
               style: TextStyle(
-                fontSize: 10.sp,
+                fontSize: 10.h,
                 color: appColors.secondaryForegroundColor,
               ),
             ),
@@ -50,7 +50,7 @@ class AccountSettingsScreen extends StatelessWidget {
               child: Text(
                 "See information about your account, download an archive of your data, or learn about your account deactivation options.",
                 style: TextStyle(
-                  fontSize: 10.sp,
+                  fontSize: 10.h,
                   color: Colors.grey,
                 ),
               ),

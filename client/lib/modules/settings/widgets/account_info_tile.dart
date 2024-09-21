@@ -34,7 +34,7 @@ class AccountInfoTile extends StatelessWidget {
             tileKey,
             style: TextStyle(
               color: appColors.foregroundColor,
-              fontSize: 12.sp,
+              fontSize: 12.h,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -59,13 +59,13 @@ class AccountInfoTile extends StatelessWidget {
                   tileValue,
                   style: TextStyle(
                     color: Colors.grey,
-                    fontSize: 12.sp,
+                    fontSize: 12.h,
                   ),
                 ),
                 const SizedBox(width: 8),
                 Icon(
                   Icons.arrow_forward_ios_outlined,
-                  size: 13.sp,
+                  size: 13.h,
                   color: Colors.grey,
                 )
               ],

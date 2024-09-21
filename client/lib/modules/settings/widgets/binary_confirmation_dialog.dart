@@ -26,7 +26,7 @@ class BinaryConfirmationDialog extends StatelessWidget {
             style: TextStyle(
               color: appColors.iconColor,
               fontWeight: FontWeight.bold,
-              fontSize: 12.sp,
+              fontSize: 12.h,
             ),
           ),
         ),
@@ -37,7 +37,7 @@ class BinaryConfirmationDialog extends StatelessWidget {
             style: TextStyle(
               color: Colors.red,
               fontWeight: FontWeight.bold,
-              fontSize: 12.sp,
+              fontSize: 12.h,
             ),
           ),
         )

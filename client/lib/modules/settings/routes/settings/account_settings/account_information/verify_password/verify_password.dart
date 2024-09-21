@@ -63,7 +63,7 @@ class _VerifyPasswordState extends State<VerifyPassword> {
                     "Verify your password",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 15.sp,
+                      fontSize: 15.h,
                       color: appColors.foregroundColor,
                     ),
                   ),
@@ -86,7 +86,7 @@ class _VerifyPasswordState extends State<VerifyPassword> {
                       "Next",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 11.sp,
+                        fontSize: 11.h,
                       ),
                     ),
                     onPressed: submit,
@@ -110,7 +110,7 @@ class _VerifyPasswordState extends State<VerifyPassword> {
                           decoration: TextDecoration.underline,
                           decorationThickness: 3,
                           decorationColor: appColors.foregroundColor,
-                          fontSize: 11.sp,
+                          fontSize: 11.h,
                         ),
                       ),
                     ),

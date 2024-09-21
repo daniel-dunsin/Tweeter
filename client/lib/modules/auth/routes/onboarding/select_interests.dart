@@ -154,6 +154,7 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
                 Card(
                   elevation: 3,
                   color: Colors.transparent,
+                  shadowColor: Colors.transparent,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: ContainedButton(

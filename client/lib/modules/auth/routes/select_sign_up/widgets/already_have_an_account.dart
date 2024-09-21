@@ -15,7 +15,7 @@ class AlreadyHaveAnAccount extends StatelessWidget {
         Text(
           "Already have an account? ",
           style: TextStyle(
-            fontSize: 11.sp,
+            fontSize: 11.h,
             color: appColors.secondaryForegroundColor,
           ),
         ),
@@ -26,7 +26,7 @@ class AlreadyHaveAnAccount extends StatelessWidget {
           child: Text(
             "Log in",
             style: TextStyle(
-              fontSize: 11.sp,
+              fontSize: 11.h,
               color: appColors.iconColor,
             ),
           ),

@@ -25,7 +25,7 @@ class PurchasesScreen extends StatelessWidget {
             style: TextStyle(
               color: appColors.foregroundColor,
               fontWeight: FontWeight.bold,
-              fontSize: 13.sp,
+              fontSize: 13.h,
             ),
           ),
           const SizedBox(height: 20),
@@ -34,7 +34,7 @@ class PurchasesScreen extends StatelessWidget {
             style: TextStyle(
               color: appColors.foregroundColor,
               fontWeight: FontWeight.bold,
-              fontSize: 13.sp,
+              fontSize: 13.h,
             ),
           ),
           const SizedBox(height: 5),
@@ -47,12 +47,12 @@ class PurchasesScreen extends StatelessWidget {
               style: TextStyle(
                 color: appColors.foregroundColor,
                 fontWeight: FontWeight.bold,
-                fontSize: 10.sp,
+                fontSize: 10.h,
               ),
             ),
             trailing: Icon(
               Icons.arrow_forward_ios_outlined,
-              size: 10.sp,
+              size: 10.h,
               color: appColors.foregroundColor,
             ),
             contentPadding: const EdgeInsets.all(0),

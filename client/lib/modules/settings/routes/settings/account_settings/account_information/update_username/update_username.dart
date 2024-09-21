@@ -50,7 +50,7 @@ class _UpdateUsernameScreenState extends State<UpdateUsernameScreen> {
           title: Text(
             "Update username",
             style: TextStyle(
-              fontSize: 14.sp,
+              fontSize: 14.h,
               fontWeight: FontWeight.bold,
               color: appColors.foregroundColor,
             ),
@@ -68,7 +68,7 @@ class _UpdateUsernameScreenState extends State<UpdateUsernameScreen> {
                     style: TextStyle(
                       color: appColors.foregroundColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 11.sp,
+                      fontSize: 11.h,
                     ),
                   ),
                 ),
@@ -89,7 +89,7 @@ class _UpdateUsernameScreenState extends State<UpdateUsernameScreen> {
                   style: TextStyle(
                     color: appColors.foregroundColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: 11.5.sp,
+                    fontSize: 11.5.h,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -97,7 +97,7 @@ class _UpdateUsernameScreenState extends State<UpdateUsernameScreen> {
                   "${user.userName}",
                   style: TextStyle(
                     color: appColors.foregroundColor,
-                    fontSize: 11.sp,
+                    fontSize: 11.h,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -106,7 +106,7 @@ class _UpdateUsernameScreenState extends State<UpdateUsernameScreen> {
                   style: TextStyle(
                     color: appColors.foregroundColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: 11.5.sp,
+                    fontSize: 11.5.h,
                   ),
                 ),
                 UnderlinedTextField(

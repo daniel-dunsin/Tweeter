@@ -24,7 +24,7 @@ AppBar getMiscScreensAppBar(
     automaticallyImplyLeading: false,
     centerTitle: true,
     title: title,
-    titleTextStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold, color: appColors.foregroundColor),
+    titleTextStyle: TextStyle(fontSize: 14.h, fontWeight: FontWeight.bold, color: appColors.foregroundColor),
     shape: const Border(bottom: BorderSide(width: .6, color: Colors.grey)),
     actions: actions,
     toolbarHeight: toolbarHeight,

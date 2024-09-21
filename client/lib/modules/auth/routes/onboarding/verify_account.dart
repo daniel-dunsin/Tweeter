@@ -49,7 +49,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
           appBar: AppBar(
             leading: CancelAppbarLeading(
               onTap: () {
-                GoRouter.of(context).goNamed(AuthRoutes.signUp);
+                GoRouter.of(context).replace(AuthRoutes.signUp);
               },
             ),
             toolbarHeight: 30,

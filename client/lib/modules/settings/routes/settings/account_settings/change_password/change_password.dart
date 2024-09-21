@@ -84,7 +84,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 Text(
                   "Update password",
                   style: TextStyle(
-                    fontSize: 14.sp,
+                    fontSize: 14.h,
                     fontWeight: FontWeight.bold,
                     color: appColors.foregroundColor,
                   ),
@@ -93,7 +93,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 Text(
                   "@${user.userName}",
                   style: TextStyle(
-                    fontSize: 10.sp,
+                    fontSize: 10.h,
                     color: appColors.secondaryForegroundColor,
                   ),
                 ),
@@ -114,7 +114,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       style: TextStyle(
                         color: appColors.foregroundColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: 11.sp,
+                        fontSize: 11.h,
                       ),
                     ),
                   ),
@@ -149,7 +149,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           'Forgot password?',
                           style: TextStyle(
                             color: appColors.iconColor,
-                            fontSize: 10.5.sp,
+                            fontSize: 10.5.h,
                           ),
                         ),
                       ),

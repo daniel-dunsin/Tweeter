@@ -31,7 +31,7 @@ class SettingsScreen extends StatelessWidget {
                       Text(
                         "Settings",
                         style: TextStyle(
-                          fontSize: 14.sp,
+                          fontSize: 14.h,
                           fontWeight: FontWeight.bold,
                           color: appColors.foregroundColor,
                         ),
@@ -39,7 +39,7 @@ class SettingsScreen extends StatelessWidget {
                       const SizedBox(height: 5),
                       Text(
                         "@${user.userName}",
-                        style: TextStyle(fontSize: 10.sp, color: appColors.secondaryForegroundColor),
+                        style: TextStyle(fontSize: 10.h, color: appColors.secondaryForegroundColor),
                       ),
                       const SizedBox(height: 10),
                       Padding(

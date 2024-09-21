@@ -7,7 +7,7 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLightMode = context.read<AppCubit>().state.isLightMode;
+    final isLightMode = context.watch<AppCubit>().state.isLightMode;
 
     return Image.asset(
       isLightMode ? "assets/images/logo-light.jpg" : "assets/images/logo.jpg",

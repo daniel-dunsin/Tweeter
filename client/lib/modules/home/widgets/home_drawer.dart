@@ -85,168 +85,169 @@ class _HomeDrawerState extends State<HomeDrawer> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            GoRouter.of(context).pushNamed(
-                              PrivateRoutes.profile,
-                              extra: {
-                                "userId": user.id
-                              },
-                            );
-                          },
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundImage: NetworkImage(user.profilePicture),
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          user.name,
-                          style: TextStyle(
-                            color: appColors.foregroundColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          "@${user.userName}",
-                          style: const TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      GoRouter.of(context).pushNamed(
+                        PrivateRoutes.profile,
+                        extra: {
+                          "userId": user.id
+                        },
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundImage: NetworkImage(user.profilePicture),
                     ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            GoRouter.of(context).pushNamed(
-                              PrivateRoutes.follows,
-                              extra: {
-                                "user": user,
-                                "tab": FollowsTabs.followings
-                              },
-                            );
-                          },
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  child: Text(
-                                    "${followings?.length ?? user.followers?.length ?? 0} ",
-                                    style: TextStyle(
-                                      color: appColors.foregroundColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                const WidgetSpan(
-                                  child: Text(
-                                    "Following",
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        GestureDetector(
-                          onTap: () {
-                            GoRouter.of(context).pushNamed(
-                              PrivateRoutes.follows,
-                              extra: {
-                                "user": user,
-                                "tab": FollowsTabs.followers,
-                              },
-                            );
-                          },
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  child: Text(
-                                    "${followers?.length ?? user.followings?.length ?? 0} ",
-                                    style: TextStyle(
-                                      color: appColors.foregroundColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                const WidgetSpan(
-                                  child: Text(
-                                    "Followers",
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    user.name,
+                    style: TextStyle(
+                      color: appColors.foregroundColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                    const SizedBox(height: 50),
-                    for (int i = 0; i < navs.length; i++) navs[i],
-                    const SizedBox(height: 30),
-                    const Divider(),
-                    const SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Settings and Support",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: appColors.foregroundColor,
-                          ),
-                        ),
-                        InkWell(
-                          borderRadius: BorderRadius.circular(600),
-                          onTap: () {
-                            setState(() {
-                              settingsOpen = !settingsOpen;
-                            });
-                          },
-                          child: AnimatedRotation(
-                            turns: settingsOpen ? .5 : 0,
-                            duration: const Duration(milliseconds: 400),
-                            child: Icon(
-                              Icons.keyboard_arrow_down_outlined,
-                              color: settingsOpen ? appColors.iconColor : appColors.foregroundColor,
-                              size: 27,
-                            ),
-                          ),
-                        ),
-                      ],
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    "@${user.userName}",
+                    style: const TextStyle(
+                      color: Colors.grey,
                     ),
-                    const SizedBox(height: 10),
-                    AnimatedOpacity(
-                      opacity: settingsOpen ? 1 : 0,
-                      duration: const Duration(milliseconds: 400),
-                      child: Column(
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      GoRouter.of(context).pushNamed(
+                        PrivateRoutes.follows,
+                        extra: {
+                          "user": user,
+                          "tab": FollowsTabs.followings
+                        },
+                      );
+                    },
+                    child: Text.rich(
+                      TextSpan(
                         children: [
-                          for (int i = 0; i < settingsNav.length; i++) settingsNav[i],
+                          WidgetSpan(
+                            child: Text(
+                              "${followings?.length ?? user.followers?.length ?? 0} ",
+                              style: TextStyle(
+                                color: appColors.foregroundColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          const WidgetSpan(
+                            child: Text(
+                              "Following",
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                  ],
+                  ),
+                  const SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () {
+                      GoRouter.of(context).pushNamed(
+                        PrivateRoutes.follows,
+                        extra: {
+                          "user": user,
+                          "tab": FollowsTabs.followers,
+                        },
+                      );
+                    },
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          WidgetSpan(
+                            child: Text(
+                              "${followers?.length ?? user.followings?.length ?? 0} ",
+                              style: TextStyle(
+                                color: appColors.foregroundColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          const WidgetSpan(
+                            child: Text(
+                              "Followers",
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 50),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (int i = 0; i < navs.length; i++) navs[i],
+                      const SizedBox(height: 30),
+                      const Divider(),
+                      const SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Settings and Support",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: appColors.foregroundColor,
+                            ),
+                          ),
+                          InkWell(
+                            borderRadius: BorderRadius.circular(600),
+                            onTap: () {
+                              setState(() {
+                                settingsOpen = !settingsOpen;
+                              });
+                            },
+                            child: AnimatedRotation(
+                              turns: settingsOpen ? .5 : 0,
+                              duration: const Duration(milliseconds: 400),
+                              child: Icon(
+                                Icons.keyboard_arrow_down_outlined,
+                                color: settingsOpen ? appColors.iconColor : appColors.foregroundColor,
+                                size: 27,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      AnimatedOpacity(
+                        opacity: settingsOpen ? 1 : 0,
+                        duration: const Duration(milliseconds: 400),
+                        child: Column(
+                          children: [
+                            for (int i = 0; i < settingsNav.length; i++) settingsNav[i],
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 30),
-              const Spacer(),
               IconButton(
                 onPressed: () {
                   showModalBottomSheet(
@@ -262,7 +263,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 },
                 icon: Icon(
                   Icons.dark_mode_outlined,
-                  size: 25.sp,
+                  size: 25.h,
                   color: appColors.foregroundColor,
                 ),
               ),

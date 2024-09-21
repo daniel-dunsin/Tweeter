@@ -36,7 +36,7 @@ class ReactivateAccountScreen extends StatelessWidget {
                 Text(
                   "Reactivate your account?",
                   style: TextStyle(
-                    fontSize: 22.sp,
+                    fontSize: 22.h,
                     fontWeight: FontWeight.bold,
                     color: appColors.foregroundColor,
                   ),

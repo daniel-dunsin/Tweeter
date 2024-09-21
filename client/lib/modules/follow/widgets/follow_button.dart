@@ -109,7 +109,7 @@ class _FollowButtonState extends State<FollowButton> {
                       'Unfollow @${widget.user.userName}',
                       style: TextStyle(
                         color: Colors.red,
-                        fontSize: 9.sp,
+                        fontSize: 9.h,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,

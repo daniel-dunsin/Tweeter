@@ -20,22 +20,22 @@ class SettingsTile extends StatelessWidget {
         leading: Icon(
           tileModel.icon,
           color: appColors.secondaryForegroundColor,
-          size: 20.sp,
+          size: 20.h,
         ),
         title: Text(tileModel.title),
         titleTextStyle: TextStyle(
           color: appColors.secondaryForegroundColor,
           fontWeight: FontWeight.bold,
-          fontSize: 12.sp,
+          fontSize: 12.h,
         ),
         subtitle: Text(tileModel.description),
         subtitleTextStyle: TextStyle(
           color: Colors.grey,
-          fontSize: 10.sp,
+          fontSize: 10.h,
         ),
         trailing: Icon(
           Icons.arrow_forward_ios_outlined,
-          size: 14.sp,
+          size: 14.h,
         ),
       ),
     );

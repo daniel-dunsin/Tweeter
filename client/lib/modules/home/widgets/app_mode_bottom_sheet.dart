@@ -32,7 +32,7 @@ class AppModeBottomSheet extends StatelessWidget {
             child: Text(
               "Dark mode",
               style: TextStyle(
-                fontSize: 15.sp,
+                fontSize: 15.h,
                 fontWeight: FontWeight.bold,
                 color: appColors.foregroundColor,
               ),
@@ -45,7 +45,7 @@ class AppModeBottomSheet extends StatelessWidget {
               Text(
                 "Dark Mode",
                 style: TextStyle(
-                  fontSize: 12.sp,
+                  fontSize: 12.h,
                   fontWeight: FontWeight.bold,
                   color: appColors.secondaryForegroundColor,
                 ),
@@ -74,7 +74,7 @@ class AppModeBottomSheet extends StatelessWidget {
               child: Text(
                 "Use device settings",
                 style: TextStyle(
-                  fontSize: 10.sp,
+                  fontSize: 10.h,
                   color: appColors.secondaryForegroundColor,
                   decoration: TextDecoration.underline,
                   decorationThickness: 3,
@@ -89,7 +89,7 @@ class AppModeBottomSheet extends StatelessWidget {
             child: Text(
               "Set Dark mode to use the Light or Dark selection located in your device Display & Brightness settings",
               style: TextStyle(
-                fontSize: 10.sp,
+                fontSize: 10.h,
                 color: appColors.secondaryForegroundColor,
               ),
               textAlign: TextAlign.right,

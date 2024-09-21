@@ -28,7 +28,7 @@ class AccountInformationScreen extends StatelessWidget {
             Text(
               "Account",
               style: TextStyle(
-                fontSize: 14.sp,
+                fontSize: 14.h,
                 fontWeight: FontWeight.bold,
                 color: appColors.foregroundColor,
               ),
@@ -37,7 +37,7 @@ class AccountInformationScreen extends StatelessWidget {
             Text(
               "@${user?.userName}",
               style: TextStyle(
-                fontSize: 10.sp,
+                fontSize: 10.h,
                 color: appColors.secondaryForegroundColor,
               ),
             ),
@@ -93,7 +93,7 @@ class AccountInformationScreen extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.bold,
-                              fontSize: 10.sp,
+                              fontSize: 10.h,
                             ),
                           ),
                         ),
