@@ -41,10 +41,11 @@ model User {
   followers        Follow[]      @relation("Followings")
   followings       Follow[]      @relation("Followers")
 
-  retweets   Tweet[] @relation("UserRetweet")
-  tweets     Tweet[] @relation("Tweets")
-  likedPosts Tweet[] @relation("Likes")
-  bookmarks  Tweet[] @relation("Bookmarks")
+  retweets   Tweet[]         @relation("UserRetweet")
+  tweets     Tweet[]         @relation("Tweets")
+  likedPosts Tweet[]         @relation("Likes")
+  bookmarks  Tweet[]         @relation("Bookmarks")
+  mentions   TweetMentions[]
 
   @@index([email, userName])
   @@map("users")
@@ -143,6 +144,8 @@ model Tweet {
 
   bookmarkers User[] @relation("Bookmarks")
 
+  location TweetLocation?
+
   @@map("tweets")
 }
 
@@ -170,12 +173,22 @@ model TweetMedia {
 model HashTag {
   id           String         @id @default(uuid())
   text         String
+  slug         String
   tweets       Tweet[]
   hashTagUsage HashTagUsage[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @default(now()) @updatedAt
 
   @@map("hashtags")
+}
+
+model TweetMentions {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model HashTagUsage {
@@ -190,4 +203,16 @@ model HashTagUsage {
   createdAt DateTime @default(now())
 
   @@map("hashtags_usage")
+}
+
+model TweetLocation {
+  id      String  @id @default(uuid())
+  tweet   Tweet   @relation(references: [id], fields: [tweetId])
+  tweetId String  @unique
+  lng     Decimal
+  lat     Decimal
+  name    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
