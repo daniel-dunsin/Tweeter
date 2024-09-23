@@ -6,6 +6,7 @@ import { CategoryModule } from './category/category.module';
 import { FollowModule } from './follow/follow.module';
 import { GifModule } from './gif/gif.module';
 import { MediaModule } from './media/media.module';
+import { TweetModule } from './tweets/tweets.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { MediaModule } from './media/media.module';
     FollowModule,
     GifModule,
     MediaModule,
+    TweetModule,
   ],
 })
 export class ApiModule {}

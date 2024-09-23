@@ -130,5 +130,10 @@ export class TweetProvider {
         createdTweetIds.push(createdTweet.id);
       });
     });
+
+    return {
+      success: true,
+      message: 'tweet created',
+    };
   }
 }
