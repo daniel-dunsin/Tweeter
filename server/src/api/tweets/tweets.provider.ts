@@ -25,6 +25,8 @@ export class TweetProvider {
   }
 
   async createTweets(user: User, createTweetDtos: CreateTweetDto) {
+    const createdTweetIds = [];
+
     await this.prisma.$transaction(async (tx) => {
       createTweetDtos.tweets.map(async (tweet) => {
         const createdTweet = await this.tweetService.createTweet(
@@ -59,6 +61,14 @@ export class TweetProvider {
                   },
                 }
               : {}),
+
+            ...(createdTweetIds.length > 0 && {
+              parentTweet: {
+                connect: {
+                  id: createdTweetIds[createdTweetIds.length - 1],
+                },
+              },
+            }),
           },
           tx,
         );
@@ -100,6 +110,24 @@ export class TweetProvider {
             }),
           );
         }
+
+        if (createdTweetIds.length > 0) {
+          await this.tweetService.updateTweet(
+            {
+              id: createdTweetIds[createdTweetIds.length - 1],
+            },
+            {
+              childTweets: {
+                connect: {
+                  id: createdTweet.id,
+                },
+              },
+            },
+            tx,
+          );
+        }
+
+        createdTweetIds.push(createdTweet.id);
       });
     });
   }

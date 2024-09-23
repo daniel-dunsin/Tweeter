@@ -42,6 +42,14 @@ export class TweetService {
     });
   }
 
+  async updateTweet(
+    where: Prisma.TweetWhereUniqueInput,
+    data: Prisma.TweetUpdateInput,
+    tx?: Omit<PrismaClient, ITXClientDenyList>,
+  ) {
+    return await (tx ?? this.prisma).tweet.update({ where, data });
+  }
+
   async deleteTweet(
     where: Prisma.TweetWhereUniqueInput,
     tx?: Omit<PrismaClient, ITXClientDenyList>,
