@@ -1,11 +1,12 @@
 import 'package:client/modules/tweets/routes/create_tweet/models/create_tweet_media_model.dart';
 
 class SingleCreateTweetModel {
-  final String? text;
+  String? text;
   List<CreateTweetMediaModel> media;
+
   SingleCreateTweetModel({
     this.text,
-    required this.media,
+    this.media = const [],
   });
 
   SingleCreateTweetModel copyWith({
