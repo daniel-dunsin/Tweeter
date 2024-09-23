@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, TweetMediaType } from '@prisma/client';
 import { genSalt, hash, compare } from 'bcryptjs';
 import { UploadApiOptions, v2 } from 'cloudinary';
 import { generate } from 'otp-generator';
 import { PrismaService } from '../prisma/prisma.service';
 import { CLOUDINARY_PROVIDER } from './cloudinary.provider';
 import { DefaultQueryDto } from '../dtos';
+import { unlink } from 'fs/promises';
 
 @Injectable()
 export class UtilService {
@@ -41,6 +42,13 @@ export class UtilService {
     );
 
     return { secure_url, public_id };
+  }
+
+  async uploadFileAsset(file: Express.Multer.File) {
+    const response = await this.uploadAsset(file.path);
+    await unlink(file.path);
+
+    return response;
   }
 
   async deleteAsset(public_id: string) {

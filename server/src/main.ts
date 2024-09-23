@@ -15,7 +15,7 @@ async function bootstrap() {
   app.enableCors();
   app.disable('x-powered-by');
 
-  app.use(express.json({ limit: '50mb' }));
+  app.use(express.json({ limit: '1024mb' }));
 
   app.useGlobalPipes(
     new ValidationPipe({

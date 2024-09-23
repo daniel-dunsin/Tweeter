@@ -117,14 +117,15 @@ model SubCategory {
 }
 
 model Tweet {
-  id           String         @id @default(uuid())
-  isPinned     Boolean        @default(false)
+  id           String          @id @default(uuid())
+  isPinned     Boolean         @default(false)
   media        TweetMedia[]
   text         String?
   hashTagUsage HashTagUsage[]
   hashTags     HashTag[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @default(now()) @updatedAt
+  mentions     TweetMentions[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @default(now()) @updatedAt
 
   parentTweetId String?
   parentTweet   Tweet?  @relation("ParentChildTweets", fields: [parentTweetId], references: [id])
@@ -144,7 +145,8 @@ model Tweet {
 
   bookmarkers User[] @relation("Bookmarks")
 
-  location TweetLocation?
+  locationId String?
+  location   TweetLocation? @relation(references: [id], fields: [locationId])
 
   @@map("tweets")
 }
@@ -183,12 +185,17 @@ model HashTag {
 }
 
 model TweetMentions {
-  id     String @id @default(uuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
+  id      String @id @default(uuid())
+  userId  String
+  user    User   @relation(fields: [userId], references: [id])
+  tweetId String
+  tweet   Tweet  @relation(fields: [tweetId], references: [id])
+  count   Int    @default(1)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("tweet_mentions")
 }
 
 model HashTagUsage {
@@ -206,13 +213,15 @@ model HashTagUsage {
 }
 
 model TweetLocation {
-  id      String  @id @default(uuid())
-  tweet   Tweet   @relation(references: [id], fields: [tweetId])
-  tweetId String  @unique
-  lng     Decimal
-  lat     Decimal
-  name    String
+  id     String  @id @default(uuid())
+  tweets Tweet[]
+  lng    Decimal
+  lat    Decimal
+  name   String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  @@unique([lng, lat])
+  @@map("tweet_location")
 }

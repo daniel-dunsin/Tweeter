@@ -7,11 +7,12 @@ import {
   IsUrl as _IsUrl,
   IsOptional,
   IsDateString,
-  IsNumberString,
+  IsNumber as _IsNumber,
   IsUUID as _IsUUID,
 } from 'class-validator';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { v4 } from 'uuid';
+import { Transform } from 'class-transformer';
 
 export const IsString = (isOptional: boolean) => {
   const decorators = [_IsString()];
@@ -27,7 +28,7 @@ export const IsString = (isOptional: boolean) => {
 };
 
 export const IsNumber = (isOptional: boolean) => {
-  const decorators = [IsNumberString()];
+  const decorators = [_IsNumber(), Transform((v) => Number(v.value))];
 
   if (isOptional) {
     decorators.push(ApiPropertyOptional({ example: 0 }));
@@ -69,10 +70,17 @@ export const IsEnum = <T>(_enum: T, isOptional: boolean) => {
   const decorators = [_IsEnum(_enum as object)];
 
   if (isOptional) {
-    decorators.push(ApiPropertyOptional({ enum: _enum }));
+    decorators.push(
+      ApiPropertyOptional({
+        enum: _enum,
+        example: Object.values(_enum).join(' | '),
+      }),
+    );
     decorators.push(IsOptional());
   } else {
-    decorators.push(ApiProperty({ enum: _enum }));
+    decorators.push(
+      ApiProperty({ enum: _enum, example: Object.values(_enum).join(' | ') }),
+    );
   }
 
   return applyDecorators(...decorators);

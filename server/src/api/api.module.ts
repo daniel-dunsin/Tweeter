@@ -5,6 +5,7 @@ import { TokenModule } from './token/token.module';
 import { CategoryModule } from './category/category.module';
 import { FollowModule } from './follow/follow.module';
 import { GifModule } from './gif/gif.module';
+import { MediaModule } from './media/media.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { GifModule } from './gif/gif.module';
     CategoryModule,
     FollowModule,
     GifModule,
+    MediaModule,
   ],
 })
 export class ApiModule {}
