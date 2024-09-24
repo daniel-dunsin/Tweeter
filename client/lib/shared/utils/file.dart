@@ -44,3 +44,16 @@ File convertBase64ToImage(String base64String) {
     rethrow;
   }
 }
+
+Future<File?> pickVideo() async {
+  try {
+    final ImagePicker? imagePicker = ImagePicker();
+
+    final XFile? image = await imagePicker?.pickImage(source: ImageSource.gallery);
+
+    return image != null ? File(image.path) : null;
+  } catch (e) {
+    handleError(e: e);
+    rethrow;
+  }
+}

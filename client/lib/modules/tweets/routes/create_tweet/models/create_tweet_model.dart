@@ -2,9 +2,9 @@ import 'package:client/modules/tweets/routes/create_tweet/models/create_tweet_lo
 import 'package:client/modules/tweets/routes/create_tweet/models/single_create_tweet_model.dart';
 
 class CreateTweetModel {
-  final List<SingleCreateTweetModel> tweets;
-  final CreateTweetLocationModel? location;
-  final int position;
+  List<SingleCreateTweetModel> tweets;
+  CreateTweetLocationModel? location;
+  int position;
 
   CreateTweetModel({
     required this.tweets,

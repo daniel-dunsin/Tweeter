@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:client/modules/tweets/enums/index.dart';
 
 class CreateTweetMediaModel {
-  final TweetMediaType type;
-  final File? file;
-  final String? url;
-  final String? publicId;
+  TweetMediaType type;
+  File? file;
+  String? url;
+  String? publicId;
   CreateTweetMediaModel({
     required this.type,
     this.file,

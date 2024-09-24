@@ -53,3 +53,9 @@ class AddLocation extends CreateTweetEvent {
 
   AddLocation(this.location);
 }
+
+class ChangeActiveIndex extends CreateTweetEvent {
+  final int index;
+
+  ChangeActiveIndex(this.index);
+}

@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:client/modules/tweets/routes/create_tweet/bloc/create_tweet_bloc.dart';
 import 'package:client/shared/constants/misc.dart';
 import 'package:client/shared/theme/colors.dart';
+import 'package:client/shared/utils/file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,8 +43,15 @@ class _CreateTweetFooterState extends State<CreateTweetFooter> {
                 ),
                 _buildIcon(
                   context: context,
-                  enabled: false,
+                  enabled: true,
                   icon: Icons.photo_outlined,
+                  onTap: () async {
+                    final File? image = await pickImage();
+
+                    if (image != null) {
+                      context.read<CreateTweetBloc>().add(AddImage(image));
+                    }
+                  },
                 ),
                 _buildIcon(
                   context: context,

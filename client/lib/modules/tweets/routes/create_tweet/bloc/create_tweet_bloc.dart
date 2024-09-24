@@ -21,17 +21,17 @@ class CreateTweetBloc extends Bloc<CreateTweetEvent, CreateTweetModel> {
         ) {
     on<AddNewTweet>(
       (event, emit) {
-        final tweets = state.tweets;
+        final List<SingleCreateTweetModel> tweets = List.from(state.tweets);
 
         tweets.add(SingleCreateTweetModel());
-        emit(state.copyWith(tweets: tweets));
+        emit(state.copyWith(tweets: tweets, position: state.position + 1));
       },
     );
 
     on<AddText>(
       (event, emit) {
-        final tweets = state.tweets;
-        tweets[tweets.length - 1].text = event.text;
+        final List<SingleCreateTweetModel> tweets = List.from(state.tweets);
+        tweets[state.position].text = event.text;
 
         emit(state.copyWith(tweets: tweets));
       },
@@ -39,14 +39,19 @@ class CreateTweetBloc extends Bloc<CreateTweetEvent, CreateTweetModel> {
 
     on<AddAudio>(
       (event, emit) {
-        final tweets = state.tweets;
+        final List<SingleCreateTweetModel> tweets = List.from(state.tweets);
 
-        tweets[tweets.length - 1].media.add(
-              CreateTweetMediaModel(
-                type: TweetMediaType.audio,
-                file: event.audio,
-              ),
-            );
+        final updatedTweet = tweets[state.position].copyWith(
+          media: [
+            ...tweets[state.position].media,
+            CreateTweetMediaModel(
+              type: TweetMediaType.audio,
+              file: event.audio,
+            ),
+          ],
+        );
+
+        tweets[state.position] = updatedTweet;
 
         emit(state.copyWith(tweets: tweets));
       },
@@ -54,14 +59,19 @@ class CreateTweetBloc extends Bloc<CreateTweetEvent, CreateTweetModel> {
 
     on<AddVideo>(
       (event, emit) {
-        final tweets = state.tweets;
+        final List<SingleCreateTweetModel> tweets = List.from(state.tweets);
 
-        tweets[tweets.length - 1].media.add(
-              CreateTweetMediaModel(
-                type: TweetMediaType.video,
-                file: event.video,
-              ),
-            );
+        final updatedTweet = tweets[state.position].copyWith(
+          media: [
+            ...tweets[state.position].media,
+            CreateTweetMediaModel(
+              type: TweetMediaType.video,
+              file: event.video,
+            ),
+          ],
+        );
+
+        tweets[state.position] = updatedTweet;
 
         emit(state.copyWith(tweets: tweets));
       },
@@ -69,14 +79,19 @@ class CreateTweetBloc extends Bloc<CreateTweetEvent, CreateTweetModel> {
 
     on<AddGif>(
       (event, emit) {
-        final tweets = state.tweets;
+        final List<SingleCreateTweetModel> tweets = List.from(state.tweets);
 
-        tweets[tweets.length - 1].media.add(
-              CreateTweetMediaModel(
-                type: TweetMediaType.gif,
-                url: event.gifUrl,
-              ),
-            );
+        final updatedTweet = tweets[state.position].copyWith(
+          media: [
+            ...tweets[state.position].media,
+            CreateTweetMediaModel(
+              type: TweetMediaType.gif,
+              url: event.gifUrl,
+            ),
+          ],
+        );
+
+        tweets[state.position] = updatedTweet;
 
         emit(state.copyWith(tweets: tweets));
       },
@@ -84,14 +99,19 @@ class CreateTweetBloc extends Bloc<CreateTweetEvent, CreateTweetModel> {
 
     on<AddImage>(
       (event, emit) {
-        final tweets = state.tweets;
+        final List<SingleCreateTweetModel> tweets = List.from(state.tweets);
 
-        tweets[tweets.length - 1].media.add(
-              CreateTweetMediaModel(
-                type: TweetMediaType.image,
-                file: event.image,
-              ),
-            );
+        final updatedTweet = tweets[state.position].copyWith(
+          media: [
+            ...tweets[state.position].media,
+            CreateTweetMediaModel(
+              type: TweetMediaType.image,
+              file: event.image,
+            ),
+          ],
+        );
+
+        tweets[state.position] = updatedTweet;
 
         emit(state.copyWith(tweets: tweets));
       },
@@ -99,9 +119,9 @@ class CreateTweetBloc extends Bloc<CreateTweetEvent, CreateTweetModel> {
 
     on<RemoveMedia>(
       (event, emit) {
-        final tweets = state.tweets;
+        final List<SingleCreateTweetModel> tweets = List.from(state.tweets);
 
-        tweets[tweets.length - 1].media.removeAt(event.index);
+        tweets[state.position].media.removeAt(event.index);
 
         emit(state.copyWith(tweets: tweets));
       },
@@ -109,13 +129,20 @@ class CreateTweetBloc extends Bloc<CreateTweetEvent, CreateTweetModel> {
 
     on<RemoveTweet>(
       (event, emit) {
-        final tweets = state.tweets;
+        final List<SingleCreateTweetModel> tweets = List.from(state.tweets);
+        int newPosition;
+
+        if (state.position == tweets.length - 1) {
+          newPosition = state.position - 1;
+        } else {
+          newPosition = state.position;
+        }
 
         if (tweets.length > 1) {
           tweets.removeLast();
         }
 
-        emit(state.copyWith(tweets: tweets));
+        emit(state.copyWith(tweets: tweets, position: newPosition));
       },
     );
 
@@ -124,5 +151,9 @@ class CreateTweetBloc extends Bloc<CreateTweetEvent, CreateTweetModel> {
         emit(state.copyWith(location: event.location));
       },
     );
+
+    on<ChangeActiveIndex>((event, emit) {
+      emit(state.copyWith(position: event.index));
+    });
   }
 }
