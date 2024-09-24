@@ -1,0 +1,1 @@
+final maxCharacterCount = 280;

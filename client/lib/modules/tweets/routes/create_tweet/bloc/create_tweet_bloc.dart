@@ -12,9 +12,13 @@ part 'create_tweet_event.dart';
 
 class CreateTweetBloc extends Bloc<CreateTweetEvent, CreateTweetModel> {
   CreateTweetBloc()
-      : super(CreateTweetModel(tweets: [
-          SingleCreateTweetModel()
-        ])) {
+      : super(
+          CreateTweetModel(
+            tweets: [
+              SingleCreateTweetModel(),
+            ],
+          ),
+        ) {
     on<AddNewTweet>(
       (event, emit) {
         final tweets = state.tweets;

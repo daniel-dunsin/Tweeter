@@ -6,8 +6,14 @@ import 'package:go_router/go_router.dart';
 class BinaryConfirmationDialog extends StatelessWidget {
   final Function() onYes;
   final String message;
+  final String? title;
 
-  const BinaryConfirmationDialog({super.key, required this.onYes, this.message = "Are you sure?"});
+  const BinaryConfirmationDialog({
+    super.key,
+    required this.onYes,
+    this.message = "Are you sure?",
+    this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +21,8 @@ class BinaryConfirmationDialog extends StatelessWidget {
 
     return AlertDialog.adaptive(
       backgroundColor: appColors.backgroundColor,
-      title: Text(message),
+      content: Text(message),
+      title: title != null ? Text(title!) : null,
       actions: [
         TextButton(
           onPressed: () {
@@ -24,7 +31,7 @@ class BinaryConfirmationDialog extends StatelessWidget {
           child: Text(
             "No",
             style: TextStyle(
-              color: appColors.iconColor,
+              color: Colors.blue[600],
               fontWeight: FontWeight.bold,
               fontSize: 12.h,
             ),
