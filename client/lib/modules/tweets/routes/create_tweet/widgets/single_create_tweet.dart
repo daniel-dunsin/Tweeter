@@ -156,18 +156,28 @@ class _SingleCreateTweetState extends State<SingleCreateTweet> {
                             ? Container(
                                 child: SizedBox(
                                   width: double.maxFinite,
-                                  height: currentPost.media.length > 1 ? 200 : 300,
+                                  height: currentPost.media.length > 1 ? 250 : 250,
                                   child: Visibility(
-                                    child: ListView(
+                                    child: ListView.builder(
+                                      padding: const EdgeInsets.all(0),
                                       scrollDirection: Axis.horizontal,
-                                      children: [
-                                        for (int i = 0; i < currentPost.media.length; i++)
-                                          EditableTweetMedia(
+                                      itemBuilder: (context, i) {
+                                        return Container(
+                                          width: 300,
+                                          height: 300,
+                                          margin: const EdgeInsets.only(right: 30),
+                                          child: EditableTweetMedia(
+                                            index: i,
                                             tweetMediaModel: currentPost.media[i],
-                                          )
-                                      ],
+                                          ),
+                                        );
+                                      },
+                                      itemCount: currentPost.media.length,
                                     ),
-                                    replacement: EditableTweetMedia(tweetMediaModel: currentPost.media[0]),
+                                    replacement: EditableTweetMedia(
+                                      tweetMediaModel: currentPost.media[0],
+                                      index: 0,
+                                    ),
                                     visible: currentPost.media.length > 1,
                                   ),
                                 ),

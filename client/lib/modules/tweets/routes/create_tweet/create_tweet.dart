@@ -47,12 +47,9 @@ class CreateTweet extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    for (int i = 0; i < createTweetBloc.tweets.length; i++) SingleCreateTweet(index: i),
-                  ],
-                ),
+              child: ListView.builder(
+                itemBuilder: (context, index) => SingleCreateTweet(index: index),
+                itemCount: createTweetBloc.tweets.length,
               ),
             ),
             const SizedBox(height: 20),

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:client/shared/utils/network.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mime/mime.dart';
 
 Future<File?> pickImage() async {
   try {
@@ -45,13 +46,13 @@ File convertBase64ToImage(String base64String) {
   }
 }
 
-Future<File?> pickVideo() async {
+Future<List<File>?> pickMultiMedia({int limit = 4}) async {
   try {
     final ImagePicker? imagePicker = ImagePicker();
 
-    final XFile? image = await imagePicker?.pickImage(source: ImageSource.gallery);
+    final List<XFile>? media = await imagePicker?.pickMultipleMedia(limit: limit);
 
-    return image != null ? File(image.path) : null;
+    return media?.map((m) => File(m.path)).toList();
   } catch (e) {
     handleError(e: e);
     rethrow;

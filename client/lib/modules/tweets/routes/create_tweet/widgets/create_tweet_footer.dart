@@ -7,6 +7,7 @@ import 'package:client/shared/utils/file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mime/mime.dart';
 
 class CreateTweetFooter extends StatefulWidget {
   const CreateTweetFooter({super.key});
@@ -18,6 +19,30 @@ class CreateTweetFooter extends StatefulWidget {
 class _CreateTweetFooterState extends State<CreateTweetFooter> {
   void _addTweet() {
     context.read<CreateTweetBloc>().add(AddNewTweet());
+  }
+
+  void _addMedia() async {
+    final createTweetState = context.read<CreateTweetBloc>().state;
+
+    final currentTweetMedia = createTweetState.tweets[createTweetState.position].media;
+
+    final List<File>? media = await pickMultiMedia(limit: maxMediaCount - currentTweetMedia.length);
+
+    if (media != null) {
+      media.forEach((media) {
+        final String? mimeType = lookupMimeType(media.path);
+
+        print(mimeType);
+
+        if (mimeType != null) {
+          if (mimeType.startsWith("image")) {
+            context.read<CreateTweetBloc>().add(AddImage(media));
+          } else if (mimeType.startsWith("video")) {
+            context.read<CreateTweetBloc>().add(AddVideo(media));
+          }
+        }
+      });
+    }
   }
 
   @override
@@ -45,13 +70,7 @@ class _CreateTweetFooterState extends State<CreateTweetFooter> {
                   context: context,
                   enabled: true,
                   icon: Icons.photo_outlined,
-                  onTap: () async {
-                    final File? image = await pickImage();
-
-                    if (image != null) {
-                      context.read<CreateTweetBloc>().add(AddImage(image));
-                    }
-                  },
+                  onTap: _addMedia,
                 ),
                 _buildIcon(
                   context: context,
