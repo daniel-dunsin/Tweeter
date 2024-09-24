@@ -92,5 +92,9 @@
                 <key>NSAllowsArbitraryLoadsInWebContent</key>
                 <true/>
             </dict>
+
+
+		<key>NSMicrophoneUsageDescription</key>
+		<string>I need it to record audio for posts</string>
 	</dict>
 </plist>

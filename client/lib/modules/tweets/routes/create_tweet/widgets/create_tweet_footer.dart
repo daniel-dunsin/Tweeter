@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:client/modules/tweets/routes/create_tweet/bloc/create_tweet_bloc.dart';
+import 'package:client/modules/tweets/routes/create_tweet/widgets/record_audio.dart';
 import 'package:client/shared/constants/misc.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/utils/file.dart';
@@ -45,6 +46,20 @@ class _CreateTweetFooterState extends State<CreateTweetFooter> {
     }
   }
 
+  void _recordAudio() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => const RecordAudio(),
+      enableDrag: false,
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(),
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      showDragHandle: false,
+      useRootNavigator: true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).appColors;
@@ -65,6 +80,7 @@ class _CreateTweetFooterState extends State<CreateTweetFooter> {
                   context: context,
                   enabled: true,
                   icon: Icons.voice_chat,
+                  onTap: _recordAudio,
                 ),
                 _buildIcon(
                   context: context,

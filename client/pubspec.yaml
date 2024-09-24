@@ -27,6 +27,10 @@ dependencies:
   go_router: ^14.2.7
   mime: ^1.0.6
   video_player: ^2.9.1
+  permission_handler: ^11.3.1
+  record: ^5.1.2
+  flutter_audio_waveforms: ^1.2.1+8
+  path_provider: ^2.1.4
 
 dev_dependencies:
   flutter_test:

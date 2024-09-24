@@ -1,7 +1,6 @@
 import 'package:client/modules/settings/widgets/binary_confirmation_dialog.dart';
 import 'package:client/modules/tweets/routes/create_tweet/bloc/create_tweet_bloc.dart';
 import 'package:client/modules/tweets/routes/create_tweet/widgets/editable_tweet_media.dart';
-import 'package:client/modules/tweets/routes/create_tweet/widgets/tweet_media_grid.dart';
 import 'package:client/shared/constants/misc.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
