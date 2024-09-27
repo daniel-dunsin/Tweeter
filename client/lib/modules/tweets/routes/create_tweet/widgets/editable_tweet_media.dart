@@ -1,6 +1,7 @@
 import 'package:client/modules/tweets/enums/index.dart';
 import 'package:client/modules/tweets/routes/create_tweet/models/create_tweet_media_model.dart';
 import 'package:client/modules/tweets/routes/create_tweet/widgets/editable_tweet_overlay.dart';
+import 'package:client/modules/tweets/routes/create_tweet/widgets/tweet_audio_player.dart';
 import 'package:client/modules/tweets/routes/create_tweet/widgets/tweet_video_player.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -18,40 +19,52 @@ class EditableTweetMedia extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
-      child: Stack(
-        children: [
-          Container(
-            child: Builder(
-              builder: (context) {
-                switch (tweetMediaModel!.type) {
-                  case TweetMediaType.gif:
-                    return Image(
-                      image: NetworkImage(tweetMediaModel!.file!.path),
+      child: Container(
+        child: Builder(
+          builder: (context) {
+            switch (tweetMediaModel!.type) {
+              case TweetMediaType.gif:
+                return Stack(
+                  children: [
+                    Image(
+                      image: NetworkImage(tweetMediaModel!.url ?? ""),
                       width: double.maxFinite,
                       height: double.maxFinite,
                       fit: BoxFit.cover,
-                    );
+                    ),
+                    EditableTweetMediaOverlay(mediaIndex: index),
+                  ],
+                );
 
-                  case TweetMediaType.image:
-                    return Image(
-                      image: AssetImage(tweetMediaModel!.file!.path),
+              case TweetMediaType.image:
+                return Stack(
+                  children: [
+                    Image(
+                      image: AssetImage(tweetMediaModel!.file?.path ?? ""),
                       width: double.maxFinite,
                       height: double.maxFinite,
                       fit: BoxFit.cover,
-                    );
+                    ),
+                    EditableTweetMediaOverlay(mediaIndex: index),
+                  ],
+                );
 
-                  case TweetMediaType.audio:
-                    return SizedBox();
+              case TweetMediaType.audio:
+                return Stack(
+                  children: [
+                    TweetAudioPlayer(file: tweetMediaModel!.file!),
+                    EditableTweetMediaOverlay(mediaIndex: index),
+                  ],
+                );
 
-                  case TweetMediaType.video:
-                    return EditableTweetVideoPlayer(file: tweetMediaModel!.file!);
-                    ;
-                }
-              },
-            ),
-          ),
-          EditableTweetMediaOverlay(mediaIndex: index)
-        ],
+              case TweetMediaType.video:
+                return EditableTweetVideoPlayer(
+                  file: tweetMediaModel!.file!,
+                  index: index,
+                );
+            }
+          },
+        ),
       ),
     );
   }

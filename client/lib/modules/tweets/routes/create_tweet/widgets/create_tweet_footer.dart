@@ -33,8 +33,6 @@ class _CreateTweetFooterState extends State<CreateTweetFooter> {
       media.forEach((media) {
         final String? mimeType = lookupMimeType(media.path);
 
-        print(mimeType);
-
         if (mimeType != null) {
           if (mimeType.startsWith("image")) {
             context.read<CreateTweetBloc>().add(AddImage(media));

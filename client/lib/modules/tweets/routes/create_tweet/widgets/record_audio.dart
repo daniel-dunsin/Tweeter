@@ -32,6 +32,7 @@ class _RecordAudioState extends State<RecordAudio> {
   StreamSubscription? volumeSubsciption;
   late ScrollController? _scrollController;
   String? _filePath;
+  String? _savedFilePath; // New variable for the saved file path
 
   @override
   void initState() {
@@ -61,7 +62,7 @@ class _RecordAudioState extends State<RecordAudio> {
         if (_scrollController != null && _scrollController!.hasClients) {
           _scrollController?.animateTo(
             _scrollController!.position.maxScrollExtent,
-            duration: Duration(microseconds: 10),
+            duration: const Duration(microseconds: 10),
             curve: Curves.easeIn,
           );
         }
@@ -76,22 +77,35 @@ class _RecordAudioState extends State<RecordAudio> {
     }
   }
 
-  void stopRecording() {
-    _audioRecorder.stop();
-    volumeSubsciption?.cancel();
+  Future<void> stopRecording() async {
+    await _audioRecorder.stop(); // Stop and save the audio
+    volumeSubsciption?.cancel(); // Stop monitoring amplitude
     setState(() {
       recording = false;
-      _audioAmplitude.removeRange(0, _audioAmplitude.length);
+      _audioAmplitude.clear(); // Clear the audio visualization data
     });
   }
 
-  void saveRecording() {
-    stopRecording();
+  Future<void> saveRecording() async {
+    await stopRecording(); // Ensure the recording is stopped
+
     if (_filePath != null) {
       final File audioFile = File(_filePath!);
-      context.read<CreateTweetBloc>().add(AddAudio(audioFile));
+
+      // Save the file permanently in the application's document directory
+      final directory = await getApplicationDocumentsDirectory();
+      final newFilePath = '${directory.path}/my_recording_${DateTime.now().microsecondsSinceEpoch}.m4a';
+      final newFile = await audioFile.copy(newFilePath); // Copy to a permanent location
+
+      setState(() {
+        _savedFilePath = newFilePath; // Store the path of the saved file
+      });
+
+      // Handle the saved file (e.g., upload it, add it to a tweet)
+      context.read<CreateTweetBloc>().add(AddAudio(newFile));
     }
-    context.pop();
+
+    context.pop(); // Close the recording screen
   }
 
   @override
