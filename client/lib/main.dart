@@ -14,7 +14,10 @@ import 'package:client/modules/profile/services/profile_service.dart';
 import 'package:client/modules/settings/bloc/settings_bloc.dart';
 import 'package:client/modules/settings/repository/settings_repository.dart';
 import 'package:client/modules/settings/services/settings_service.dart';
-import 'package:client/modules/tweets/routes/create_tweet/bloc/create_tweet_bloc.dart';
+import 'package:client/modules/tweets/repository/tweet_repository.dart';
+import 'package:client/modules/tweets/routes/create_tweet/bloc/api/api_create_tweet_bloc.dart';
+import 'package:client/modules/tweets/routes/create_tweet/bloc/local/create_tweet_bloc.dart';
+import 'package:client/modules/tweets/services/tweet_service.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,7 +48,8 @@ class _MyAppState extends State<MyApp> {
         RepositoryProvider(create: (context) => CategoriesRepository(CategoriesService())),
         RepositoryProvider(create: (context) => FollowRepository(FollowService())),
         RepositoryProvider(create: (context) => ProfileRepository(ProfileService())),
-        RepositoryProvider(create: (context) => SettingsRepository(SettingsService()))
+        RepositoryProvider(create: (context) => SettingsRepository(SettingsService())),
+        RepositoryProvider(create: (context) => TweetRepository(tweetService: TweetService()))
       ],
       child: MultiBlocProvider(
         providers: [
@@ -79,7 +83,12 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider(
             create: (context) => CreateTweetBloc(),
-          )
+          ),
+          BlocProvider(
+            create: (context) => ApiCreateTweetBloc(
+              tweetRepository: context.read<TweetRepository>(),
+            ),
+          ),
         ],
         child: const App(),
       ),

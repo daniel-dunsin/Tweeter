@@ -17,9 +17,6 @@ export class GifService {
 
     let data, pagination;
 
-    console.log(query.search);
-    console.log(query);
-
     if (!query.search || isEmpty(query.search.trim())) {
       const response = await this.giphy.trending({ offset: skip, limit });
 

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TweetAudioPlayer extends StatefulWidget {
-  final File file;
+  final File? file;
 
   const TweetAudioPlayer({
     super.key,
@@ -28,19 +28,21 @@ class _TweetAudioPlayerState extends State<TweetAudioPlayer> {
   void initState() {
     super.initState();
 
-    audioPlayer = AudioPlayer();
-    audioPlayer.setReleaseMode(ReleaseMode.loop);
+    if (widget.file != null) {
+      audioPlayer = AudioPlayer();
+      audioPlayer.setReleaseMode(ReleaseMode.loop);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await audioPlayer.setSourceDeviceFile(widget.file.path);
-      await audioPlayer.pause();
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await audioPlayer.setSourceDeviceFile(widget.file!.path);
+        await audioPlayer.pause();
 
-      audioPlayer.getDuration().then((value) {
-        setState(() {
-          duration = value;
+        audioPlayer.getDuration().then((value) {
+          setState(() {
+            duration = value;
+          });
         });
       });
-    });
+    }
   }
 
   @override

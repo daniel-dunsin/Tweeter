@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:client/modules/tweets/routes/create_tweet/bloc/create_tweet_bloc.dart';
+import 'package:client/modules/tweets/routes/create_tweet/bloc/local/create_tweet_bloc.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/widgets/button.dart';
@@ -88,7 +88,7 @@ class _RecordAudioState extends State<RecordAudio> {
     if (_filePath != null) {
       File audioFile = File(_filePath!);
       final Directory appDirectory = await getApplicationDocumentsDirectory();
-      final newPath = '$appDirectory/my_recordings_${DateTime.now().millisecondsSinceEpoch}';
+      final newPath = '${appDirectory.path}/my_recordings_${DateTime.now().millisecondsSinceEpoch}.m4a';
       audioFile = await audioFile.copy(newPath);
 
       context.read<CreateTweetBloc>().add(AddAudio(audioFile));

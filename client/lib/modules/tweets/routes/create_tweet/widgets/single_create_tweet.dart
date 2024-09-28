@@ -1,5 +1,5 @@
 import 'package:client/modules/settings/widgets/binary_confirmation_dialog.dart';
-import 'package:client/modules/tweets/routes/create_tweet/bloc/create_tweet_bloc.dart';
+import 'package:client/modules/tweets/routes/create_tweet/bloc/local/create_tweet_bloc.dart';
 import 'package:client/modules/tweets/routes/create_tweet/widgets/editable_tweet_media.dart';
 import 'package:client/shared/constants/misc.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
@@ -42,7 +42,6 @@ class _SingleCreateTweetState extends State<SingleCreateTweet> {
     if (renderBox != null) {
       setState(() {
         _textFieldHeight = renderBox.size.height;
-        print('Widget size changed: ${renderBox.size.height}');
       });
     }
   }

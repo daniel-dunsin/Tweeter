@@ -148,5 +148,11 @@ class CreateTweetBloc extends Bloc<CreateTweetEvent, CreateTweetModel> {
     on<ChangeActiveIndex>((event, emit) {
       emit(state.copyWith(position: event.index));
     });
+
+    on<ResetCreateTweet>((event, emit) {
+      emit(CreateTweetModel(tweets: [
+        SingleCreateTweetModel(),
+      ], position: 0));
+    });
   }
 }

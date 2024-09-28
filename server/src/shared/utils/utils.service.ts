@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Prisma, TweetMediaType } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { genSalt, hash, compare } from 'bcryptjs';
 import { UploadApiOptions, v2 } from 'cloudinary';
 import { generate } from 'otp-generator';
@@ -7,6 +7,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CLOUDINARY_PROVIDER } from './cloudinary.provider';
 import { DefaultQueryDto } from '../dtos';
 import { unlink } from 'fs/promises';
+import * as mime from 'mime-types';
 
 @Injectable()
 export class UtilService {
@@ -45,7 +46,16 @@ export class UtilService {
   }
 
   async uploadFileAsset(file: Express.Multer.File) {
-    const response = await this.uploadAsset(file.path);
+    let resource_type: UploadApiOptions['resource_type'] = 'auto';
+    const mimetype = mime.lookup(file.path);
+
+    if (mimetype && mimetype.startsWith('image')) {
+      resource_type = 'image';
+    } else {
+      resource_type = 'video';
+    }
+
+    const response = await this.uploadAsset(file.path, { resource_type });
     await unlink(file.path);
 
     return response;

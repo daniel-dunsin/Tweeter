@@ -19,10 +19,11 @@ class CreateTweetMediaModel {
     File? file,
     String? url,
     String? publicId,
+    bool overrideFile = false,
   }) {
     return CreateTweetMediaModel(
       type: type ?? this.type,
-      file: file ?? this.file,
+      file: overrideFile ? file : this.file ?? file,
       url: url ?? this.url,
       publicId: publicId ?? this.publicId,
     );

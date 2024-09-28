@@ -18,6 +18,9 @@ class EditableTweetMedia extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (tweetMediaModel == null || (tweetMediaModel!.type == TweetMediaType.gif && tweetMediaModel!.url == null) || (tweetMediaModel!.type != TweetMediaType.gif && tweetMediaModel!.file == null)) {
+      return const SizedBox();
+    }
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
@@ -52,7 +55,7 @@ class EditableTweetMedia extends StatelessWidget {
               case TweetMediaType.audio:
                 return Stack(
                   children: [
-                    TweetAudioPlayer(file: tweetMediaModel!.file!),
+                    TweetAudioPlayer(file: tweetMediaModel!.file),
                     EditableTweetMediaOverlay(mediaIndex: index),
                   ],
                 );

@@ -1,4 +1,4 @@
-import 'package:client/modules/tweets/routes/create_tweet/bloc/create_tweet_bloc.dart';
+import 'package:client/modules/tweets/routes/create_tweet/bloc/local/create_tweet_bloc.dart';
 import 'package:client/modules/tweets/routes/create_tweet/models/gif_model.dart';
 import 'package:client/modules/tweets/services/tweet_service.dart';
 import 'package:client/shared/theme/colors.dart';

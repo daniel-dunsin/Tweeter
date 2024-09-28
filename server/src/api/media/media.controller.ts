@@ -1,7 +1,7 @@
 import {
   Controller,
   Post,
-  UploadedFiles,
+  UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -28,7 +28,7 @@ export class MediaController {
       },
     },
   })
-  async uploadFiles(@UploadedFiles() file: Express.Multer.File) {
+  async uploadFiles(@UploadedFile() file: Express.Multer.File) {
     const data = await this.mediaService.uploadBulkMedia(file);
 
     return data;

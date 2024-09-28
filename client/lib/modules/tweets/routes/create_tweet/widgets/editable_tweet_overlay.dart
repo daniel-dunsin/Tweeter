@@ -1,4 +1,4 @@
-import 'package:client/modules/tweets/routes/create_tweet/bloc/create_tweet_bloc.dart';
+import 'package:client/modules/tweets/routes/create_tweet/bloc/local/create_tweet_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

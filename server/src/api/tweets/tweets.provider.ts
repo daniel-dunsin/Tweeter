@@ -27,31 +27,28 @@ export class TweetProvider {
   async createTweets(user: User, createTweetDtos: CreateTweetDto) {
     const createdTweetIds = [];
 
-    await this.prisma.$transaction(async (tx) => {
+    await Promise.all(
       createTweetDtos.tweets.map(async (tweet) => {
-        const createdTweet = await this.tweetService.createTweet(
-          {
-            text: tweet.text,
-            media: {
-              createMany: {
-                data: tweet.media,
-              },
+        let createdTweet = await this.tweetService.createTweet({
+          text: tweet.text,
+          media: {
+            createMany: {
+              data: tweet.media,
             },
-            tweeter: {
-              connect: {
-                id: user.id,
-              },
-            },
-            ...(createdTweetIds.length > 0 && {
-              parentTweet: {
-                connect: {
-                  id: createdTweetIds[createdTweetIds.length - 1],
-                },
-              },
-            }),
           },
-          tx,
-        );
+          tweeter: {
+            connect: {
+              id: user.id,
+            },
+          },
+          ...(createdTweetIds.length > 0 && {
+            parentTweet: {
+              connect: {
+                id: createdTweetIds[createdTweetIds.length - 1],
+              },
+            },
+          }),
+        });
 
         if (tweet.text) {
           const [tags, mentions] = [
@@ -67,32 +64,26 @@ export class TweetProvider {
 
           await Promise.all(
             tags.map(async (tag) => {
-              const newTag = await this.tweetService.createHashTag(tag, tx);
-              await this.tweetService.createHashTagUsage(
-                {
-                  tweet: { connect: { id: createdTweet.id } },
-                  hashTag: { connect: { id: newTag.id } },
-                },
-                tx,
-              );
+              const newTag = await this.tweetService.createHashTag(tag);
+              await this.tweetService.createHashTagUsage({
+                tweet: { connect: { id: createdTweet.id } },
+                hashTag: { connect: { id: newTag.id } },
+              });
             }),
           );
 
           await Promise.all(
             mentionedUsers.map(async (mention) => {
-              await this.tweetService.createMention(
-                {
-                  userId: mention.id,
-                  tweetId: createdTweet.id,
-                },
-                tx,
-              );
+              await this.tweetService.createMention({
+                userId: mention.id,
+                tweetId: createdTweet.id,
+              });
             }),
           );
         }
 
         if (createdTweetIds.length > 0) {
-          await this.tweetService.updateTweet(
+          createdTweet = await this.tweetService.updateTweet(
             {
               id: createdTweetIds[createdTweetIds.length - 1],
             },
@@ -103,13 +94,14 @@ export class TweetProvider {
                 },
               },
             },
-            tx,
           );
         }
 
         createdTweetIds.push(createdTweet.id);
-      });
-    });
+
+        return createdTweet;
+      }),
+    );
 
     return {
       success: true,

@@ -53,3 +53,5 @@ class ChangeActiveIndex extends CreateTweetEvent {
 
   ChangeActiveIndex(this.index);
 }
+
+class ResetCreateTweet extends CreateTweetEvent {}

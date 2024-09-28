@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:client/modules/tweets/enums/index.dart';
-import 'package:client/modules/tweets/routes/create_tweet/bloc/create_tweet_bloc.dart';
+import 'package:client/modules/tweets/routes/create_tweet/bloc/local/create_tweet_bloc.dart';
 import 'package:client/modules/tweets/routes/create_tweet/widgets/record_audio.dart';
 import 'package:client/modules/tweets/routes/create_tweet/widgets/select_gif_media.dart';
 import 'package:client/shared/constants/misc.dart';

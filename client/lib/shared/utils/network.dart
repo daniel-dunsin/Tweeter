@@ -74,10 +74,13 @@ handleSuccess(String message) {
   );
 }
 
-Future<Options> getDefaulNetworkOptions() async {
+Future<Options> getDefaulNetworkOptions({Map<String, dynamic>? otherOptions}) async {
   final authToken = await LocalStorage.getString(key: localStorageConstants.accessToken);
 
-  return Options(headers: {
-    "Authorization": "Bearer $authToken"
-  });
+  return Options(
+    headers: {
+      "Authorization": "Bearer $authToken",
+      ...(otherOptions == null ? {} : otherOptions)
+    },
+  );
 }
