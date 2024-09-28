@@ -104,7 +104,14 @@ export class AuthProvider {
 
     const user = await this.userService.getUser({ email: userExists.email });
 
-    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
+    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{
+      user: {
+        name: user.name,
+        userName: user.userName,
+        email: user.email,
+        id: user.id,
+      },
+    });
     await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
 
     if (userExists.deactivatedAt) {
@@ -169,7 +176,14 @@ export class AuthProvider {
 
     const user = await this.userService.getUser({ email });
 
-    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
+    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{
+      user: {
+        name: user.name,
+        userName: user.userName,
+        email: user.email,
+        id: user.id,
+      },
+    });
     await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
 
     return {
@@ -299,7 +313,14 @@ export class AuthProvider {
         profilePicture: googleUser.picture ?? DEFAULT_IMAGES.profilePicture,
         userName,
       });
-      const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
+      const accessToken = await this.jwtService.signAsync(<SignJwtDto>{
+        user: {
+          name: user.name,
+          userName: user.userName,
+          email: user.email,
+          id: user.id,
+        },
+      });
       await this.authService.upsertJwtToken(
         { userId: user.id },
         { accessToken },
@@ -317,7 +338,14 @@ export class AuthProvider {
     }
 
     const user = await this.userService.getUser({ email: googleUser.email });
-    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
+    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{
+      user: {
+        name: user.name,
+        userName: user.userName,
+        email: user.email,
+        id: user.id,
+      },
+    });
     await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
 
     return {
@@ -338,7 +366,14 @@ export class AuthProvider {
       { deactivatedAt: null },
     );
 
-    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
+    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{
+      user: {
+        name: user.name,
+        userName: user.userName,
+        email: user.email,
+        id: user.id,
+      },
+    });
     await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
 
     return {
@@ -403,7 +438,14 @@ export class AuthProvider {
       { password: hashedPassword },
     );
 
-    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{ user });
+    const accessToken = await this.jwtService.signAsync(<SignJwtDto>{
+      user: {
+        name: user.name,
+        userName: user.userName,
+        email: user.email,
+        id: user.id,
+      },
+    });
     await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
 
     return {
@@ -461,7 +503,12 @@ export class AuthProvider {
     ]);
 
     const accessToken = await this.jwtService.signAsync(<SignJwtDto>{
-      user: newUser,
+      user: {
+        name: newUser.name,
+        userName: newUser.userName,
+        email: newUser.email,
+        id: newUser.id,
+      },
     });
     await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
 
@@ -495,7 +542,12 @@ export class AuthProvider {
     ]);
 
     const accessToken = await this.jwtService.signAsync(<SignJwtDto>{
-      user: newUser,
+      user: {
+        name: newUser.name,
+        userName: newUser.userName,
+        email: newUser.email,
+        id: newUser.id,
+      },
     });
     await this.authService.upsertJwtToken({ userId: user.id }, { accessToken });
 

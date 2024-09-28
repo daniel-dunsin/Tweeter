@@ -1,5 +1,9 @@
-import { User } from '@prisma/client';
-
 export class SignJwtDto {
-  user: User;
+  user: {
+    email: string;
+    id: string;
+    profilePicture: string;
+    userName: string;
+    name: string;
+  };
 }

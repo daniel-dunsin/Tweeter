@@ -11,7 +11,7 @@ class TweetMediaModel {
     this.publicId,
   });
 
-  factory TweetMediaModel.fromMap(Map<String, dynamic> map) {
+  factory TweetMediaModel.fromMap(map) {
     return TweetMediaModel(
       type: TweetMediaType.values.firstWhere((v) => v.name == map['type']),
       url: map['url'] as String,

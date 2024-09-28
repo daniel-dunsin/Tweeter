@@ -22,4 +22,16 @@ class TweetRepository {
 
     return response;
   }
+
+  getUserTweets(String userId) async {
+    final response = await tweetService.getUserTweets(userId);
+
+    return response.data;
+  }
+
+  getHomeTweets() async {
+    final response = await tweetService.getHomeTweets();
+
+    return response.data;
+  }
 }

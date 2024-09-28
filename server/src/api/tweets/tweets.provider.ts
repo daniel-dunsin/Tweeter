@@ -133,14 +133,18 @@ export class TweetProvider {
       this.tweetService.getTweets({
         ...default_args,
         where: {
-          parentTweetId: {
-            not: null,
-          },
-          parentTweet: {
-            tweeterId: {
-              not: userId,
+          OR: [
+            {
+              parentTweetId: {
+                not: null,
+              },
             },
-          },
+            {
+              quotedTweetId: {
+                not: null,
+              },
+            },
+          ],
         },
       }),
       this.tweetService.getTweets({
@@ -236,18 +240,6 @@ export class TweetProvider {
     return {
       success: true,
       message: 'Tweet Comments fetched',
-      data,
-    };
-  }
-
-  async getDummy() {
-    const data = await this.tweetService.getTweets({
-      ...this.tweetService.multipleTweetsDefaultArgs,
-    });
-
-    return {
-      success: true,
-      message: '',
       data,
     };
   }

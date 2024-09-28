@@ -14,6 +14,7 @@ import 'package:client/modules/profile/services/profile_service.dart';
 import 'package:client/modules/settings/bloc/settings_bloc.dart';
 import 'package:client/modules/settings/repository/settings_repository.dart';
 import 'package:client/modules/settings/services/settings_service.dart';
+import 'package:client/modules/tweets/bloc/tweets_bloc.dart';
 import 'package:client/modules/tweets/repository/tweet_repository.dart';
 import 'package:client/modules/tweets/routes/create_tweet/bloc/api/api_create_tweet_bloc.dart';
 import 'package:client/modules/tweets/routes/create_tweet/bloc/local/create_tweet_bloc.dart';
@@ -89,6 +90,11 @@ class _MyAppState extends State<MyApp> {
               tweetRepository: context.read<TweetRepository>(),
             ),
           ),
+          BlocProvider(
+            create: (context) => TweetsBloc(
+              tweetRepository: context.read<TweetRepository>(),
+            ),
+          )
         ],
         child: const App(),
       ),

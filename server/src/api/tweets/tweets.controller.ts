@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { TweetProvider } from './tweets.provider';
-import { Auth, IsPublic } from 'src/core/decorators/auth.decorator';
+import { Auth } from 'src/core/decorators/auth.decorator';
 import { User } from '@prisma/client';
 import { CreateTweetDto } from './dtos/create-tweet.dto';
 
@@ -19,9 +19,13 @@ export class TweetsController {
     return await this.tweetsProvider.createTweets(user, createTweetsDto);
   }
 
-  @Get()
-  @IsPublic()
-  async get() {
-    return await this.tweetsProvider.getDummy();
+  @Get('home')
+  async getHomeTweets(@Auth('id') userId: string) {
+    return await this.tweetsProvider.getHomePageTweets(userId);
+  }
+
+  @Get('user/:userId')
+  async getUserTweets(@Param('userId') userId: string) {
+    return await this.tweetsProvider.getUserTweets(userId);
   }
 }

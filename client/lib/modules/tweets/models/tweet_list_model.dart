@@ -74,7 +74,7 @@ class TweetListModel {
     );
   }
 
-  factory TweetListModel.fromMap(Map<String, dynamic> map) {
+  factory TweetListModel.fromMap(Map map) {
     return TweetListModel(
       id: map['id'] as String,
       isPinned: map['isPinned'] as bool,
@@ -82,22 +82,22 @@ class TweetListModel {
       createdAt: DateTime.parse(map['createdAt'] as String),
       tweeterId: map['tweeterId'] as String,
       media: List<TweetMediaModel>.from(
-        (map['media'] as List<int>).map<TweetMediaModel>(
-          (x) => TweetMediaModel.fromMap(x as Map<String, dynamic>),
+        (map['media'] as List).map<TweetMediaModel>(
+          (x) => TweetMediaModel.fromMap(x),
         ),
       ),
-      likersCount: map['likersCount'] as int,
-      retweetersCount: map['retweetersCount'] as int,
-      childTweetsCount: map['childTweetsCount'] as int,
-      bookmarkersCount: map['bookmarkersCount'] as int,
+      likersCount: map['_count']["likers"] as int,
+      retweetersCount: map['_count']["retweeters"] as int,
+      childTweetsCount: map['_count']["childTweets"] as int,
+      bookmarkersCount: map['_count']["bookmarkers"] as int,
       mentions: List<TweetMentionsModel>.from(
-        (map['mentions'] as List<int>).map<TweetMentionsModel>(
-          (x) => TweetMentionsModel.fromMap(x as Map<String, dynamic>),
+        (map['mentions'] as List).map<TweetMentionsModel>(
+          (x) => TweetMentionsModel.fromMap(x),
         ),
       ),
       hashTags: List<HashtagsModel>.from(
-        (map['hashTags'] as List<int>).map<HashtagsModel>(
-          (x) => HashtagsModel.fromMap(x as Map<String, dynamic>),
+        (map['hashTags'] as List).map<HashtagsModel>(
+          (x) => HashtagsModel.fromMap(x),
         ),
       ),
       tweeter: UserModel.fromMap(map['tweeter'] as Map<String, dynamic>),

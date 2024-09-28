@@ -34,4 +34,18 @@ class TweetService {
       options: await getDefaulNetworkOptions(),
     );
   }
+
+  Future<Response> getUserTweets(String userId) async {
+    return await httpService.get(
+      "${AppSecrets.serverUrl}/tweets/user/$userId",
+      options: await getDefaulNetworkOptions(),
+    );
+  }
+
+  Future<Response> getHomeTweets() async {
+    return await httpService.get(
+      "${AppSecrets.serverUrl}/tweets/home",
+      options: await getDefaulNetworkOptions(),
+    );
+  }
 }

@@ -7,8 +7,8 @@ class TweeterLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 30,
-      height: 30,
+      width: 20,
+      height: 20,
       child: CircularProgressIndicator(
         color: Theme.of(context).appColors.iconColor,
       ),

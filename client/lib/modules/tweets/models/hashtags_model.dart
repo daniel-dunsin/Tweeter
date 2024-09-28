@@ -6,7 +6,7 @@ class HashtagsModel {
     required this.name,
   });
 
-  factory HashtagsModel.fromMap(Map<String, dynamic> map) {
+  factory HashtagsModel.fromMap(Map map) {
     return HashtagsModel(
       id: map['id'] as String,
       name: map['name'] as String,
