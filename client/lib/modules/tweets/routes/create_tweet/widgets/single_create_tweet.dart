@@ -56,6 +56,7 @@ class _SingleCreateTweetState extends State<SingleCreateTweet> {
     final createTweetState = context.watch<CreateTweetBloc>().state;
     final currentPost = createTweetState.tweets[widget.index];
     final bool nextPostExists = createTweetState.tweets.length > widget.index + 1;
+    final isLightMode = context.watch<AppCubit>().state.isLightMode;
 
     return GestureDetector(
       onTap: () {
@@ -200,11 +201,21 @@ class _SingleCreateTweetState extends State<SingleCreateTweet> {
                 child: Container(
                   height: double.maxFinite,
                   width: double.maxFinite,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Color.fromRGBO(7, 7, 7, .85),
-                        Color.fromRGBO(7, 7, 7, .85),
+                        Color.fromRGBO(
+                          isLightMode ? 240 : 7,
+                          isLightMode ? 240 : 7,
+                          isLightMode ? 240 : 7,
+                          .85,
+                        ),
+                        Color.fromRGBO(
+                          isLightMode ? 240 : 7,
+                          isLightMode ? 240 : 7,
+                          isLightMode ? 240 : 7,
+                          .85,
+                        ),
                       ],
                     ),
                   ),

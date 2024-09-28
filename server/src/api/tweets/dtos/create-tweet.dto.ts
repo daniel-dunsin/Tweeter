@@ -2,11 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { TweetMediaType } from '@prisma/client';
 import { Type } from 'class-transformer';
 import { IsArray, IsOptional, ValidateNested } from 'class-validator';
-import {
-  IsEnum,
-  IsNumber,
-  IsString,
-} from 'src/core/decorators/validators.decorator';
+import { IsEnum, IsString } from 'src/core/decorators/validators.decorator';
 
 export class TweetMediaDto {
   @IsEnum(TweetMediaType, false)
@@ -17,17 +13,6 @@ export class TweetMediaDto {
 
   @IsString(true)
   publicId: string;
-}
-
-export class TweetLocationDto {
-  @IsNumber(false)
-  lng: number;
-
-  @IsNumber(false)
-  lat: number;
-
-  @IsString(false)
-  name: string;
 }
 
 export class TweetDto {
@@ -49,10 +34,4 @@ export class CreateTweetDto {
   @ApiProperty({ type: [TweetDto] })
   @IsOptional()
   tweets: TweetDto[];
-
-  @ValidateNested()
-  @Type(() => TweetLocationDto)
-  @ApiProperty({ type: TweetLocationDto })
-  @IsOptional()
-  location: TweetLocationDto;
 }

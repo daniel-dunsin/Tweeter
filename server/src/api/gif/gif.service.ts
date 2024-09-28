@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { GIPHY_PROVIDER } from './giphy.provider';
 import { GetGifsQuery } from './dtos';
 import { UtilService } from 'src/shared/utils/utils.service';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class GifService {
@@ -16,7 +17,10 @@ export class GifService {
 
     let data, pagination;
 
-    if (!query.search) {
+    console.log(query.search);
+    console.log(query);
+
+    if (!query.search || isEmpty(query.search.trim())) {
       const response = await this.giphy.trending({ offset: skip, limit });
 
       data = response.data;

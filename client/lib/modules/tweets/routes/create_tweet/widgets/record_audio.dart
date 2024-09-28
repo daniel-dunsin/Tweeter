@@ -1,18 +1,15 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:client/modules/tweets/routes/create_tweet/bloc/create_tweet_bloc.dart';
 import 'package:client/shared/cubit/app_cubit/app_cubit.dart';
 import 'package:client/shared/theme/colors.dart';
 import 'package:client/shared/widgets/button.dart';
-import 'package:client/shared/widgets/cancel_appbar_leading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_waveforms/flutter_audio_waveforms.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
@@ -32,7 +29,6 @@ class _RecordAudioState extends State<RecordAudio> {
   StreamSubscription? volumeSubsciption;
   late ScrollController? _scrollController;
   String? _filePath;
-  String? _savedFilePath; // New variable for the saved file path
 
   @override
   void initState() {
@@ -90,22 +86,15 @@ class _RecordAudioState extends State<RecordAudio> {
     await stopRecording(); // Ensure the recording is stopped
 
     if (_filePath != null) {
-      final File audioFile = File(_filePath!);
+      File audioFile = File(_filePath!);
+      final Directory appDirectory = await getApplicationDocumentsDirectory();
+      final newPath = '$appDirectory/my_recordings_${DateTime.now().millisecondsSinceEpoch}';
+      audioFile = await audioFile.copy(newPath);
 
-      // Save the file permanently in the application's document directory
-      final directory = await getApplicationDocumentsDirectory();
-      final newFilePath = '${directory.path}/my_recording_${DateTime.now().microsecondsSinceEpoch}.m4a';
-      final newFile = await audioFile.copy(newFilePath); // Copy to a permanent location
-
-      setState(() {
-        _savedFilePath = newFilePath; // Store the path of the saved file
-      });
-
-      // Handle the saved file (e.g., upload it, add it to a tweet)
-      context.read<CreateTweetBloc>().add(AddAudio(newFile));
+      context.read<CreateTweetBloc>().add(AddAudio(audioFile));
     }
 
-    context.pop(); // Close the recording screen
+    context.pop();
   }
 
   @override

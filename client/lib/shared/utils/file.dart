@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:client/shared/utils/network.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mime/mime.dart';
 
 Future<File?> pickImage() async {
   try {

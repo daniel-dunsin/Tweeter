@@ -48,12 +48,6 @@ class RemoveTweet extends CreateTweetEvent {
   RemoveTweet({required this.index});
 }
 
-class AddLocation extends CreateTweetEvent {
-  final CreateTweetLocationModel location;
-
-  AddLocation(this.location);
-}
-
 class ChangeActiveIndex extends CreateTweetEvent {
   final int index;
 

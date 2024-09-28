@@ -42,26 +42,6 @@ export class TweetProvider {
                 id: user.id,
               },
             },
-            ...(createTweetDtos.location
-              ? {
-                  location: {
-                    connectOrCreate: {
-                      where: {
-                        lng_lat: {
-                          lng: createTweetDtos.location.lng,
-                          lat: createTweetDtos.location.lat,
-                        },
-                      },
-                      create: {
-                        lng: createTweetDtos.location.lng,
-                        lat: createTweetDtos.location.lat,
-                        name: createTweetDtos.location.name,
-                      },
-                    },
-                  },
-                }
-              : {}),
-
             ...(createdTweetIds.length > 0 && {
               parentTweet: {
                 connect: {

@@ -146,9 +146,6 @@ model Tweet {
 
   bookmarkers User[] @relation("Bookmarks")
 
-  locationId String?
-  location   TweetLocation? @relation(references: [id], fields: [locationId])
-
   @@map("tweets")
 }
 
@@ -211,18 +208,4 @@ model HashTagUsage {
   createdAt DateTime @default(now())
 
   @@map("hashtags_usage")
-}
-
-model TweetLocation {
-  id     String  @id @default(uuid())
-  tweets Tweet[]
-  lng    Decimal
-  lat    Decimal
-  name   String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-
-  @@unique([lng, lat])
-  @@map("tweet_location")
 }

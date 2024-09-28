@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:client/modules/tweets/enums/index.dart';
-import 'package:client/modules/tweets/routes/create_tweet/models/create_tweet_location_model.dart';
 import 'package:client/modules/tweets/routes/create_tweet/models/create_tweet_media_model.dart';
 import 'package:client/modules/tweets/routes/create_tweet/models/create_tweet_model.dart';
 import 'package:client/modules/tweets/routes/create_tweet/models/single_create_tweet_model.dart';
@@ -143,12 +142,6 @@ class CreateTweetBloc extends Bloc<CreateTweetEvent, CreateTweetModel> {
         }
 
         emit(state.copyWith(tweets: tweets, position: newPosition));
-      },
-    );
-
-    on<AddLocation>(
-      (event, emit) {
-        emit(state.copyWith(location: event.location));
       },
     );
 

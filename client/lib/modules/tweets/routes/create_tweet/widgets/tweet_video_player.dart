@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:client/modules/tweets/routes/create_tweet/widgets/editable_tweet_overlay.dart';
-import 'package:client/shared/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 

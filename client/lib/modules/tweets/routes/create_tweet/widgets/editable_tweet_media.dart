@@ -3,6 +3,7 @@ import 'package:client/modules/tweets/routes/create_tweet/models/create_tweet_me
 import 'package:client/modules/tweets/routes/create_tweet/widgets/editable_tweet_overlay.dart';
 import 'package:client/modules/tweets/routes/create_tweet/widgets/tweet_audio_player.dart';
 import 'package:client/modules/tweets/routes/create_tweet/widgets/tweet_video_player.dart';
+import 'package:client/shared/widgets/cached_image.dart';
 import 'package:flutter/cupertino.dart';
 
 class EditableTweetMedia extends StatelessWidget {
@@ -26,11 +27,10 @@ class EditableTweetMedia extends StatelessWidget {
               case TweetMediaType.gif:
                 return Stack(
                   children: [
-                    Image(
-                      image: NetworkImage(tweetMediaModel!.url ?? ""),
+                    CachedImage(
+                      url: tweetMediaModel!.url!,
                       width: double.maxFinite,
                       height: double.maxFinite,
-                      fit: BoxFit.cover,
                     ),
                     EditableTweetMediaOverlay(mediaIndex: index),
                   ],
