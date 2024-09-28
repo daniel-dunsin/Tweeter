@@ -1,7 +1,7 @@
 import 'package:client/modules/tweets/enums/index.dart';
 import 'package:client/modules/tweets/repository/tweet_repository.dart';
-import 'package:client/modules/tweets/routes/create_tweet/models/create_tweet_media_model.dart';
-import 'package:client/modules/tweets/routes/create_tweet/models/single_create_tweet_model.dart';
+import 'package:client/modules/tweets/models/create_tweet_media_model.dart';
+import 'package:client/modules/tweets/models/single_create_tweet_model.dart';
 import 'package:client/shared/utils/network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

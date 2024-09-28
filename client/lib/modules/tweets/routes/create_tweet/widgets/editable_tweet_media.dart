@@ -1,5 +1,5 @@
 import 'package:client/modules/tweets/enums/index.dart';
-import 'package:client/modules/tweets/routes/create_tweet/models/create_tweet_media_model.dart';
+import 'package:client/modules/tweets/models/create_tweet_media_model.dart';
 import 'package:client/modules/tweets/routes/create_tweet/widgets/editable_tweet_overlay.dart';
 import 'package:client/modules/tweets/routes/create_tweet/widgets/tweet_audio_player.dart';
 import 'package:client/modules/tweets/routes/create_tweet/widgets/tweet_video_player.dart';

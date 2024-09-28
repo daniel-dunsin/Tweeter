@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:client/modules/tweets/routes/create_tweet/models/create_tweet_model.dart';
-import 'package:client/modules/tweets/routes/create_tweet/models/single_create_tweet_model.dart';
+import 'package:client/modules/tweets/models/create_tweet_model.dart';
+import 'package:client/modules/tweets/models/single_create_tweet_model.dart';
 import 'package:client/modules/tweets/services/tweet_service.dart';
 
 class TweetRepository {

@@ -12,7 +12,7 @@ export class TweetService {
     private readonly userService: UserService,
   ) {}
 
-  multipleTweetsBaseArgs: Prisma.TweetInclude = {
+  multipleTweetsIncludeArgs: Prisma.TweetInclude = {
     media: {
       select: {
         publicId: true,
@@ -55,13 +55,13 @@ export class TweetService {
 
   multipleTweetsDefaultArgs: Prisma.TweetFindManyArgs = {
     include: {
-      ...this.multipleTweetsBaseArgs,
+      ...this.multipleTweetsIncludeArgs,
       quotedTweet: {
-        include: this.multipleTweetsBaseArgs,
+        include: this.multipleTweetsIncludeArgs,
       },
-    },
-    orderBy: {
-      createdAt: 'asc',
+      parentTweet: {
+        include: this.multipleTweetsIncludeArgs,
+      },
     },
   };
 

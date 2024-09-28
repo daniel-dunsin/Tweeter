@@ -1,4 +1,4 @@
-import 'package:client/modules/tweets/routes/create_tweet/models/single_create_tweet_model.dart';
+import 'package:client/modules/tweets/models/single_create_tweet_model.dart';
 
 class CreateTweetModel {
   List<SingleCreateTweetModel> tweets;

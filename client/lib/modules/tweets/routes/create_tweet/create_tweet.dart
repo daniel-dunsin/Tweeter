@@ -1,6 +1,6 @@
 import 'package:client/modules/tweets/routes/create_tweet/bloc/api/api_create_tweet_bloc.dart';
 import 'package:client/modules/tweets/routes/create_tweet/bloc/local/create_tweet_bloc.dart';
-import 'package:client/modules/tweets/routes/create_tweet/models/single_create_tweet_model.dart';
+import 'package:client/modules/tweets/models/single_create_tweet_model.dart';
 import 'package:client/modules/tweets/routes/create_tweet/widgets/create_tweet_footer.dart';
 import 'package:client/modules/tweets/routes/create_tweet/widgets/single_create_tweet.dart';
 import 'package:client/shared/theme/colors.dart';

@@ -1,4 +1,4 @@
-import 'package:client/modules/tweets/routes/create_tweet/models/create_tweet_media_model.dart';
+import 'package:client/modules/tweets/models/create_tweet_media_model.dart';
 
 class SingleCreateTweetModel {
   String? text;
