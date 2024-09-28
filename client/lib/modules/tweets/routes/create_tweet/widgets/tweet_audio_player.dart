@@ -33,7 +33,7 @@ class _TweetAudioPlayerState extends State<TweetAudioPlayer> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await audioPlayer.setSourceDeviceFile(widget.file.path);
-      await audioPlayer.resume();
+      await audioPlayer.pause();
 
       audioPlayer.getDuration().then((value) {
         setState(() {
