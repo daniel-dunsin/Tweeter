@@ -129,8 +129,7 @@ model Tweet {
 
   parentTweetId String? @unique
   parentTweet   Tweet?  @relation("ParentChildTweets", fields: [parentTweetId], references: [id])
-  childTweetId  String? @unique
-  childTweets   Tweet?  @relation("ParentChildTweets")
+  childTweets   Tweet[] @relation("ParentChildTweets")
 
   quotedTweetId String?
   quotedTweet   Tweet?  @relation("Quotes", fields: [quotedTweetId], references: [id])

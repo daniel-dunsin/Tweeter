@@ -58,7 +58,10 @@ export class TweetProvider {
 
           const mentionedUsers = await this.userService.getUsers({
             OR: mentions.map((mention) => ({
-              userName: mention,
+              userName: {
+                equals: mention,
+                mode: 'insensitive',
+              },
             })),
           });
 
@@ -66,8 +69,16 @@ export class TweetProvider {
             tags.map(async (tag) => {
               const newTag = await this.tweetService.createHashTag(tag);
               await this.tweetService.createHashTagUsage({
-                tweet: { connect: { id: createdTweet.id } },
-                hashTag: { connect: { id: newTag.id } },
+                tweet: {
+                  connect: {
+                    id: createdTweet.id,
+                  },
+                },
+                hashTag: {
+                  connect: {
+                    id: newTag.id,
+                  },
+                },
               });
             }),
           );
@@ -106,6 +117,138 @@ export class TweetProvider {
     return {
       success: true,
       message: 'tweet created',
+    };
+  }
+
+  async getUserTweets(userId: string) {
+    const default_args = this.tweetService.multipleTweetsDefaultArgs;
+
+    const [posts, replies, media, likes] = await Promise.all([
+      this.tweetService.getTweets({
+        ...default_args,
+        where: {
+          tweeterId: userId,
+        },
+      }),
+      this.tweetService.getTweets({
+        ...default_args,
+        where: {
+          parentTweetId: {
+            not: null,
+          },
+          parentTweet: {
+            tweeterId: {
+              not: userId,
+            },
+          },
+        },
+      }),
+      this.tweetService.getTweets({
+        ...default_args,
+        where: {
+          tweeterId: userId,
+          media: {
+            some: {},
+          },
+        },
+      }),
+      this.tweetService.getTweets({
+        ...default_args,
+        where: {
+          likersIds: {
+            has: userId,
+          },
+        },
+      }),
+    ]);
+
+    const data = {
+      posts,
+      replies,
+      media,
+      likes,
+    };
+
+    return {
+      success: true,
+      message: 'user tweets fetched successfully',
+      data,
+    };
+  }
+
+  async getHomePageTweets(userId: string) {
+    const default_args = this.tweetService.multipleTweetsDefaultArgs;
+
+    const { interests } = await this.userService.getUser({ id: userId });
+
+    const [forYou, following] = await Promise.all([
+      this.tweetService.getTweets({
+        ...default_args,
+        where: {
+          tweeter: {
+            interests: {
+              some: {
+                id: {
+                  in: interests.map(({ id }) => id),
+                },
+              },
+            },
+          },
+        },
+      }),
+
+      this.tweetService.getTweets({
+        ...default_args,
+        where: {
+          tweeter: {
+            followers: {
+              some: {
+                followerId: {
+                  equals: userId,
+                },
+              },
+            },
+          },
+        },
+      }),
+    ]);
+
+    const data = {
+      forYou,
+      following,
+    };
+
+    return {
+      success: true,
+      message: 'Home page tweets fetched',
+      data,
+    };
+  }
+
+  async getTweetComments(tweetId: string) {
+    const data = await this.tweetService.getTweets({
+      ...this.tweetService.multipleTweetsDefaultArgs,
+      where: {
+        parentTweetId: tweetId,
+      },
+    });
+
+    return {
+      success: true,
+      message: 'Tweet Comments fetched',
+      data,
+    };
+  }
+
+  async getDummy() {
+    const data = await this.tweetService.getTweets({
+      ...this.tweetService.multipleTweetsDefaultArgs,
+    });
+
+    return {
+      success: true,
+      message: '',
+      data,
     };
   }
 }

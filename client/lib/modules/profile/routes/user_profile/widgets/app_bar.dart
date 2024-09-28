@@ -77,9 +77,9 @@ class _UserProfileAppBarState extends State<UserProfileAppBar> {
                                         ),
                                       ),
                                       const SizedBox(height: 3),
-                                      const Text(
-                                        "196 posts",
-                                        style: TextStyle(
+                                      Text(
+                                        "${widget.user?.tweets} posts",
+                                        style: const TextStyle(
                                           fontSize: 12,
                                         ),
                                       ),

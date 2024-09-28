@@ -15,6 +15,7 @@ class UserModel {
   final DateTime createdAt;
   final List<FollowsModel>? followers;
   final List<FollowsModel>? followings;
+  final int? tweets;
 
   UserModel({
     required this.email,
@@ -29,6 +30,7 @@ class UserModel {
     required this.createdAt,
     this.followers,
     this.followings,
+    this.tweets = 0,
   });
 
   UserModel copyWith({
@@ -44,6 +46,7 @@ class UserModel {
     DateTime? createdAt,
     List<FollowsModel>? followers,
     List<FollowsModel>? followings,
+    int? tweets,
   }) {
     return UserModel(
       email: email ?? this.email,
@@ -58,6 +61,7 @@ class UserModel {
       createdAt: createdAt ?? this.createdAt,
       followers: followers ?? this.followers,
       followings: followings ?? this.followings,
+      tweets: tweets ?? this.tweets,
     );
   }
 
@@ -110,6 +114,11 @@ class UserModel {
         'followings': followings!.map((x) => x.toMap()).toList()
       });
     }
+    if (tweets != null) {
+      result.addAll({
+        "tweets": tweets,
+      });
+    }
 
     return result;
   }
@@ -128,6 +137,7 @@ class UserModel {
       createdAt: DateTime.parse(map['createdAt']),
       followers: map['followers'] != null ? List<FollowsModel>.from(map['followers']?.map((x) => FollowsModel.fromMap(x))) : null,
       followings: map['followings'] != null ? List<FollowsModel>.from(map['followings']?.map((x) => FollowsModel.fromMap(x))) : null,
+      tweets: map["_count"]?["tweets"] != null ? map["_count"]["tweets"] : 0,
     );
   }
 

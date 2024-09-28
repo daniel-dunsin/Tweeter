@@ -3,12 +3,67 @@ import { Prisma, PrismaClient } from '@prisma/client';
 import { PrismaService } from 'src/shared/prisma/prisma.service';
 import _ from 'lodash';
 import { ITXClientDenyList } from '@prisma/client/runtime/library';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class TweetService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly userService: UserService,
+  ) {}
 
-  private readonly tweetInclude: Prisma.TweetInclude = {};
+  multipleTweetsBaseArgs: Prisma.TweetInclude = {
+    media: {
+      select: {
+        publicId: true,
+        url: true,
+        id: true,
+        type: true,
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+    },
+    _count: {
+      select: {
+        likers: true,
+        retweeters: true,
+        childTweets: true,
+        bookmarkers: true,
+      },
+    },
+    mentions: {
+      select: {
+        userId: true,
+        user: {
+          select: {
+            userName: true,
+          },
+        },
+      },
+    },
+    hashTags: {
+      select: {
+        text: true,
+        id: true,
+      },
+    },
+    tweeter: {
+      include: this.userService.populateOptions,
+    },
+  };
+
+  multipleTweetsDefaultArgs: Prisma.TweetFindManyArgs = {
+    include: {
+      ...this.multipleTweetsBaseArgs,
+      quotedTweet: {
+        include: this.multipleTweetsBaseArgs,
+      },
+    },
+    orderBy: {
+      createdAt: 'asc',
+    },
+  };
 
   async createTweet(
     data: Prisma.TweetCreateInput,
@@ -31,14 +86,12 @@ export class TweetService {
   async getTweets(data: Prisma.TweetFindManyArgs) {
     return await this.prisma.tweet.findMany({
       ...data,
-      include: this.tweetInclude,
     });
   }
 
   async getTweet(data: Prisma.TweetFindFirstArgs) {
     return await this.prisma.tweet.findFirst({
       ...data,
-      include: this.tweetInclude,
     });
   }
 
