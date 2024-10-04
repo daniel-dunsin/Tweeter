@@ -30,3 +30,21 @@ String formatDuration(Duration duration) {
 
   return duration.inHours > 0 ? "$hours:$minutes:$seconds" : "$minutes:$seconds";
 }
+
+String formatTimeDifference(Duration duration) {
+  if (duration.inDays > 365) {
+    return "${(duration.inDays / 365).floor()}yr";
+  } else if (duration.inDays > 28) {
+    return "${((duration.inDays) / 28).floor()}month(s)";
+  } else if (duration.inDays > 7) {
+    return "${((duration.inDays) / 7).floor()}w";
+  } else if (duration.inDays < 7 && duration.inDays > 1) {
+    return "${((duration.inDays))}d";
+  } else if (duration.inHours < 24 && duration.inDays == 0) {
+    return "${duration.inHours}hr";
+  } else if (duration.inMinutes < 60 && duration.inHours < 1 && duration.inDays == 0) {
+    return "${duration.inMinutes}m";
+  } else {
+    return "${duration.inSeconds}s";
+  }
+}

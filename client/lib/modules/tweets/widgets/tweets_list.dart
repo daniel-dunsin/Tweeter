@@ -15,7 +15,7 @@ class TweetsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return true
+    return loading
         ? const SingleChildScrollView(
             child: Column(
               children: [

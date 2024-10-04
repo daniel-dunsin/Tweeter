@@ -129,6 +129,9 @@ export class TweetProvider {
         where: {
           tweeterId: userId,
         },
+        orderBy: {
+          createdAt: 'desc',
+        },
       }),
       this.tweetService.getTweets({
         ...default_args,
@@ -146,6 +149,9 @@ export class TweetProvider {
             },
           ],
         },
+        orderBy: {
+          createdAt: 'desc',
+        },
       }),
       this.tweetService.getTweets({
         ...default_args,
@@ -155,6 +161,9 @@ export class TweetProvider {
             some: {},
           },
         },
+        orderBy: {
+          createdAt: 'desc',
+        },
       }),
       this.tweetService.getTweets({
         ...default_args,
@@ -162,6 +171,9 @@ export class TweetProvider {
           likersIds: {
             has: userId,
           },
+        },
+        orderBy: {
+          createdAt: 'desc',
         },
       }),
     ]);
